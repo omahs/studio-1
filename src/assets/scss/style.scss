@@ -309,20 +309,20 @@ $primary-font:  sans-serif;
 }
 
 .paper-blockchain {
-    background: #2f526a;
+    // background: $primaryMain;
     cursor: pointer;
 }
 
 .paper-blockchain-selected {
-    background: $secondaryMain;
+    background: $primaryMain;
 }
 
 .paper-blockchain-selected:hover {
-    background: $secondaryDark;
+    background: $primaryDark;
 }
 
 .paper-blockchain:hover {
-    background: #3e6e8e;
+    background: $primaryLight;
     cursor: pointer;
 }
 

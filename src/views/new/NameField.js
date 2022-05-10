@@ -1,42 +1,29 @@
 import { useState } from 'react';
 import { UPDATE_APP } from 'store/actions';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { TextField, Grid, Typography, Alert } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { TextField, Grid, Typography, Alert, Chip, Tooltip, Button, DialogContentText, DialogTitle, DialogActions, Dialog, DialogContent } from '@mui/material';
 import { withStyles } from '@mui/styles';
 import Project from 'react-dappify/model/Project';
-
-const WhiteTextField = withStyles({
-    root: {
-        '& .MuiInputBase-input': {
-            color: '#fff' // Text color
-        },
-        '& .MuiInput-underline:before': {
-            borderBottomColor: '#fff8' // Semi-transparent underline
-        },
-        '& .MuiInput-underline:hover:before': {
-            borderBottomColor: '#fff' // Solid underline on hover
-        },
-        '& .MuiInput-underline:after': {
-            borderBottomColor: '#fff' // Solid underline on focus
-        }
-    }
-})(TextField);
+import EditIcon from '@mui/icons-material/Edit';
 
 const styles = { 'aria-label': 'description', style: { fontSize: '2.5em', height: '2.25em' } };
 
 const NameField = () => {
+    const theme = useTheme();
     const dispatch = useDispatch();
     const appState = useSelector((state) => state.app);
     const [appName, setAppName] = useState('');
     const [appSubdomain, setAppSubdomain] = useState('subdomain');
     const [exists, setExists] = useState();
+    const [error, setError] = useState();
+    const [showEditor, setShowEditor] = useState();
 
     const generateSubdomain = async (name) => {
         const suffix = Math.random().toString(36).substr(2, 3);
         const prefix = name ? name.toLowerCase().replace(/\s/g, '').replace(/\W/g, '') : 'subdomain';
         const found = await Project.exists(prefix);
-        setExists(found);
+        setError(found ? 'Project subdomain taken, please set a different subdomain' : null);
         setAppSubdomain(`${prefix}`);
         setAppName(name);
     };
@@ -51,32 +38,70 @@ const NameField = () => {
     };
 
     return (
-        <Grid container direction="row" justifyContent="center" alignItems="center" sx={{ px: '5%' }} spacing={2}>
+        <Grid container direction="row" justifyContent="left" alignItems="left" spacing={2}>
             <Grid item xs={12}>
-                <WhiteTextField
-                    className="new-project-input"
-                    placeholder="e.g Dappify Studio"
-                    label="Project Name"
-                    inputProps={styles}
-                    InputLabelProps={{ style: { fontSize: '0.5em', color: 'white' } }}
+                <Typography variant="h1" fontWeight="regular" sx={{ mb: 5 }}>Let's start with a name for<br/>your <span className="project-keyword">project</span></Typography>
+            </Grid>
+            <Grid item xs={12}>
+                <TextField
+                    fontSize="3em"
+                    placeholder="Enter your project name"
                     variant="standard"
                     onKeyDown={handleKeyDown}
                     onChange={(e) => generateSubdomain(e.target.value)}
                     autoFocus
+                    sx={{ 
+                        input: { 
+                            "&::placeholder": {
+                                fontSize: 34,
+                                fontWeight: '500',
+                                color: 'rgba(0,0,0,0.9)'
+                            } 
+                        }
+                    }} 
+                    inputProps={{
+                        style: {
+                            fontSize: 40,    
+                            color:   theme.palette.primary.dark
+                        }
+                    }}
                 />
             </Grid>
             <Grid item xs={12}>
-                <Typography sx={{ color: 'white', fontSize: '1.5em', fontWeight: 100, opacity: 0.7 }}>
-                    <b>https://</b>
-                    <i>
-                        <u>{appSubdomain}</u>
-                    </i>
-                    <b>.dappify.us</b>
-                </Typography>
+                <Tooltip title="A unique identifier subdomain for your project">
+                    <Chip icon={<EditIcon sx={{ fontSize: '1.2em', paddingLeft: 1, width: 25 , opacity: 0.75 }} />} label={`https://${appSubdomain}.dappify.us`}  variant="outlined" onClick={() => setShowEditor(true)}/>
+                </Tooltip>
             </Grid>
-            <Grid item sx={{ height: 40 }}>
-                {exists && (<Alert severity="error">Project name taken</Alert>)}
+            <Grid item xs={12}>
+                { error && (<Alert variant="filled" severity="error" sx={{ fontSize: "1em", height: 28 }}>{error}</Alert>)}
             </Grid>
+
+            <Dialog open={showEditor} onClose={() => showEditor(false)}>
+                <DialogTitle>Project Subdomain</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Your project's globally unique subdomain, used as your URL. You cannot change your project subdomain after project creation.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Project subdomain"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        defaultValue={appSubdomain}
+                        onChange={(e) => {generateSubdomain(e.target.value)}}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setShowEditor(false)}>Cancel</Button>
+                    <Button onClick={() => {
+                        setShowEditor(false)
+                    }}>Save</Button>
+                </DialogActions>
+            </Dialog>
+
         </Grid>
     );
 };

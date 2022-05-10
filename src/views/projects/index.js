@@ -34,8 +34,8 @@ const SecondWrapper = styled('div')(({ theme }) => ({
 const ProjectsPage = () => (
     <>
         <HeaderWrapper>
-            <Box className="landing-dark">
-                <img src={background} alt="background" width="100%" />
+            <Box className="project-bg image-bg">
+                {/** <img src={background} alt="background" width="100%" /> */}
             </Box>
             <AppBar />
         </HeaderWrapper>

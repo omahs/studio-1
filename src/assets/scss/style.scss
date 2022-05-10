@@ -196,7 +196,7 @@ $primary-font:  sans-serif;
     height: 100vh;
     position: relative;
     padding-bottom: 10%;
-    background: linear-gradient($primary800, $primaryMain);
+    background: rgb(242, 243, 245);
 }
 
 .new-project-input {
@@ -438,4 +438,56 @@ $primary-font:  sans-serif;
 
 .block-picker {
     margin: 0 auto;
+}
+
+.project-bg {
+    background:#1a73e8;
+    width: 100%;
+    height: 400px;
+    position: absolute;
+    top: -50px;
+}
+
+.image-bg {
+    background-image: url(//www.gstatic.com/mobilesdk/190805_mobilesdk/woman-at-desktop@2x.png),url(//www.gstatic.com/mobilesdk/190805_mobilesdk/man-at-desktop@2x.png);
+    background-size: 380px auto,350px auto;
+    background-position: left -70px bottom -55px,right -50px bottom -50px;
+    transition: opacity .15s cubic-bezier(0.4, 0, 0.2, 1);
+    background-repeat: no-repeat;
+}
+
+.project-new-container { 
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-attachment: scroll;
+    background-color: #1a73e8;
+    grid-area: sidebar;
+    height: 100%;
+    pointer-events: none;
+    width: 320px;
+    z-index: 51;
+    background-attachment: scroll;
+    background-image: url(https://www.gstatic.com/mobilesdk/180313_mobilesdk/grain@2x.png);
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: 100% 100%;
+}
+
+.project-new-image {
+    background-image: url(https://www.gstatic.com/mobilesdk/200107_mobilesdk/project_create_illo_welcome@2x.png);
+    position: absolute;
+    right: 0px;
+    top: 100px;
+    height: 80vh;
+    background-size: contain;
+    width: 568px;
+    background-repeat: no-repeat;
+}
+
+.project-keyword {
+    text-decoration: underline;
+    &:hover {
+        color:  #1a73e8;
+    }
 }

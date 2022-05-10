@@ -1,9 +1,7 @@
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Paper, Grid, Typography } from '@mui/material';
-import QRCode from 'react-qr-code';
-import StarIcon from '@mui/icons-material/Star';
-import { useDispatch, useSelector } from 'react-redux';
+import { Paper, Grid, Typography } from '@mui/material';
+import { useDispatch } from 'react-redux';
 import { UPDATE_APP } from 'store/actions';
 import moment from 'moment';
 import { getImage } from 'react-dappify/utils/image';
@@ -13,19 +11,20 @@ const getAppUrl = (subdomain) => `https://${subdomain}.dappify.us`;
 const DetailsApp = ({ project = {} }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [selected, setSelected] = useState();
 
     const selectProject = (appConfig) => {
         dispatch({ type: UPDATE_APP, configuration: appConfig });
         navigate(`/studio/overview`);
     };
 
-    const fontColor = project.config.theme?.palette?.mode !== 'dark' ? 'black' : 'white';
-    const backgroundColor = project.config.theme?.palette?.mode === 'dark' ? 'black' : 'white';
+    const fontColor = project.config.theme?.palette?.mode !== 'dark' ? '#000' : '#fff';
+    const backgroundColor = project.config.theme?.palette?.mode === 'dark' ? '#222' : '#fff';
 
     return (
         <Paper
             sx={{
-                borderRadius: 0,
+                borderRadius: 4,
                 p: 3,
                 position: 'relative',
                 background: backgroundColor,
@@ -35,9 +34,11 @@ const DetailsApp = ({ project = {} }) => {
                 cursor: 'pointer'
             }}
             onClick={() => selectProject(project.config)}
-            elevation="2"
+            onMouseOver={() => setSelected(project.config.subdomain)}
+            onMouseOut={() => setSelected()}
+            elevation={selected === project.config.subdomain ? 20: 5}
         >
-            <Grid container spacing={0.3} className="opacitated">
+            <Grid container spacing={0.3}>
                 <Grid item xs={12} sx={{height: 64}}>
                     {/* <QRCode size="128" value={getAppUrl(app.id)} /> */}
                     <img
@@ -60,10 +61,6 @@ const DetailsApp = ({ project = {} }) => {
             </Grid>
         </Paper>
     );
-};
-
-DetailsApp.propTypes = {
-    app: PropTypes.object
 };
 
 export default DetailsApp;

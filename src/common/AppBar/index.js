@@ -1,5 +1,5 @@
 import { cloneElement, useState, useEffect, useContext } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -25,6 +25,8 @@ import {
 import { DappifyContext, useDappify } from 'react-dappify';
 
 // assets
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { green, deepOrange } from '@mui/material/colors';
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppsIcon from '@mui/icons-material/Apps';
@@ -32,6 +34,12 @@ import AccountBalanceWalletTwoToneIcon from '@mui/icons-material/AccountBalanceW
 import LogoutIcon from '@mui/icons-material/Logout';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import Logo from 'common/Logo';
+
+const orangeTheme = createTheme({
+    palette: {
+      primary: deepOrange,
+    },
+  })
 
 function ElevationScroll({ children, window }) {
     const theme = useTheme();
@@ -56,6 +64,7 @@ function ElevationScroll({ children, window }) {
 // ==============================|| MINIMAL LAYOUT APP BAR ||============================== //
 
 const AppBar = ({ ...others }) => {
+    const location = useLocation();
     const [drawerToggle, setDrawerToggle] = useState(false);
     const { isAuthenticated, authenticate, user, logout } = useContext(DappifyContext);
 
@@ -79,14 +88,16 @@ const AppBar = ({ ...others }) => {
         setDrawerToggle(open);
     };
 
-    const myDappsButton = (
-        <Button component={RouterLink} variant="contained" to="/projects" size="large" color="primary">
-            Admin Console
-        </Button>
+    const myDappsButton = location.pathname === '/' && (
+        <ThemeProvider theme={orangeTheme}>
+            <Button component={RouterLink} variant="contained" to="/projects" size="small" color="primary">
+                Sign in to the Console
+            </Button>
+        </ThemeProvider>
     );
 
     const createDappButton = isAuthenticated && (
-        <Button component={RouterLink} to="/new" disableElevation variant="contained" color="secondary" size="large">
+        <Button component={RouterLink} to="/new" variant="contained" color="secondary" size="large">
             Create dApp
         </Button>
     );
@@ -121,8 +132,8 @@ const AppBar = ({ ...others }) => {
         </Button>
     );
 
-    const roadmap = 'https://app.dework.xyz/dappify-1';
-    const micropaper = 'https://mirage-property-c46.notion.site/Overview-a0836d7575b0400a8362797c9b21731a';
+    const roadmap = process.env.REACT_ROADMAP_URL;
+    const micropaper = process.env.REACT_MICROPAPER_URL;
 
     return (
         <ElevationScroll {...others}>
@@ -152,7 +163,7 @@ const AppBar = ({ ...others }) => {
                             </Button>
                             {myDappsButton}
                             {/* createDappButton */}
-                            {loginButton}
+                            {location.pathname !== '/' && loginButton}
                         </Stack>
                         <Box sx={{ display: { xs: 'block', md: 'none' } }}>
                             <IconButton color="inherit" onClick={drawerToggler(true)} size="large">

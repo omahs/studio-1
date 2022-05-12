@@ -1,5 +1,5 @@
 import { useEffect, useContext, useState } from 'react';
-import { Typography, Grid, Container, Box, Paper } from '@mui/material';
+import { Typography, Grid, Container, Box, Paper,Dialog, Button, DialogActions, DialogTitle, DialogContent, DialogContentText} from '@mui/material';
 import { gridSpacing } from 'store/constant';
 import DetailsApp from 'views/application/DetailsApp';
 import Project from 'react-dappify/model/Project';
@@ -22,6 +22,42 @@ const Projects = () => {
             setProjects(list);
         }
     };
+
+    const [showAcknowledge, setAcknowledge] = useState();
+    const acknowledge = () => {
+        // Has this person acknowledge beta?
+        const ready = localStorage.getItem('acknowledge');
+        if (!ready) {
+            setAcknowledge(true);
+        }
+    };
+
+    useEffect(() => {
+        acknowledge();
+    }, []);
+
+
+    const confirmDialog = (
+        <Dialog open={showAcknowledge} onClose={() => showAcknowledge(false)} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+            <DialogTitle id="alert-dialog-title">Welcome to our Beta!</DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    This is a temporary testing ground to capture builders feedback about the self service experience<br />
+                    - Feel free to play around using testnets, we do not advise yet to deploy to mainnets<br />
+                    - Join our discord and give us feedback! we are building for you!<br />
+                    - There will be a full data cleanup before launch in Q3
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions sx={{ p: 1, textAlign: 'center' }} justifyContent="center" alignItems="center">
+                <Button variant="contained" color="info" sx={{ margin: '0 auto', minWidth: 200 }} onClick={() => {
+                    localStorage.setItem('acknowledge', true);
+                    setAcknowledge(false);
+                }} autoFocus>
+                    Confirm
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
 
     useEffect(() => {
         loadApps();
@@ -90,6 +126,7 @@ const Projects = () => {
                 {listApps()}
                 {projects.length === 0 && welcome}
             </Grid>
+            {confirmDialog}
         </Container>
     );
 }

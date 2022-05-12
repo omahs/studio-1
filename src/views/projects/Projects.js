@@ -20,6 +20,8 @@ const Projects = () => {
         if (isAuthenticated) {
             const list = await Project.listAll(user);
             setProjects(list);
+        } else {
+            setProjects([]);
         }
     };
 

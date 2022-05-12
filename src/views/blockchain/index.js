@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Alert, TextField, InputAdornment, Grid,  Typography, Paper, Button, DialogActions, Dialog, DialogContentText, DialogTitle, DialogContent } from '@mui/material';
+import { Alert, TextField, InputAdornment, Grid,  CircularProgress, Typography, Paper, Button, DialogActions, Dialog, DialogContentText, DialogTitle, DialogContent } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { gridSpacing } from 'store/constant';
@@ -24,6 +24,7 @@ const BlockchainPage = () => {
     const [dappifyFee] = useState(2.5);
     const [isConfirmationOpen, setConfirmationOpen] = useState();
     const [selectedNetwork, setSelectedNetwork] = useState({});
+    const [processing, setProcessign] = useState();
 
     useEffect(() => {
         setBeneficiary(user.get('ethAddress'));
@@ -42,6 +43,7 @@ const BlockchainPage = () => {
     const deploy = async() => {
         const isMainnet = MAINNETS.includes(selectedNetwork.chainId);
         try {
+            setProcessign(true);
             const currentProvider = new ethers.providers.Web3Provider(window.ethereum);
             await switchToChain(selectedNetwork, currentProvider.provider);
             const address = await launch();
@@ -75,6 +77,9 @@ const BlockchainPage = () => {
                 anchorOrigin: { vertical: 'top', horizontal: 'center' },
                 alertSeverity: 'error'
             });
+        } finally {
+            setProcessign(false);
+            setConfirmationOpen(false);
         }
     }
 
@@ -217,7 +222,8 @@ const BlockchainPage = () => {
                 <DialogActions>
                 <Button onClick={() => setConfirmationOpen(false)}>Cancel</Button>
                 <Button variant="contained" onClick={() => deploy()} autoFocus>
-                    Deploy
+                    {!processing && "Deploy"}
+                    {processing && <CircularProgress color="inherit" size={20} />}
                 </Button>
                 </DialogActions>
             </Dialog>

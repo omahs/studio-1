@@ -5,9 +5,9 @@ $yspace: $h * 0.25 - 1;
 $speed: 1.5s;
 
 .tetrominos {
-  position: absolute;
-  top: 50%; left: 50%;
   transform: translate(-$h, -$w);
+  margin: 0 auto;
+  position: relative;
 }
 
 .tetromino {
@@ -15,7 +15,7 @@ $speed: 1.5s;
   height: $h;
   position: absolute;
   transition: all ease .3s;
-  background: url('data:image/svg+xml;utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 684"%3E%3Cpath fill="%239FA8DA" d="M305.7 0L0 170.9v342.3L305.7 684 612 513.2V170.9L305.7 0z"/%3E%3Cpath fill="%23485cc7" d="M305.7 80.1l-233.6 131 233.6 131 234.2-131-234.2-131"/%3E%3C/svg%3E') no-repeat top center;
+  background: url('data:image/svg+xml;utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 684"%3E%3Cpath fill="%231a73e8" d="M305.7 0L0 170.9v342.3L305.7 684 612 513.2V170.9L305.7 0z"/%3E%3Cpath fill="%238AB4F8" d="M305.7 80.1l-233.6 131 233.6 131 234.2-131-234.2-131"/%3E%3C/svg%3E') no-repeat top center;
 }
 
 .box1 {
@@ -76,4 +76,8 @@ $speed: 1.5s;
     /* compose logo */
     transform: translate(0, 0);
   }
+}
+
+.anim-paused { 
+  animation-play-state: 'paused';
 }

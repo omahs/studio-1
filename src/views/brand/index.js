@@ -85,28 +85,28 @@ const BrandPage = () => {
         <MainCard>
             {isLoading && <Loader />}
             <Grid container spacing={gridSpacing} sx={{ p: 3 }}>
-                <Grid item xs={6} justifyContent="center">
+                <Grid item xs={12} justifyContent="center">
                     <Typography variant="h2">Color Palette</Typography>
                     <Typography variant="body">Colors displayed as part of the theme</Typography>
                     <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
                         <Grid container spacing={gridSpacing} sx={{ p: 3, textAlign: 'center' }}
                             alignItems="center"
                             justifyContent="center">
-                            <Grid item xs={12} xl={4} justifyContent="center">
+                            <Grid item xs={4} xl={4} justifyContent="center">
                                 <Typography variant="h3" sx={{ mb: 3}}>Theme</Typography>
                                 <Grid container direction="row" spacing={1}>
                                     <Grid item xs={12}><Button fullWidth variant={appState.theme.palette.mode === 'light' ? 'contained' : 'outlined'} onClick={() => setMode('light')}>Light</Button></Grid>
                                     <Grid item xs={12}><Button fullWidth variant={appState.theme.palette.mode === 'dark' ? 'contained' : 'outlined'} onClick={() => setMode('dark')}>Dark</Button></Grid>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={12} xl={4} justifyContent="center">
+                            <Grid item xs={4} xl={4} justifyContent="center">
                                 <Typography variant="h3" sx={{ mb: 3 }}>Primary</Typography>
                                 <BlockPicker
                                     color={appState.theme.palette.primary.main}
                                     onChangeComplete={(color) => setPrimaryColor(color)}
                                 />
                             </Grid>
-                            <Grid item xs={12} xl={4} justifyContent="center">
+                            <Grid item xs={4} xl={4} justifyContent="center">
                                 <Typography variant="h3" sx={{ mb: 3 }}>Secondary</Typography>
                                 <BlockPicker
                                     color={appState.theme.palette.secondary.main}
@@ -116,7 +116,7 @@ const BrandPage = () => {
                         </Grid>
                     </Paper>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <Typography variant="h2">Style</Typography>
                     <Typography variant="body">Look & Feel</Typography>
                     <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
@@ -134,7 +134,7 @@ const BrandPage = () => {
                         </Stack>
                     </Paper>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <Typography variant="h2">App Logo</Typography>
                     <Typography variant="body">Displayed on the top left corner and the footer</Typography>
                     <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
@@ -151,7 +151,7 @@ const BrandPage = () => {
                         </Grid>
                     </Paper>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <Typography variant="h2">App Icon</Typography>
                     <Typography variant="body">Displayed as html metadata</Typography>
                     <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
@@ -168,7 +168,7 @@ const BrandPage = () => {
                         </Grid>
                     </Paper>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <Typography variant="h2">Landing Page Background</Typography>
                     <Typography variant="body">Displayed as Background</Typography>
                     <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">

@@ -24,6 +24,7 @@ const HeaderWrapper = styled('div')(({ theme }) => ({
 
 const SecondWrapper = styled('div')(({ theme }) => ({
     paddingTop: 160,
+    minHeight: 700,
     [theme.breakpoints.down('md')]: {
         paddingTop: 60
     }

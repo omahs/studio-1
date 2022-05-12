@@ -7,6 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
 import { DappifyContext } from 'react-dappify';
+import emptyList from 'assets/images/emptylist.png';
 
 const Projects = () => {
     const { isAuthenticated, user } = useContext(DappifyContext);
@@ -74,10 +75,20 @@ const Projects = () => {
         return list;
     };
 
+    const welcome = (
+        <Grid item xs={12}>
+            <Box>
+                <img src={emptyList} alt="" style={{ top: '400px', left: '33%', height: 'auto', width: '33%', position: 'absolute', zIndex:-1 }} />
+            </Box>
+        </Grid>
+        
+    );
+
     return (
         <Container sx={{ pb: 5 }}>
-            <Grid container spacing={gridSpacing}>
+            <Grid container spacing={gridSpacing} justifyContent="center" alignItems="center">
                 {listApps()}
+                {projects.length === 0 && welcome}
             </Grid>
         </Container>
     );

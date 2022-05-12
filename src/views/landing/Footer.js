@@ -52,7 +52,7 @@ const FooterPage = () => {
     const theme = useTheme();
 
     return (
-        <>
+        <div className="footer">
             <FooterWrapper sx={{ mt: 20 }}>
                 <Container>
                     <Grid container alignItems="center" spacing={gridSpacing}>
@@ -97,7 +97,7 @@ const FooterPage = () => {
                     </Typography>
                 </Container>
             </FooterSubWrapper>
-        </>
+        </div>
     );
 };
 

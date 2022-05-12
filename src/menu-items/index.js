@@ -5,7 +5,7 @@ import engage from 'menu-items/engage';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-    items: [engage, configuration, content]
+    items: [configuration]
 };
 
 export default menuItems;

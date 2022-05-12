@@ -7,16 +7,17 @@ import constants from 'react-dappify/constants';
 import { ethers } from 'ethers';
 import MarketplaceBytecode from 'react-dappify/contracts/artefacts/contracts.json';
 import { DappifyContext } from 'react-dappify';
+import { formatAddress } from 'react-dappify/utils/format';
 import { UPDATE_APP } from 'store/actions';
+import { SNACKBAR_OPEN } from 'store/actions';
+import Project from 'react-dappify/model/Project';
 
-const { NETWORKS, LOGO, MAINNETS } = constants;
+const { NETWORKS, LOGO, MAINNETS, FAUCETS } = constants;
 
 const BlockchainPage = () => {
     const { user, switchToChain } = useContext(DappifyContext);
     const dispatch = useDispatch();
     const appState = useSelector((state) => state.app);
-    const [network, setNetwork] = useState(appState.template.marketplace.main.chainId);
-    const [testNetwork, setTestNetwork] = useState(appState.template.marketplace.test.chainId);
     const [beneficiaryFee, setBeneficiaryFee] = useState(2.5);
     const [beneficiary, setBeneficiary] = useState();
     const [dappify] = useState("0x6a10C54110336937f184bf9A88bFD5998c8E99D4");
@@ -26,7 +27,7 @@ const BlockchainPage = () => {
 
     useEffect(() => {
         setBeneficiary(user.get('ethAddress'));
-    },[]);
+    }, []);
 
     const launch = async() => {
         const currentProvider = new ethers.providers.Web3Provider(window.ethereum);
@@ -56,8 +57,24 @@ const BlockchainPage = () => {
                 }
             }
             dispatch({ type: UPDATE_APP, configuration: appState });
+            await Project.publishChanges(appState, user);
+            dispatch({
+                type: SNACKBAR_OPEN,
+                open: true,
+                message: 'Project updated',
+                variant: 'alert',
+                anchorOrigin: { vertical: 'top', horizontal: 'center' },
+                alertSeverity: 'success'
+            });
         } catch (e) {
-            console.log(e);
+            dispatch({
+                type: SNACKBAR_OPEN,
+                open: true,
+                message: e.message,
+                variant: 'alert',
+                anchorOrigin: { vertical: 'top', horizontal: 'center' },
+                alertSeverity: 'error'
+            });
         }
     }
 
@@ -65,13 +82,17 @@ const BlockchainPage = () => {
         const list = [];
         Object.keys(NETWORKS).forEach((chainId, index) => {
             const targetNetwork = NETWORKS[chainId];
-            if (MAINNETS.includes(chainId)) {
+            if (MAINNETS.includes(chainId)  && (!appState.template.marketplace.main.chainId || (appState.template.marketplace.main.chainId === chainId))) {
+                const explorer = `${targetNetwork.blockExplorerUrls[0]}/address/${appState.template.marketplace.main.contract}`;
                 list.push(
-                    <Grid item xs={12} sm={6} lg={4} xl={3} textAlign="center" key={chainId}>
-                        <Paper disabled variant="outlined" elevation="20" sx={{ p: 3, minHeight: 160, background:'lightgray' }} >
+                    <Grid item xs={12} sm={6} lg={3} textAlign="center" key={chainId}>
+                        <Paper variant="outlined" elevation="20" sx={{ p: 3, minHeight: 160 }} className={`paper-blockchain ${chainId === appState.template.marketplace.main.chainId ? 'paper-blockchain-selected': ''}`} onClick={() => {
+                            setSelectedNetwork(targetNetwork);
+                            setConfirmationOpen(true);
+                        }}>
                             <img src={LOGO[targetNetwork.nativeCurrency.symbol]} alt="Ava" height="50px"/>
                             <Typography variant="h4" sx={{ mt: 2 }}>{targetNetwork.chainName}</Typography>
-                            <Typography variant="h5" sx={{opacity:0.75}}>Unavailable during beta</Typography>
+                            {chainId === appState.template.marketplace.main.chainId && (<Button fullWidth size="small" href={explorer} target="_blank">View in explorer {formatAddress(appState.template.marketplace.main.contract)}</Button>)}
                         </Paper>
                     </Grid>
                 );
@@ -84,16 +105,18 @@ const BlockchainPage = () => {
         const list = [];
         Object.keys(NETWORKS).forEach((chainId, index) => {
             const targetNetwork = NETWORKS[chainId];
-            if (!MAINNETS.includes(chainId)) {
+            if (!MAINNETS.includes(chainId) && (!appState.template.marketplace.test.chainId || (appState.template.marketplace.test.chainId === chainId))) {
+                const explorer = `${targetNetwork.blockExplorerUrls[0]}/address/${appState.template.marketplace.test.contract}`;
                 list.push(
-                    <Grid item xs={12} sm={6} lg={4} xl={3} textAlign="center" key={chainId}>
-                        <Paper variant="outlined" elevation="20" sx={{ p: 3, minHeight: 160 }} className={`paper-blockchain ${chainId === testNetwork ? 'paper-blockchain-selected': ''}`} onClick={() => {
+                    <Grid item xs={12} sm={6} lg={3} textAlign="center" key={chainId}>
+                        <Paper variant="outlined" elevation="20" sx={{ p: 3, minHeight: 160 }} className={`paper-blockchain ${chainId === appState.template.marketplace.test.chainId ? 'paper-blockchain-selected': ''}`} onClick={() => {
                             setSelectedNetwork(targetNetwork);
                             setConfirmationOpen(true);
-                            // deployTestNetwork(chainId);
                         }}>
                             <img src={LOGO[targetNetwork.nativeCurrency.symbol]} alt="Ava" height="50px"/>
                             <Typography variant="h4" sx={{ mt: 2 }}>{targetNetwork.chainName}</Typography>
+                            {chainId === appState.template.marketplace.test.chainId && (<Button fullWidth size="small" href={explorer} target="_blank">View in explorer {formatAddress(appState.template.marketplace.test.contract)}</Button>)}
+                            {FAUCETS[chainId] && (<Button fullWidth size="small" href={FAUCETS[chainId]} target="_blank">Get funds</Button>)}
                         </Paper>
                     </Grid>
                 );
@@ -106,22 +129,22 @@ const BlockchainPage = () => {
         <MainCard>
             <Grid container spacing={gridSpacing} sx={{ p: 3 }}>
                 <Grid item xs={12}>
-                    <Typography variant="h2">Select your mainnet</Typography>
-                    <Typography variant="body">Your production network where <a href={`https://${appState.subdomain}.dappify.us`}>{`https://${appState.subdomain}.dappify.us`}</a> will be deployed to</Typography>
-                    <Paper variant="outlined" elevation="20" sx={{ mt: 2 }} className="paper-in">
+                    <Typography variant="h2">1. Lets start by launching on a testnet for FREE</Typography>
+                    <Typography variant="body">Your testing network where <a href={`https://test.${appState.subdomain}.dappify.us`}>{`https://test.${appState.subdomain}.dappify.us`}</a> will be deployed to</Typography>
+                    <Paper elevation={0} sx={{ mt: 2 }} className="paper-in">
                         <Grid container>
-                            {renderSupportedMainNetsChains()}
+                            {renderSupportedTestnetChains()}
                         </Grid>
                     </Paper>
                 </Grid>
             </Grid>
             <Grid container spacing={gridSpacing} sx={{ p: 3 }}>
                 <Grid item xs={12}>
-                    <Typography variant="h2">Select your testnet</Typography>
-                    <Typography variant="body">Your testing network where <a href={`https://test.${appState.subdomain}.dappify.us`}>{`https://test.${appState.subdomain}.dappify.us`}</a> will be deployed to</Typography>
-                    <Paper variant="outlined" elevation="20" sx={{ mt: 2 }} className="paper-in">
+                    <Typography variant="h2">2. Deploy your production ready version (Gas fees apply)</Typography>
+                    <Typography variant="body">Your production network where <a href={`https://${appState.subdomain}.dappify.us`}>{`https://${appState.subdomain}.dappify.us`}</a> will be deployed to</Typography>
+                    <Paper elevation={0} sx={{ mt: 2 }} className="paper-in">
                         <Grid container>
-                            {renderSupportedTestnetChains()}
+                            {renderSupportedMainNetsChains()}
                         </Grid>
                     </Paper>
                 </Grid>

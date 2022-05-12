@@ -13,6 +13,12 @@ $primary-font:  sans-serif;
     font-family: $primary-font;
   }
 
+.footer {
+    // position: fixed;
+    // width: 100%;
+    // bottom: 0;
+}
+
 .opacitated {
     opacity: 0.75;
     transition-duration: 0.5s;
@@ -314,15 +320,15 @@ $primary-font:  sans-serif;
 }
 
 .paper-blockchain-selected {
-    background: $primaryMain;
+    background: rgba(0,0,0,0.05);
 }
 
 .paper-blockchain-selected:hover {
-    background: $primaryDark;
+    background: rgba(0,0,0,0.05);
 }
 
 .paper-blockchain:hover {
-    background: $primaryLight;
+    background: rgba(0,0,0,0.05);
     cursor: pointer;
 }
 
@@ -487,7 +493,15 @@ $primary-font:  sans-serif;
 
 .project-keyword {
     text-decoration: underline;
+    margin-left: 10px;
     &:hover {
         color:  #1a73e8;
     }
+}
+
+.onboarding__image {
+    height: auto;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
 }

@@ -8,7 +8,6 @@ import { gridSpacing } from 'store/constant';
 import { setField, setImage, setBoolean, setColor, setMoralis, setSocial, setFeature } from 'utils/config';
 
 import { UPDATE_APP } from 'store/actions';
-import TemplateCarousel from 'views/new/TemplateCarousel';
 import BackgroundCarousel from 'views/template/BackgroundCarousel';
 import { useMoralis } from 'react-moralis';
 
@@ -24,10 +23,10 @@ const TemplatePage = () => {
         items.forEach((item, index) => {
             list.push(
                 <Grid container key={index} sx={{ my: 1}}>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                         <Typography variant="body" fontWeight={400} fontSize="1.2em">{item}</Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={8}>
                         <TextField fullWidth variant="standard"  defaultValue={appState.translation.resources.en.translation[item]} 
                             onChange={(e) => {
                                 appState.translation.resources.en.translation[item] = e.target.value;
@@ -43,7 +42,7 @@ const TemplatePage = () => {
     return (
         <MainCard>
             <Grid container spacing={gridSpacing} sx={{ p: 3 }}>
-                <Grid item xs={12} lg={6}>
+                <Grid item xs={12}>
                     <Typography variant="h2">Localization</Typography>
                     <Typography variant="body">Translate default text from the template</Typography>
                     <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">

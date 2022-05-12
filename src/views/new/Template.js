@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { UPDATE_APP } from 'store/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import TemplateCarousel from 'views/new/TemplateCarousel';
 
 const Template = () => {
     const dispatch = useDispatch();
@@ -48,7 +47,7 @@ const Template = () => {
         dispatch({ type: UPDATE_APP, configuration: appState });
     };
 
-    return <TemplateCarousel onSelect={handleSelectTemplate} />;
+    return <div></div>;
 };
 
 export default Template;

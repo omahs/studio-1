@@ -89,12 +89,12 @@ const icons = {
 
 const dashboard = {
     id: 'dashboard',
-    title: <FormattedMessage id="Configuration" />,
+    title: <FormattedMessage id="Configuration steps" />,
     type: 'group',
     children: [
         {
             id: 'default',
-            title: <FormattedMessage id="App Information" />,
+            title: <FormattedMessage id="1. Get started" />,
             type: 'item',
             url: 'overview',
             icon: icons.IconInfoSquare,
@@ -102,7 +102,7 @@ const dashboard = {
         },
         {
             id: 'theme',
-            title: <FormattedMessage id="Theme" />,
+            title: <FormattedMessage id="2. Brand it" />,
             type: 'item',
             url: 'theme',
             icon: icons.IconPalette,
@@ -128,7 +128,7 @@ const dashboard = {
         },
         {
             id: 'localization',
-            title: <FormattedMessage id="Localization" />,
+            title: <FormattedMessage id="3. Localize it" />,
             type: 'item',
             url: 'localization',
             icon: icons.IconLanguage,
@@ -144,7 +144,7 @@ const dashboard = {
         // },
         {
             id: 'blockchain',
-            title: <FormattedMessage id="Smart Contract" />,
+            title: <FormattedMessage id="4. Your smart contract" />,
             type: 'item',
             url: 'blockchain',
             icon: icons.IconSettingsAutomation,
@@ -152,7 +152,7 @@ const dashboard = {
         },
         {
             id: 'backend',
-            title: <FormattedMessage id="Settings" />,
+            title: <FormattedMessage id="5. Review settings" />,
             type: 'item',
             url: 'backend',
             icon: icons.IconSettings,

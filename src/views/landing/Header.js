@@ -11,8 +11,7 @@ import { motion } from 'framer-motion';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { gridSpacing } from 'store/constant';
 import mockup from 'assets/images/landing/banner.svg';
-import ArrowForwardTwoToneIcon from '@mui/icons-material/ArrowForwardTwoTone';
-import discordIcon from 'assets/images/discord.svg';
+import DiscordButton from 'views/landing/Discord';
 
 // ==============================|| LANDING - HEADER PAGE ||============================== //
 
@@ -111,22 +110,7 @@ const HeaderPage = () => {
                                             >
                                                 GET STARTED
                                             </Button> */}
-                                            <Button
-                                                href="https://discord.gg/CYYX8yUVgc"
-                                                target="__blank"
-                                                variant="contained"
-                                                size="large"
-                                                className="join__discord"
-                                                color="secondary"
-                                                sx={{ px: 5, py: 2 }}
-                                                endIcon={
-                                                    <SvgIcon component="object" sx={{ fontSize: '48px' }}>
-                                                        <embed type="image/svg+xml" src={discordIcon} style={{ height: '100%' }} />
-                                                    </SvgIcon>
-                                                }
-                                            >
-                                                JOIN US ON DISCORD
-                                            </Button>
+                                            <DiscordButton />
                                         </AnimateButton>
                                     </Grid>
                                 </Grid>

@@ -77,7 +77,12 @@ const AppBar = ({ ...others }) => {
     // }, [isAuthenticated]);
 
     const authUser = () => {
-        authenticate();
+
+        if (typeof window.ethereum !== 'undefined') {
+            authenticate();
+        } else {
+            authenticate({provider: 'walletconnect'});
+        }
     };
 
     /** Method called on multiple components with different event types */

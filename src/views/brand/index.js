@@ -103,14 +103,14 @@ const BrandPage = () => {
                                 <Typography variant="h3" sx={{ mb: 3 }}>Primary</Typography>
                                 <BlockPicker
                                     color={appState.theme.palette.primary.main}
-                                    onChangeComplete={(color) => setPrimaryColor(color)}
+                                    onChangeComplete={(color) => setPrimaryColor(color.hex)}
                                 />
                             </Grid>
                             <Grid item xs={4} xl={4} justifyContent="center">
                                 <Typography variant="h3" sx={{ mb: 3 }}>Secondary</Typography>
                                 <BlockPicker
                                     color={appState.theme.palette.secondary.main}
-                                    onChangeComplete={(color) => setSecondaryColor(color)}
+                                    onChangeComplete={(color) => setSecondaryColor(color.hex)}
                                 />
                             </Grid>
                         </Grid>

@@ -89,11 +89,9 @@ const AppBar = ({ ...others }) => {
     };
 
     const myDappsButton = location.pathname === '/' && (
-        <ThemeProvider theme={orangeTheme}>
-            <Button component={RouterLink} variant="contained" to="/projects" size="small" color="primary">
+            <Button disableElevation component={RouterLink} variant="contained" to="/projects" size="small" color="secondary">
                 Sign in to the Console
             </Button>
-        </ThemeProvider>
     );
 
     const createDappButton = isAuthenticated && (

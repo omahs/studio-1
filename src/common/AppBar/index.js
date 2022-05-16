@@ -135,8 +135,9 @@ const AppBar = ({ ...others }) => {
         </Button>
     );
 
-    const roadmap = process.env.REACT_ROADMAP_URL;
-    const micropaper = process.env.REACT_MICROPAPER_URL;
+    const roadmap = process.env.REACT_APP_ROADMAP_URL;
+    const micropaper = process.env.REACT_APP_MICROPAPER_URL;
+    const changelog = process.env.REACT_APP_CHANGELOG_URL;
 
     return (
         <ElevationScroll {...others}>
@@ -163,6 +164,9 @@ const AppBar = ({ ...others }) => {
                             </Button>
                             <Button color="inherit" href={micropaper} size="large" target="_blank">
                                 Micropaper
+                            </Button>
+                            <Button color="inherit" href={changelog} size="large" target="_blank">
+                                Changelog
                             </Button>
                             {myDappsButton}
                             {/* createDappButton */}
@@ -220,6 +224,14 @@ const AppBar = ({ ...others }) => {
                                                     <DirectionsIcon />
                                                 </ListItemIcon>
                                                 <ListItemText primary="Micropaper" />
+                                            </ListItemButton>
+                                        </Link>
+                                        <Link style={{ textDecoration: 'none' }} href={changelog}>
+                                            <ListItemButton component="a">
+                                                <ListItemIcon>
+                                                    <DirectionsIcon />
+                                                </ListItemIcon>
+                                                <ListItemText primary="Changelog" />
                                             </ListItemButton>
                                         </Link>
                                         <Link style={{ textDecoration: 'none' }} component={RouterLink} to="/projects">

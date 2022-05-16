@@ -1,5 +1,5 @@
 import { cloneElement, useState, useEffect, useContext } from 'react';
-import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -22,24 +22,15 @@ import {
 } from '@mui/material';
 
 // project imports
-import { DappifyContext, useDappify } from 'react-dappify';
+import { DappifyContext } from 'react-dappify';
 
 // assets
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { green, deepOrange } from '@mui/material/colors';
-import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppsIcon from '@mui/icons-material/Apps';
 import AccountBalanceWalletTwoToneIcon from '@mui/icons-material/AccountBalanceWalletTwoTone';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import Logo from 'common/Logo';
-
-const orangeTheme = createTheme({
-    palette: {
-      primary: deepOrange,
-    },
-  })
 
 function ElevationScroll({ children, window }) {
     const theme = useTheme();
@@ -68,16 +59,15 @@ const AppBar = ({ ...others }) => {
     const [drawerToggle, setDrawerToggle] = useState(false);
     const { isAuthenticated, authenticate, user, logout } = useContext(DappifyContext);
 
-    const navigate = useNavigate();
-
-    // useEffect(() => {
-    //     if (!isAuthenticated) {
-    //         navigate('/', { replace: true });
-    //     }
-    // }, [isAuthenticated]);
+    // ----------------------- Analytics ----------------------------
+    useEffect(() => {
+        if (isAuthenticated) {
+            window.pendo.initialize({ account: { id: user?.get('ethAddress') }});
+        }
+    }, [isAuthenticated, user]);
+    // ------------------------------------------------------------------
 
     const authUser = () => {
-
         if (typeof window.ethereum !== 'undefined') {
             authenticate();
         } else {
@@ -226,7 +216,7 @@ const AppBar = ({ ...others }) => {
                                                 <ListItemText primary="Micropaper" />
                                             </ListItemButton>
                                         </Link>
-                                        <Link style={{ textDecoration: 'none' }} href={changelog}>
+                                        <Link style={{ textDecoration: 'none' }} href={micropaper}>
                                             <ListItemButton component="a">
                                                 <ListItemIcon>
                                                     <DirectionsIcon />

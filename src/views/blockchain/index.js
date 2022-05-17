@@ -224,14 +224,24 @@ const BlockchainPage = () => {
                             {isCurrentChain && <Typography fontWeight="bold">{`Dappify gets ${dappifyFee}%`}</Typography>}
                             {isCurrentChain && <Typography fontWeight="bold">{`You get ${beneficiaryFee}% at ${formatAddress(appState.operator)}`}</Typography>}
                         </Grid>
-                        <Grid item xs={12} sx={{ minHeight: 45, pt: 1 }}>
-                            {FAUCETS[chainId] && (<Button fullWidth variant="outlined" size="small" href={FAUCETS[chainId]} target="_blank">Get test funds</Button>)}
-                        </Grid>
                     </Paper>
-                    <Grid item xs={12} sx={{ minHeight: 35 }}>
-                        {contractAddress && (<Button variant="contained" fullWidth size="small" href={explorer} target="_blank">View in explorer {formatAddress(CONTRACTS.ERC721MarketplaceV1[chainId])}</Button>)}
-                        {!contractAddress && (<Button variant="contained" disabled fullWidth size="small">TBD</Button>)}
-                    </Grid>
+                    {!contractAddress && 
+                        (<Grid item xs={12} sx={{ minHeight:35}}>
+                            <Button variant="contained" disabled fullWidth size="small">TBD</Button>
+                         </Grid>)
+                    }
+                    {contractAddress && (
+                        <Grid container sx={{ minHeight: 35 }}>
+                            <Grid item xs={FAUCETS[chainId] ? 8 : 12}>
+                                <Button sx={{ borderRadius: 0 }} variant="contained" fullWidth size="small" href={explorer} target="_blank">View in explorer {formatAddress(CONTRACTS.ERC721MarketplaceV1[chainId])}</Button>
+                            </Grid>
+                            {FAUCETS[chainId] && (
+                                <Grid item xs={4}>
+                                    <Button sx={{ borderRadius: 0 }} fullWidth variant="contained" color="secondary" size="small" href={FAUCETS[chainId]} target="_blank">Get test funds</Button>
+                                </Grid>
+                            )}
+                        </Grid>)
+                    }
                 </Grid>
             );
         });

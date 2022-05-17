@@ -153,7 +153,6 @@ const UserList = () => {
             page: page,
             limit: rowsPerPage
         });
-        console.log(profiles);
         setRows(profiles.results);
         setCount(profiles.count);
     };

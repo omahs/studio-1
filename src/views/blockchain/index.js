@@ -22,17 +22,19 @@ const BlockchainPage = () => {
     const dispatch = useDispatch();
     const appState = useSelector((state) => state.app);
     const [beneficiaryFee, setBeneficiaryFee] = useState(0);
-    const [beneficiary, setBeneficiary] = useState(appState.operator || user.get('ethAddress'));
+    const [beneficiary, setBeneficiary] = useState(appState.operator);
     const [dappify] = useState('0x6a10C54110336937f184bf9A88bFD5998c8E99D4');
     const [dappifyFee, setDappifyFee] = useState(2.5);
     const [isConfirmationOpen, setConfirmationOpen] = useState();
     const [selectedNetwork, setSelectedNetwork] = useState({});
     const [processing, setProcessign] = useState();
 
-    const getContractFee = async () => {
-        if (beneficiary) {
+    useEffect(() => {
+        const getContractFee = async (currentProvider) => {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signerAddress = await provider.getSigner().getAddress();
+            setBeneficiary(signerAddress);
             try {
-                const currentProvider = new ethers.providers.Web3Provider(window.ethereum);
                 const contract = MarketplaceBytecode.output.contracts['contracts/ERC721MarketplaceV1.sol'].ERC721MarketplaceV1;
                 const abi = contract.abi;
                 const marketplaceContract = new ethers.Contract(appState.template.marketplace.main.contract, abi, currentProvider.getSigner());
@@ -43,12 +45,10 @@ const BlockchainPage = () => {
             } catch (e) {
                 console.log(e);
             }
-        }
-    };
+        };
 
-    useEffect(() => {
         getContractFee();
-    }, [beneficiary, selectedNetwork]);
+    }, [selectedNetwork]);
 
     const launch = async() => {
         const currentProvider = new ethers.providers.Web3Provider(window.ethereum);
@@ -222,7 +222,10 @@ const BlockchainPage = () => {
                         {!isTestnet && (<Chip color="secondary" variant="outlined" label="Mainnet coming soon"></Chip>)}
                         <Grid item xs={12} sx={{ minHeight: 45, pt: 1 }}>
                             {isCurrentChain && <Typography fontWeight="bold">{`Dappify gets ${dappifyFee}%`}</Typography>}
-                            {isCurrentChain && <Typography fontWeight="bold">{`You get ${beneficiaryFee}%`}</Typography>}
+                            {isCurrentChain && <Typography fontWeight="bold">{`You get ${beneficiaryFee}% at ${formatAddress(appState.operator)}`}</Typography>}
+                        </Grid>
+                        <Grid item xs={12} sx={{ minHeight: 45, pt: 1 }}>
+                            {FAUCETS[chainId] && (<Button fullWidth variant="outlined" size="small" href={FAUCETS[chainId]} target="_blank">Get test funds</Button>)}
                         </Grid>
                     </Paper>
                     <Grid item xs={12} sx={{ minHeight: 35 }}>
@@ -412,9 +415,10 @@ const BlockchainPage = () => {
                     <Grid item sx={{ mt: 2}} xs={12} justifyContent="center">
                         <TextField
                         fullWidth
-                        label="Beneficiary address"
+                        label="Beneficiary address is the signer of the following transaction"
                         id="outlined-start-adornment"
                         value={beneficiary}
+                        disabled
                         InputProps={{
                             startAdornment: <InputAdornment position="start">Eth</InputAdornment>,
                         }}

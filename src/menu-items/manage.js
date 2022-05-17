@@ -2,27 +2,28 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { IconBrush, IconNews } from '@tabler/icons';
+import { IconBrush, IconNews, IconUsers } from '@tabler/icons';
 
 // constant
 const icons = {
     IconBrush,
-    IconNews
+    IconNews,
+    IconUsers
 };
 
 // ==============================|| UI ELEMENTS MENU ITEMS ||============================== //
 
 const elements = {
-    id: 'content',
-    title: <FormattedMessage id="Content Creation" />,
+    id: 'manage',
+    title: <FormattedMessage id="2. Manage" />,
     type: 'group',
     children: [
         {
-            id: 'news',
-            title: <FormattedMessage id="News" />,
+            id: 'users',
+            title: <FormattedMessage id="Users" />,
             type: 'item',
-            url: 'news',
-            icon: icons.IconNews,
+            url: 'users',
+            icon: icons.IconUsers,
             breadcrumbs: false
         }
     ]

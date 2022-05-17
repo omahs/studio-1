@@ -136,7 +136,7 @@ const FeaturesPage = Loadable(lazy(() => import('views/features')));
 const BlockchainPage = Loadable(lazy(() => import('views/blockchain')));
 const BackendPage = Loadable(lazy(() => import('views/backend')));
 
-const NewsPage = Loadable(lazy(() => import('views/announcements')));
+const UsersPage = Loadable(lazy(() => import('views/users')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -523,8 +523,8 @@ const MainRoutes = {
             element: <BackendPage />
         },
         {
-            path: '/studio/news',
-            element: <NewsPage />
+            path: '/studio/users',
+            element: <UsersPage />
         }
     ]
 };

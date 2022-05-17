@@ -89,7 +89,7 @@ const icons = {
 
 const dashboard = {
     id: 'dashboard',
-    title: <FormattedMessage id="Configuration steps" />,
+    title: <FormattedMessage id="1.Configure" />,
     type: 'group',
     children: [
         {

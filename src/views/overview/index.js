@@ -282,7 +282,7 @@ const OverviewPage = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <Typography variant="h2">Add categories for your dApp content</Typography>
-                    <Typography variant="body">Content creators can select from this list of categories when publishign their content on your dApp. It will help users nagivate and filer while searching. Use the string identifier from icons in <a href="https://fonts.google.com/icons?icon.style=Outlined">Material UI</a></Typography>
+                    <Typography variant="body">Content creators can select from this list of categories when publishing their content on your dApp. It will help users nagivate and filter while searching. Use the string identifier from icons in <a href="https://fonts.google.com/icons?icon.style=Outlined" target="_blank" rel="noreferrer">Material UI</a></Typography>
                     <Button size="small" variant="outlined" sx={{ ml: 2 }} onClick={() => {
                         appState.categories.push({
                             "icon": "test",

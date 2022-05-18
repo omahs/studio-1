@@ -15,12 +15,12 @@ const icons = {
 
 const elements = {
     id: 'manage',
-    title: <FormattedMessage id="2. Manage" />,
+    title: "2. Manage",
     type: 'group',
     children: [
         {
             id: 'users',
-            title: <FormattedMessage id="Users" />,
+            title: "Users",
             type: 'item',
             url: 'users',
             icon: icons.IconUsers,

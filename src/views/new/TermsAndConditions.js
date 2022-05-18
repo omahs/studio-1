@@ -35,17 +35,32 @@ const TermsAndConditions = ({ onChange }) => {
                     <Grid item xs={12}><DiscordButton /> </Grid>
                     <Grid item xs={12} sx={{ mt: 2 }}>
                         <Grid container direction="row">
-                            <SchoolOutlinedIcon /><Typography sx={{ lineHeight: 1.75, ml: 1 }}>Access learning resources and online support</Typography>
+                            <Grid item xs={{ width: 20 }}>
+                                <SchoolOutlinedIcon />
+                            </Grid>
+                            <Grid item sx={{flex:1}}>
+                                <Typography sx={{ lineHeight: 1.75, ml: 1 }}>Access learning resources and online support</Typography>
+                            </Grid>
                         </Grid>
                     </Grid>
                     <Grid item xs={12}>
                         <Grid container direction="row">
-                            <GroupsOutlinedIcon /><Typography sx={{ lineHeight: 1.75, ml: 1 }}>Engage with other builders, find collaborators, tell us what you need</Typography>
+                            <Grid item xs={{ width: 20 }}>
+                                <GroupsOutlinedIcon />
+                            </Grid>
+                            <Grid item sx={{flex:1}}>
+                                <Typography sx={{ lineHeight: 1.75, ml: 1 }}>Engage with other builders, find collaborators, tell us what you need</Typography>
+                            </Grid>
                         </Grid>
                     </Grid>
                     <Grid item xs={12}>
                         <Grid container direction="row">
-                            <CampaignOutlinedIcon /><Typography sx={{ lineHeight: 1.75, ml: 1 }}>Stay up to date and participate in giveaway events and ideathons</Typography>
+                            <Grid item xs={{ width: 20 }}>
+                                <CampaignOutlinedIcon />
+                            </Grid>
+                            <Grid item sx={{flex:1}}>
+                            <Typography sx={{ lineHeight: 1.75, ml: 1 }}>Stay up to date and participate in giveaway events and ideathons</Typography>
+                            </Grid>
                         </Grid>
                     </Grid>
                     <Grid item xs={12} sx={{ mt: 5}}>

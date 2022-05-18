@@ -115,7 +115,7 @@ const FeaturePage = () => {
         <Container>
             <Grid container justifyContent="center" spacing={gridSpacing} sx={{ textAlign: 'center' }}>
                 <Box className="landing-dark">
-                    <img src={background} alt="background" width="100%" />
+                    <img src={background} width="100%" alt="Create dApps from templates" />
                 </Box>
                 <Grid item sx={{ mb: 5 }}>
                     <Grid item xs={12} sx={{ mt: 5, mb: 3 }}>
@@ -137,7 +137,7 @@ const FeaturePage = () => {
                                 <SubCard className="feature-highlight" elevation="0" sx={{ ':hover': { boxShadow: 20 } }}>
                                     <Grid container justifyContent="center" spacing={2}>
                                         <Grid item className="use-case">
-                                            <img src={templateNftMarketplace} alt="use" />
+                                            <img src={templateNftMarketplace} alt="Build an NFT Marketplace" />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography variant="h3">White Label NFT Marketplace</Typography>
@@ -162,7 +162,7 @@ const FeaturePage = () => {
                                 <SubCard className="feature-highlight" elevation="0" sx={{ ':hover': { boxShadow: 20 } }}>
                                     <Grid container justifyContent="center" spacing={2}>
                                         <Grid item className="use-case">
-                                            <img src={imagePayment} alt="use" />
+                                            <img src={imagePayment} alt="Launch Crypto Payments via QR Code for your business" />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography variant="h3">QR Code Payments</Typography>
@@ -186,7 +186,7 @@ const FeaturePage = () => {
                                 <SubCard className="feature-highlight" elevation="0" sx={{ ':hover': { boxShadow: 20 } }}>
                                     <Grid container justifyContent="center" spacing={2}>
                                         <Grid item className="use-case">
-                                            <img src={imageTicket} alt="use" />
+                                            <img src={imageTicket} alt="Launch an NFT based ticketing dApp" />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography variant="h3">Ticket Sales</Typography>
@@ -214,7 +214,7 @@ const FeaturePage = () => {
     </Box> */}
                                     <Grid container className="feature-highlight-content" justifyContent="center" spacing={2}>
                                         <Grid item className="use-case">
-                                            <img src={imageBooking} alt="use" />
+                                            <img src={imageBooking} alt="Create an on-chain Event Booking dApp" />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography variant="h3">Event Booking</Typography>
@@ -243,7 +243,7 @@ const FeaturePage = () => {
     </Box> */}
                                     <Grid container className="feature-highlight-content" justifyContent="center" spacing={2}>
                                         <Grid item className="use-case">
-                                            <img src={imageBlog} alt="use" />
+                                            <img src={imageBlog} alt="Build a decentralized blog" />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography variant="h3">Blog</Typography>
@@ -272,7 +272,7 @@ const FeaturePage = () => {
     </Box> */}
                                     <Grid container className="feature-highlight-content" justifyContent="center" spacing={2}>
                                         <Grid item className="use-case">
-                                            <img src={imageLanding} alt="use" />
+                                            <img src={imageLanding} alt="Create a Web3 landing page to get leads" />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography variant="h3">Landing Page</Typography>
@@ -301,7 +301,7 @@ const FeaturePage = () => {
     </Box> */}
                                     <Grid container className="feature-highlight-content" justifyContent="center" spacing={2}>
                                         <Grid item className="use-case">
-                                            <img src={imageChat} alt="use" />
+                                            <img src={imageChat} alt="Build a Web3 messaging dApp" />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography variant="h3">Messaging</Typography>
@@ -329,7 +329,7 @@ const FeaturePage = () => {
     </Box> */}
                                     <Grid container className="feature-highlight-content" justifyContent="center" spacing={2}>
                                         <Grid item className="use-case">
-                                            <img src={imageMembership} alt="use" />
+                                            <img src={imageMembership} alt="Launch NFT based memberships and leases" />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography variant="h3">Memberships</Typography>

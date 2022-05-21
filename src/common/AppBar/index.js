@@ -63,6 +63,7 @@ const AppBar = ({ ...others }) => {
     useEffect(() => {
         if (isAuthenticated) {
             window.pendo.initialize({ account: { id: user?.get('ethAddress') }});
+            window.heap.identify(user?.get('ethAddress'));
         }
     }, [isAuthenticated, user]);
     // ------------------------------------------------------------------

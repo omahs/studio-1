@@ -119,10 +119,10 @@ const FeaturePage = () => {
                 </Box>
                 <Grid item sx={{ mb: 5 }}>
                     <Grid item xs={12} sx={{ mt: 5, mb: 3 }}>
-                        <Typography className="landing-title-white">Start building your own app from our templates</Typography>
+                        <Typography className="landing-title-white" component="h1">Start building your own app from our templates</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography className="landing-description" sx={{ color: 'white' }}>
+                        <Typography className="landing-description" sx={{ color: 'white' }} component="h2">
                             Craft and launch web3 projects, from templates, without having to write a single line of code. Dappify lowers
                             the entry barrier for builders into web3 by abstracting them on the complexities of blockchain & UX with
                             pre-built templates they can adapt for their own needs that offer an ultra friendly end experience for their
@@ -143,7 +143,7 @@ const FeaturePage = () => {
                                             <Typography variant="h3">White Label NFT Marketplace</Typography>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Typography className="use-case-description">
+                                            <Typography className="use-case-description" component="h4">
                                                 From tokenized artwork to audio and ingame items, you name it, there is one template that
                                                 will fit your needs. Launch a beautiful, custom branded NFT marketplace you control in
                                                 seconds.
@@ -168,7 +168,7 @@ const FeaturePage = () => {
                                             <Typography variant="h3">QR Code Payments</Typography>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Typography className="use-case-description">
+                                            <Typography className="use-case-description" component="h4">
                                                 Businesses and individuals looking to setup a secure payment point of sale to accept
                                                 payments in crypto now have a 1 click secure and transparent solution powered by blockchain.
                                             </Typography>
@@ -192,7 +192,7 @@ const FeaturePage = () => {
                                             <Typography variant="h3">Ticket Sales</Typography>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Typography className="use-case-description">
+                                            <Typography className="use-case-description" component="h4">
                                                 A suite of ticketing tools, from your own custom ticket wallet app to real-time dashboard.
                                                 Everything you need to start selling tickets.
                                             </Typography>
@@ -220,7 +220,7 @@ const FeaturePage = () => {
                                             <Typography variant="h3">Event Booking</Typography>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Typography className="use-case-description">
+                                            <Typography className="use-case-description" component="h4">
                                                 Host events, manage bookings and waiting lists, all onchain. You can create your own Booking
                                                 app and generate additional sales without paying commissions. All tools are seamlessly
                                                 integrated.
@@ -249,7 +249,7 @@ const FeaturePage = () => {
                                             <Typography variant="h3">Blog</Typography>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Typography className="use-case-description">
+                                            <Typography className="use-case-description" component="h4">
                                                 Share your story through a cutomized blog where you can engage with your audience and
                                                 monetize your content, all decentralized. Dappify helps you build that wanted experience and
                                                 gives you the tools to build it beautifully.
@@ -278,7 +278,7 @@ const FeaturePage = () => {
                                             <Typography variant="h3">Landing Page</Typography>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Typography className="use-case-description">
+                                            <Typography className="use-case-description" component="h4">
                                                 Lead pages helps individuals and small businesses connect with their audience, collect
                                                 leads, and close sales and deals. Easily build personal or business landing pages, share
                                                 information and engage via a CTA button.
@@ -307,7 +307,7 @@ const FeaturePage = () => {
                                             <Typography variant="h3">Messaging</Typography>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Typography className="use-case-description">
+                                            <Typography className="use-case-description" component="h4">
                                                 Send and receive a variety of media: text, photos, videos, documents, and voice calls. Share
                                                 your moments with your community, powered by blockchain.
                                             </Typography>
@@ -335,7 +335,7 @@ const FeaturePage = () => {
                                             <Typography variant="h3">Memberships</Typography>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Typography className="use-case-description">
+                                            <Typography className="use-case-description" component="h4">
                                                 Build and maintain authentic relationships with your members at every phase of their life
                                                 cycle. Create perks embedded in NFT membership plans your network can use to enjoy your
                                                 product or service.

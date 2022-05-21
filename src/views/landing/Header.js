@@ -81,7 +81,7 @@ const HeaderPage = () => {
                                 >
                                     <Typography
                                         variant="body"
-                                        component="div"
+                                        component="h2"
                                         color="inherit"
                                         sx={{
                                             fontSize: '1.6em',

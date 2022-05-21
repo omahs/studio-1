@@ -35,10 +35,10 @@ const KeyFeaturePage = () => {
             <Grid container justifyContent="center" spacing={gridSpacing} sx={{ textAlign: 'center' }}>
                 <Grid item sx={{ mb: 5 }}>
                     <Grid item xs={12} sx={{ mt: 5, mb: 3 }}>
-                        <Typography className="landing-title">Beautiful and Customizable</Typography>
+                        <Typography className="landing-title" component="h1">Beautiful and Customizable</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography className="landing-description">
+                        <Typography className="landing-description" component="h2">
                             Our templates are beautiful and of high quality, allowing you to customize and adapt them to your own brand. The
                             configuration and behavior of your dApp is coded into smart contracts you launch and control as part of your
                             project.

@@ -15,15 +15,15 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
-const { NETWORKS, LOGO, MAINNETS, FAUCETS, CONTRACTS } = constants;
+const { NETWORKS, LOGO, MAINNETS, CONTRACTS } = constants;
 
 const BlockchainPage = () => {
-    const { user, switchToChain } = useContext(DappifyContext);
+    const { user, switchToChain, getProviderInstance } = useContext(DappifyContext);
     const dispatch = useDispatch();
     const appState = useSelector((state) => state.app);
     const [beneficiaryFee, setBeneficiaryFee] = useState(0);
     const [originalBeneficiaryFee, setOriginalBeneficiaryFee] = useState(0);
-    const [beneficiary, setBeneficiary] = useState(appState.operator);
+    const [beneficiary, setBeneficiary] = useState(user.get('ethAddress'));
     const [dappify] = useState('0x6a10C54110336937f184bf9A88bFD5998c8E99D4');
     const [dappifyFee, setDappifyFee] = useState(2.5);
     const [isConfirmationOpen, setConfirmationOpen] = useState();
@@ -32,11 +32,11 @@ const BlockchainPage = () => {
     const [processing, setProcessign] = useState();
 
     const loadChainProvider = async() => {
-        const currentProvider = new ethers.providers.Web3Provider(window.ethereum);
+        const currentProvider = await getProviderInstance();
         const chain = await currentProvider.getNetwork();
         const chainIdHex = ethers.utils.hexlify(chain.chainId);
         if (chainIdHex !== selectedNetwork.chainId) {
-            await switchToChain(selectedNetwork, currentProvider.provider);
+            await switchToChain(selectedNetwork, currentProvider);
         }
         return currentProvider;
     };
@@ -59,59 +59,59 @@ const BlockchainPage = () => {
         }
     };
 
-    const launch = async() => {
-        const currentProvider = new ethers.providers.Web3Provider(window.ethereum);
-        const contract = MarketplaceBytecode.output.contracts['contracts/ERC721MarketplaceV1.sol'].Marketplace;
-        const abi = contract.abi;
-        const bytecode = contract.evm.bytecode;
-        const market = new ethers.ContractFactory(abi, bytecode, currentProvider.getSigner());
-        const marketplace = await market.deploy();
-        const deployment = await marketplace.deployed();
-        return deployment.address;
-    }
+    // const launch = async() => {
+    //     const currentProvider = new ethers.providers.Web3Provider(window.ethereum);
+    //     const contract = MarketplaceBytecode.output.contracts['contracts/ERC721MarketplaceV1.sol'].Marketplace;
+    //     const abi = contract.abi;
+    //     const bytecode = contract.evm.bytecode;
+    //     const market = new ethers.ContractFactory(abi, bytecode, currentProvider.getSigner());
+    //     const marketplace = await market.deploy();
+    //     const deployment = await marketplace.deployed();
+    //     return deployment.address;
+    // }
 
-    const deploy = async() => {
-        const isMainnet = MAINNETS.includes(selectedNetwork.chainId);
-        try {
-            setProcessign(true);
-            const currentProvider = new ethers.providers.Web3Provider(window.ethereum);
-            await switchToChain(selectedNetwork, currentProvider.provider);
-            const address = await launch();
-            if (isMainnet) {
-                appState.template.marketplace.main = {
-                    chainId: selectedNetwork.chainId,
-                    contract: address
-                }
-            } else {
-                appState.template.marketplace.test = {
-                    chainId: selectedNetwork.chainId,
-                    contract: address
-                }
-            }
-            dispatch({ type: UPDATE_APP, configuration: appState });
-            await Project.publishChanges(appState, user);
-            dispatch({
-                type: SNACKBAR_OPEN,
-                open: true,
-                message: 'Project updated',
-                variant: 'alert',
-                anchorOrigin: { vertical: 'top', horizontal: 'center' },
-                alertSeverity: 'success'
-            });
-        } catch (e) {
-            dispatch({
-                type: SNACKBAR_OPEN,
-                open: true,
-                message: e.message,
-                variant: 'alert',
-                anchorOrigin: { vertical: 'top', horizontal: 'center' },
-                alertSeverity: 'error'
-            });
-        } finally {
-            setProcessign(false);
-            setConfirmationOpen(false);
-        }
-    }
+    // const deploy = async() => {
+    //     const isMainnet = MAINNETS.includes(selectedNetwork.chainId);
+    //     try {
+    //         setProcessign(true);
+    //         const currentProvider = new ethers.providers.Web3Provider(window.ethereum);
+    //         await switchToChain(selectedNetwork, currentProvider.provider);
+    //         const address = await launch();
+    //         if (isMainnet) {
+    //             appState.template.marketplace.main = {
+    //                 chainId: selectedNetwork.chainId,
+    //                 contract: address
+    //             }
+    //         } else {
+    //             appState.template.marketplace.test = {
+    //                 chainId: selectedNetwork.chainId,
+    //                 contract: address
+    //             }
+    //         }
+    //         dispatch({ type: UPDATE_APP, configuration: appState });
+    //         await Project.publishChanges(appState, user);
+    //         dispatch({
+    //             type: SNACKBAR_OPEN,
+    //             open: true,
+    //             message: 'Project updated',
+    //             variant: 'alert',
+    //             anchorOrigin: { vertical: 'top', horizontal: 'center' },
+    //             alertSeverity: 'success'
+    //         });
+    //     } catch (e) {
+    //         dispatch({
+    //             type: SNACKBAR_OPEN,
+    //             open: true,
+    //             message: e.message,
+    //             variant: 'alert',
+    //             anchorOrigin: { vertical: 'top', horizontal: 'center' },
+    //             alertSeverity: 'error'
+    //         });
+    //     } finally {
+    //         setProcessign(false);
+    //         setConfirmationOpen(false);
+    //     }
+    // }
 
     const setContractFee = async(currentProvider) => {
         const contract = MarketplaceBytecode.output.contracts['contracts/ERC721MarketplaceV1.sol'].ERC721MarketplaceV1;
@@ -125,7 +125,7 @@ const BlockchainPage = () => {
     const setRates = async() => {
         try {
             setProcessign(true);
-            const currentProvider = new ethers.providers.Web3Provider(window.ethereum);
+            const currentProvider = await getProviderInstance();
             await switchToChain(selectedNetwork, currentProvider.provider);
             if (hasBeneficiaryFeeChanged()) {
                 await setContractFee(currentProvider);
@@ -193,52 +193,52 @@ const BlockchainPage = () => {
         }
     }
 
-    const renderSupportedMainNetsChains = () => {
-        const list = [];
-        Object.keys(NETWORKS).forEach((chainId, index) => {
-            const targetNetwork = NETWORKS[chainId];
-            if (MAINNETS.includes(chainId)  && (!appState.template.marketplace.main.chainId || (appState.template.marketplace.main.chainId === chainId))) {
-                const explorer = `${targetNetwork.blockExplorerUrls[0]}/address/${appState.template.marketplace.main.contract}`;
-                list.push(
-                    <Grid item xs={12} sm={6} lg={3} textAlign="center" key={chainId}>
-                        <Paper variant="outlined" elevation="20" sx={{ p: 3, minHeight: 160 }} className={`paper-blockchain ${chainId === appState.template.marketplace.main.chainId ? 'paper-blockchain-selected': ''}`} onClick={() => {
-                            setSelectedNetwork(targetNetwork);
-                            setConfirmationOpen(true);
-                        }}>
-                            <img src={LOGO[targetNetwork.nativeCurrency.symbol]} alt="Ava" height="50px"/>
-                            <Typography variant="h4" sx={{ mt: 2 }}>{targetNetwork.chainName}</Typography>
-                            {chainId === appState.template.marketplace.main.chainId && (<Button fullWidth size="small" href={explorer} target="_blank">View in explorer {formatAddress(appState.template.marketplace.main.contract)}</Button>)}
-                        </Paper>
-                    </Grid>
-                );
-            }
-        });
-        return list;
-    }
+    // const renderSupportedMainNetsChains = () => {
+    //     const list = [];
+    //     Object.keys(NETWORKS).forEach((chainId, index) => {
+    //         const targetNetwork = NETWORKS[chainId];
+    //         if (MAINNETS.includes(chainId)  && (!appState.template.marketplace.main.chainId || (appState.template.marketplace.main.chainId === chainId))) {
+    //             const explorer = `${targetNetwork.blockExplorerUrls[0]}/address/${appState.template.marketplace.main.contract}`;
+    //             list.push(
+    //                 <Grid item xs={12} sm={6} lg={3} textAlign="center" key={chainId}>
+    //                     <Paper variant="outlined" elevation="20" sx={{ p: 3, minHeight: 160 }} className={`paper-blockchain ${chainId === appState.template.marketplace.main.chainId ? 'paper-blockchain-selected': ''}`} onClick={() => {
+    //                         setSelectedNetwork(targetNetwork);
+    //                         setConfirmationOpen(true);
+    //                     }}>
+    //                         <img src={LOGO[targetNetwork.nativeCurrency.symbol]} alt="Ava" height="50px"/>
+    //                         <Typography variant="h4" sx={{ mt: 2 }}>{targetNetwork.chainName}</Typography>
+    //                         {chainId === appState.template.marketplace.main.chainId && (<Button fullWidth size="small" href={explorer} target="_blank">View in explorer {formatAddress(appState.template.marketplace.main.contract)}</Button>)}
+    //                     </Paper>
+    //                 </Grid>
+    //             );
+    //         }
+    //     });
+    //     return list;
+    // }
 
-    const renderSupportedTestnetChains = () => {
-        const list = [];
-        Object.keys(NETWORKS).forEach((chainId, index) => {
-            const targetNetwork = NETWORKS[chainId];
-            if (!MAINNETS.includes(chainId) && (!appState.template.marketplace.test.chainId || (appState.template.marketplace.test.chainId === chainId))) {
-                const explorer = `${targetNetwork.blockExplorerUrls[0]}/address/${appState.template.marketplace.test.contract}`;
-                list.push(
-                    <Grid item xs={12} sm={6} lg={3} textAlign="center" key={chainId}>
-                        <Paper variant="outlined" elevation="20" sx={{ p: 3, minHeight: 160 }} className={`paper-blockchain ${chainId === appState.template.marketplace.test.chainId ? 'paper-blockchain-selected': ''}`} onClick={() => {
-                            setSelectedNetwork(targetNetwork);
-                            setConfirmationOpen(true);
-                        }}>
-                            <img src={LOGO[targetNetwork.nativeCurrency.symbol]} alt="Ava" height="50px"/>
-                            <Typography variant="h4" sx={{ mt: 2 }}>{targetNetwork.chainName}</Typography>
-                            {chainId === appState.template.marketplace.test.chainId && (<Button fullWidth size="small" href={explorer} target="_blank">View in explorer {formatAddress(appState.template.marketplace.test.contract)}</Button>)}
-                            {FAUCETS[chainId] && (<Button fullWidth size="small" href={FAUCETS[chainId]} target="_blank">Get funds</Button>)}
-                        </Paper>
-                    </Grid>
-                );
-            }
-        });
-        return list;
-    }
+    // const renderSupportedTestnetChains = () => {
+    //     const list = [];
+    //     Object.keys(NETWORKS).forEach((chainId, index) => {
+    //         const targetNetwork = NETWORKS[chainId];
+    //         if (!MAINNETS.includes(chainId) && (!appState.template.marketplace.test.chainId || (appState.template.marketplace.test.chainId === chainId))) {
+    //             const explorer = `${targetNetwork.blockExplorerUrls[0]}/address/${appState.template.marketplace.test.contract}`;
+    //             list.push(
+    //                 <Grid item xs={12} sm={6} lg={3} textAlign="center" key={chainId}>
+    //                     <Paper variant="outlined" elevation="20" sx={{ p: 3, minHeight: 160 }} className={`paper-blockchain ${chainId === appState.template.marketplace.test.chainId ? 'paper-blockchain-selected': ''}`} onClick={() => {
+    //                         setSelectedNetwork(targetNetwork);
+    //                         setConfirmationOpen(true);
+    //                     }}>
+    //                         <img src={LOGO[targetNetwork.nativeCurrency.symbol]} alt="Ava" height="50px"/>
+    //                         <Typography variant="h4" sx={{ mt: 2 }}>{targetNetwork.chainName}</Typography>
+    //                         {chainId === appState.template.marketplace.test.chainId && (<Button fullWidth size="small" href={explorer} target="_blank">View in explorer {formatAddress(appState.template.marketplace.test.contract)}</Button>)}
+    //                         {FAUCETS[chainId] && (<Button fullWidth size="small" href={FAUCETS[chainId]} target="_blank">Get funds</Button>)}
+    //                     </Paper>
+    //                 </Grid>
+    //             );
+    //         }
+    //     });
+    //     return list;
+    // }
 
     const hasBeneficiaryFeeChanged = () => originalBeneficiaryFee !== beneficiaryFee;
 
@@ -249,7 +249,7 @@ const BlockchainPage = () => {
             const contractAddress = CONTRACTS.ERC721MarketplaceV1[chainId];
             const isTestnet = !MAINNETS.includes(chainId);
             const isCurrentChain = chainId === appState.template.marketplace.main.chainId;
-            const tooltip = isCurrentChain ? `Beneficiary ${appState.operator}` : 'Not active chain';
+            const tooltip = isCurrentChain ? `Current beneficiary ${appState.operator}` : 'Not active chain';
             if (contractAddress)
                 list.push(
                     <Grid item xs={12} sm={6} md={3} lg={2} textAlign="center" key={chainId}>
@@ -334,7 +334,6 @@ const BlockchainPage = () => {
                             startAdornment: <InputAdornment position="start">Eth</InputAdornment>,
                         }}
                         InputLabelProps={{style: {fontSize: 20}}}
-                        onChange={(e)=> setBeneficiary(e.target.value)}
                         />
                     </Grid>
                 </Grid>

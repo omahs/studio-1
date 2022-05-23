@@ -31,6 +31,7 @@ import AccountBalanceWalletTwoToneIcon from '@mui/icons-material/AccountBalanceW
 import LogoutIcon from '@mui/icons-material/Logout';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import Logo from 'common/Logo';
+import WalletsDialog from 'common/WalletsDialog';
 
 function ElevationScroll({ children, window }) {
     const theme = useTheme();
@@ -57,7 +58,9 @@ function ElevationScroll({ children, window }) {
 const AppBar = ({ ...others }) => {
     const location = useLocation();
     const [drawerToggle, setDrawerToggle] = useState(false);
-    const { isAuthenticated, authenticate, user, logout } = useContext(DappifyContext);
+    const { isAuthenticated, user, logout } = useContext(DappifyContext);
+
+    const [showWalletDialog, setShowWalletDialog] = useState();
 
     // ----------------------- Analytics ----------------------------
     useEffect(() => {
@@ -67,14 +70,6 @@ const AppBar = ({ ...others }) => {
         }
     }, [isAuthenticated, user]);
     // ------------------------------------------------------------------
-
-    const authUser = () => {
-        if (typeof window.ethereum !== 'undefined') {
-            authenticate();
-        } else {
-            authenticate({provider: 'walletconnect'});
-        }
-    };
 
     /** Method called on multiple components with different event types */
     const drawerToggler = (open) => (event) => {
@@ -88,12 +83,6 @@ const AppBar = ({ ...others }) => {
             <Button disableElevation component={RouterLink} variant="contained" to="/projects" size="small" color="secondary">
                 Sign in to the Console
             </Button>
-    );
-
-    const createDappButton = isAuthenticated && (
-        <Button component={RouterLink} to="/new" variant="contained" color="secondary" size="large">
-            Create dApp
-        </Button>
     );
 
     const renderAddress = () => {
@@ -119,7 +108,7 @@ const AppBar = ({ ...others }) => {
             variant="contained"
             color="primary"
             size="large"
-            onClick={authUser}
+            onClick={() => setShowWalletDialog(true)}
             startIcon={<AccountBalanceWalletTwoToneIcon />}
         >
             Connect Wallet
@@ -135,21 +124,13 @@ const AppBar = ({ ...others }) => {
             <MuiAppBar>
                 <Container>
                     <Toolbar>
+                        <WalletsDialog isOpen={showWalletDialog} onClose={() => setShowWalletDialog(false)} />
                         <Typography component="div" sx={{ flexGrow: 1, textAlign: 'left' }}>
                             <Button color="inherit" component={RouterLink} to="/">
                                 <Logo />
                             </Button>
                         </Typography>
                         <Stack direction="row" sx={{ display: { xs: 'none', md: 'block' } }} spacing={2}>
-                            {/* <Button color="inherit" component={RouterLink} to="/cases" size="large">
-                                Solutions
-                            </Button>
-                            <Button color="inherit" component={RouterLink} to="/resources" size="large">
-                                Resources
-                            </Button>
-                            <Button color="inherit" component={RouterLink} to="/faq" size="large">
-                                Pricing
-    </Button> */}
                             <Button color="inherit" href={roadmap} size="large" target="_blank">
                                 Roadmap
                             </Button>
@@ -160,7 +141,6 @@ const AppBar = ({ ...others }) => {
                                 Changelog
                             </Button>
                             {myDappsButton}
-                            {/* createDappButton */}
                             {location.pathname !== '/' && loginButton}
                         </Stack>
                         <Box sx={{ display: { xs: 'block', md: 'none' } }}>
@@ -177,30 +157,6 @@ const AppBar = ({ ...others }) => {
                                     onKeyDown={drawerToggler(false)}
                                 >
                                     <List>
-                                        {/* <Link style={{ textDecoration: 'none' }} component={RouterLink} to="/cases">
-                                            <ListItemButton component="a">
-                                                <ListItemIcon>
-                                                    <VideoLibraryIcon />
-                                                </ListItemIcon>
-                                                <ListItemText primary="Use cases" />
-                                            </ListItemButton>
-                                        </Link>
-                                        <Link style={{ textDecoration: 'none' }} component={RouterLink} to="/resources">
-                                            <ListItemButton component="a">
-                                                <ListItemIcon>
-                                                    <MenuBookIcon />
-                                                </ListItemIcon>
-                                                <ListItemText primary="Resources" />
-                                            </ListItemButton>
-                                        </Link>
-                                        <Link style={{ textDecoration: 'none' }} component={RouterLink} to="/faq">
-                                            <ListItemButton component="a">
-                                                <ListItemIcon>
-                                                    <HelpCenterIcon />
-                                                </ListItemIcon>
-                                                <ListItemText primary="FAQs" />
-                                            </ListItemButton>
-                                </Link> */}
                                         <Link style={{ textDecoration: 'none' }} href={roadmap}>
                                             <ListItemButton component="a">
                                                 <ListItemIcon>

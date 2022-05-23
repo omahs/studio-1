@@ -54,6 +54,8 @@ const NewPage = () => {
         }
     }
 
+    const canGoBack = appState.step < 3 || !appState.step;
+
     return (
         <Slide direction="left" in={true} mountOnEnter unmountOnExit  className="new-project-container" >
             <Grid container>
@@ -62,7 +64,7 @@ const NewPage = () => {
                         <Box className="project-new-container">
                             <Box className="project-new-image"></Box>
                         </Box>
-                        {appState.step < 3 && (<Grid container direction="row" sx={{ ml: -8 }}>
+                        {canGoBack && (<Grid container direction="row" sx={{ ml: -8 }}>
                             <Grid item>
                                 <IconButton aria-label="Back" onClick={() => {
                                     defaultConfiguration.step = 0;

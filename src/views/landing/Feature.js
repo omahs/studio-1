@@ -43,46 +43,54 @@ const FeaturePage = () => {
     const [myVotes, setMyVotes] = useState({});
 
     const loadVotes = async () => {
-        const totalVotes = await Moralis.Cloud.run('getTotalTemplateVotes');
-        const result = totalVotes.reduce((map, obj) => {
-            map[obj.objectId] = obj.count;
-            return map;
-        }, {});
-        setVotes(result);
+        try {
+            const totalVotes = await Moralis.Cloud.run('getTotalTemplateVotes');
+            const result = totalVotes.reduce((map, obj) => {
+                map[obj.objectId] = obj.count;
+                return map;
+            }, {});
+            setVotes(result);
 
-        const myVotes = await Moralis.Cloud.run('getMyTemplateVotes');
-        const myResults = myVotes.reduce((map, obj) => {
-            map[obj.get('name')] = true;
-            return map;
-        }, {});
-        setMyVotes(myResults);
+            const myVotes = await Moralis.Cloud.run('getMyTemplateVotes');
+            const myResults = myVotes.reduce((map, obj) => {
+                map[obj.get('name')] = true;
+                return map;
+            }, {});
+            setMyVotes(myResults);
+        } catch (e) {
+            
+        }
     };
 
     const vote = async (template) => {
-        const TemplateVote = Moralis.Object.extend('TemplateVote');
-        const vote = new TemplateVote();
-        vote.set('name', template);
-        await vote.save().then(
-            () => {
-                dispatch({
-                    type: SNACKBAR_OPEN,
-                    open: true,
-                    message: 'Thank you vor voting!',
-                    variant: 'alert',
-                    alertSeverity: 'success'
-                });
-            },
-            (error) => {
-                dispatch({
-                    type: SNACKBAR_OPEN,
-                    open: true,
-                    message: error.message,
-                    variant: 'alert',
-                    alertSeverity: 'error'
-                });
-            }
-        );
-        await loadVotes();
+        try {
+            const TemplateVote = Moralis.Object.extend('TemplateVote');
+            const vote = new TemplateVote();
+            vote.set('name', template);
+            await vote.save().then(
+                () => {
+                    dispatch({
+                        type: SNACKBAR_OPEN,
+                        open: true,
+                        message: 'Thank you vor voting!',
+                        variant: 'alert',
+                        alertSeverity: 'success'
+                    });
+                },
+                (error) => {
+                    dispatch({
+                        type: SNACKBAR_OPEN,
+                        open: true,
+                        message: error.message,
+                        variant: 'alert',
+                        alertSeverity: 'error'
+                    });
+                }
+            );
+            await loadVotes();
+        } catch (e) {
+
+        }
     };
 
     useEffect(() => {

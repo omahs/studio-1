@@ -14,7 +14,9 @@ import Locales from 'ui-component/Locales';
 import Snackbar from 'ui-component/extended/Snackbar';
 
 // provider
-import { DappifyProvider } from 'react-dappify';
+import { DappifyProvider, Logger } from 'react-dappify';
+
+Logger.debug(`Environment ${process.env.NODE_ENV}`);
 
 // ==============================|| APP ||============================== //
 

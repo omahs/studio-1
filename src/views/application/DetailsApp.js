@@ -6,7 +6,7 @@ import { UPDATE_APP } from 'store/actions';
 import moment from 'moment';
 import { getImage } from 'react-dappify/utils/image';
 
-const getAppUrl = (subdomain) => `https://${subdomain}.dappify.us`;
+const getAppUrl = (subdomain) => `https://${subdomain}.dappify.com`;
 
 const DetailsApp = ({ project = {} }) => {
     const navigate = useNavigate();

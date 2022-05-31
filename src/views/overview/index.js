@@ -9,6 +9,7 @@ import contact from 'assets/images/studio/contact.jpg';
 import footer from 'assets/images/studio/footer.jpg';
 import styleit from 'assets/images/studio/styleit.webp';
 import { useNavigate } from 'react-router-dom';
+import DetailsPage from 'views/overview/DetailsPage';
 
 const OverviewPage = () => {
     const navigate = useNavigate();
@@ -51,58 +52,58 @@ const OverviewPage = () => {
     }
 
 
-    const renderCategoryItems = (column) => {
-        const list = [];
-        appState.categories.forEach((item, index) => {
-            list.push(
-                <Grid container direction="row" spacing={2}sx={{ py: 1 }}>
-                    <Grid item xs={3}>
-                        <TextField
-                            label="Displayed label"
-                            value={item.label}
-                            onChange={(e) => {
-                                appState.categories[index].label = e.target.value;
-                                dispatch({ type: UPDATE_APP, configuration: appState });
-                            }}
-                            variant="standard"
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={3}>
-                        <TextField
-                            label="Code"
-                            value={item.uri}
-                            onChange={(e) => {
-                                appState.categories[index].uri = e.target.value;
-                                dispatch({ type: UPDATE_APP, configuration: appState });
-                            }}
-                            variant="standard"
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={3}>
-                        <TextField
-                            label="Icon string"
-                            value={item.icon}
-                            onChange={(e) => {
-                                appState.categories[index].icon = e.target.value;
-                                dispatch({ type: UPDATE_APP, configuration: appState });
-                            }}
-                            variant="standard"
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={3} sx={{ mt: 1}}>
-                        <Button color="error" onClick={() =>{
-                            appState.categories.splice(index, 1);
-                            dispatch({ type: UPDATE_APP, configuration: appState });
-                        }}>Remove</Button>
-                    </Grid>
-                </Grid>
-            );
-        });
-        return list;
-    }
+    // const renderCategoryItems = (column) => {
+    //     const list = [];
+    //     appState.categories.forEach((item, index) => {
+    //         list.push(
+    //             <Grid container direction="row" spacing={2}sx={{ py: 1 }}>
+    //                 <Grid item xs={3}>
+    //                     <TextField
+    //                         label="Displayed label"
+    //                         value={item.label}
+    //                         onChange={(e) => {
+    //                             appState.categories[index].label = e.target.value;
+    //                             dispatch({ type: UPDATE_APP, configuration: appState });
+    //                         }}
+    //                         variant="standard"
+    //                         fullWidth
+    //                     />
+    //                 </Grid>
+    //                 <Grid item xs={3}>
+    //                     <TextField
+    //                         label="Code"
+    //                         value={item.uri}
+    //                         onChange={(e) => {
+    //                             appState.categories[index].uri = e.target.value;
+    //                             dispatch({ type: UPDATE_APP, configuration: appState });
+    //                         }}
+    //                         variant="standard"
+    //                         fullWidth
+    //                     />
+    //                 </Grid>
+    //                 <Grid item xs={3}>
+    //                     <TextField
+    //                         label="Icon string"
+    //                         value={item.icon}
+    //                         onChange={(e) => {
+    //                             appState.categories[index].icon = e.target.value;
+    //                             dispatch({ type: UPDATE_APP, configuration: appState });
+    //                         }}
+    //                         variant="standard"
+    //                         fullWidth
+    //                     />
+    //                 </Grid>
+    //                 <Grid item xs={3} sx={{ mt: 1}}>
+    //                     <Button color="error" onClick={() =>{
+    //                         appState.categories.splice(index, 1);
+    //                         dispatch({ type: UPDATE_APP, configuration: appState });
+    //                     }}>Remove</Button>
+    //                 </Grid>
+    //             </Grid>
+    //         );
+    //     });
+    //     return list;
+    // }
 
     return (
         <MainCard>
@@ -145,7 +146,7 @@ const OverviewPage = () => {
                                     id="outlined-id"
                                     disabled
                                     label="Provided Subdomain"
-                                    value={`https://${appState.subdomain}.dappify.us`}
+                                    value={`https://${appState.subdomain}.dappify.com`}
                                     fullWidth
                                 />
                             </Grid>
@@ -280,7 +281,7 @@ const OverviewPage = () => {
                         {renderFooterColumnItems('right')}
                     </Paper>    
                 </Grid>
-                <Grid item xs={12}>
+                {/*<Grid item xs={12}>
                     <Typography variant="h2">Add categories for your dApp content</Typography>
                     <Typography variant="body">Content creators can select from this list of categories when publishing their content on your dApp. It will help users nagivate and filter while searching. Use the string identifier from icons in <a href="https://fonts.google.com/icons?icon.style=Outlined" target="_blank" rel="noreferrer">Material UI</a></Typography>
                     <Button size="small" variant="outlined" sx={{ ml: 2 }} onClick={() => {
@@ -294,11 +295,12 @@ const OverviewPage = () => {
                     <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
                         {renderCategoryItems()}
                     </Paper>    
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
                     <Alert severity="success" variant="filled">Once done here you can continue with step - 2. Brand it - to setup look & feel!</Alert>
                 </Grid>
             </Grid>
+            <DetailsPage />
         </MainCard>
     );
 };

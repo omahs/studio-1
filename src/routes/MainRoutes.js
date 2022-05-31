@@ -134,9 +134,13 @@ const BrandPage = Loadable(lazy(() => import('views/brand')));
 const TemplatePage = Loadable(lazy(() => import('views/template')));
 const FeaturesPage = Loadable(lazy(() => import('views/features')));
 const BlockchainPage = Loadable(lazy(() => import('views/blockchain')));
-const BackendPage = Loadable(lazy(() => import('views/backend')));
+// const BackendPage = Loadable(lazy(() => import('views/backend')));
 
 const UsersPage = Loadable(lazy(() => import('views/users')));
+const TransactionsPage = Loadable(lazy(() => import('views/transactions')));
+
+const TemplatesPage = Loadable(lazy(() => import('views/templates')));
+const TemplatesItemPage = Loadable(lazy(() => import('views/templates/Item')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -519,12 +523,20 @@ const MainRoutes = {
             element: <BlockchainPage />
         },
         {
-            path: '/studio/backend',
-            element: <BackendPage />
-        },
-        {
             path: '/studio/users',
             element: <UsersPage />
+        },
+        {
+            path: '/studio/transactions',
+            element: <TransactionsPage />
+        },
+        {
+            path: '/studio/templates',
+            element: <TemplatesPage />
+        },
+        {
+            path: '/studio/templates/:id',
+            element: <TemplatesItemPage />
         }
     ]
 };

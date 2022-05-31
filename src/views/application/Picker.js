@@ -222,6 +222,7 @@ const Picker = ({ onSelect }) => {
     };
 
     const deployContract = async (tContract) => {
+        console.log(3);
         const web3Provider = await Moralis.enableWeb3();
         const contract = new web3Provider.eth.Contract(tContract.abi);
         contract
@@ -308,6 +309,7 @@ const Picker = ({ onSelect }) => {
     const isValidChain = async (t) => {
         let isValid = false;
         try {
+            console.log(4);
             const web3 = await Moralis.enableWeb3();
             const chainIdHex = web3.currentProvider.chainId;
             const chainIdDec = await web3.eth.getChainId();

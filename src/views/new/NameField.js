@@ -41,9 +41,7 @@ const NameField = ({ onChange }) => {
     }, [error, appName, appSubdomain]);
 
     const projectInfo = `
-    A Dappify project is Web3, Ethereum Virtual Machine compatible.
-    Templates in this project will share features like Look & feel, User Management and Properties Config.
-    When you create a new Dappify project in the Dappify console, you're actually creating a Smart Contract behind the scenes powered by Dappify UI engine.
+        Your Dappify App project subdomain. You can later add and manage multiple templates from the same subdomain and they will all share the branding and look & feel properties as well as the blockchain settings
     `;
 
     return (

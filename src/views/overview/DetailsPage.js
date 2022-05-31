@@ -71,7 +71,7 @@ const BackendPage = () => {
     );
     
     return (
-        <MainCard>
+        <Grid container sx={{ p:3 }}>
             <Grid item xs={12}>
                 {confirmDialog}
                 <Typography variant="h2">Review your dApp configuration</Typography>
@@ -86,7 +86,7 @@ const BackendPage = () => {
                                     id="outlined-id"
                                     disabled
                                     label="Provided Subdomain"
-                                    value={`https://${appState.subdomain}.dappify.us`}
+                                    value={`https://${appState.subdomain}.dappify.com`}
                                     fullWidth
                                 />
                             </Grid>
@@ -107,7 +107,7 @@ const BackendPage = () => {
                     </Grid>
                 </Paper>
             </Grid>
-        </MainCard>
+        </Grid>
     );
 };
 

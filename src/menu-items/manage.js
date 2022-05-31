@@ -2,20 +2,21 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { IconBrush, IconNews, IconUsers } from '@tabler/icons';
+import { IconBrush, IconNews, IconUsers, IconCurrencyEthereum } from '@tabler/icons';
 
 // constant
 const icons = {
     IconBrush,
     IconNews,
-    IconUsers
+    IconUsers,
+    IconCurrencyEthereum
 };
 
 // ==============================|| UI ELEMENTS MENU ITEMS ||============================== //
 
 const elements = {
     id: 'manage',
-    title: "2. Manage",
+    title: "Engagement",
     type: 'group',
     children: [
         {
@@ -24,6 +25,14 @@ const elements = {
             type: 'item',
             url: 'users',
             icon: icons.IconUsers,
+            breadcrumbs: false
+        },
+        {
+            id: 'transactions',
+            title: "Transactions",
+            type: 'item',
+            url: 'transactions',
+            icon: icons.IconCurrencyEthereum,
             breadcrumbs: false
         }
     ]

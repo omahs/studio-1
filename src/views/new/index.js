@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box, Stack, Grid, Typography, IconButton, Button, Slide } from '@mui/material';
 import NameField from 'views/new/NameField';
 import UseCase from 'views/new/UseCase';
+import Blockchain from 'views/new/Blockchain';
 import TermsAndConditions from 'views/new/TermsAndConditions';
 import Loader from 'views/new/Loader';
 import CloseIcon from '@mui/icons-material/Close';
@@ -24,9 +25,10 @@ const NewPage = () => {
         appState.subdomain = subddomain;
     }
 
-    const handleStepTwo = (category) => {
-        setCantContinue(!category);
-        appState.type = category;
+    const handleStepTwo = (chainId) => {
+        setCantContinue(!chainId);
+        appState.chainId = chainId;
+        console.log(appState);
     };
 
     const handleStepThree = (checked) => {
@@ -38,7 +40,7 @@ const NewPage = () => {
     };
 
     const stepOne = !appState.step && <NameField onChange={handleStepOne}/>;
-    const stepTwo = appState.step === 1 && <UseCase onChange={handleStepTwo}/>;
+    const stepTwo = appState.step === 1 && <Blockchain onChange={handleStepTwo} />; //<UseCase onChange={handleStepTwo}/>;
     const stepThree = appState.step === 2 && <TermsAndConditions onChange={handleStepThree} />;
     const loader = appState.step === 3 && <Loader onChange={handleStepFour}  />;
     const [cantContinue, setCantContinue] = useState(true);

@@ -18,7 +18,9 @@ import TabPanel from '@mui/lab/TabPanel';
 const { NETWORKS, LOGO, MAINNETS, CONTRACTS } = constants;
 
 const BlockchainPage = () => {
-    const { user, switchToChain, getProviderInstance } = useContext(DappifyContext);
+    const { configuration, user, switchToChain, getProviderInstance } = useContext(DappifyContext);
+
+
     const dispatch = useDispatch();
     const appState = useSelector((state) => state.app);
     const [beneficiaryFee, setBeneficiaryFee] = useState(0);
@@ -28,7 +30,7 @@ const BlockchainPage = () => {
     const [dappifyFee, setDappifyFee] = useState(2.5);
     const [isConfirmationOpen, setConfirmationOpen] = useState();
     const [isRatesOpen, setRatesOpen] = useState();
-    const [selectedNetwork, setSelectedNetwork] = useState(NETWORKS[appState.template.marketplace.main.chainId] || {});
+    const [selectedNetwork, setSelectedNetwork] = useState(NETWORKS[appState.template.chainId] || {});
     const [processing, setProcessign] = useState();
 
     const loadChainProvider = async() => {
@@ -116,7 +118,7 @@ const BlockchainPage = () => {
     const setContractFee = async(currentProvider) => {
         const contract = MarketplaceBytecode.output.contracts['contracts/ERC721MarketplaceV1.sol'].ERC721MarketplaceV1;
         const abi = contract.abi;
-        const marketplaceContract = new ethers.Contract(CONTRACTS.ERC721MarketplaceV1[selectedNetwork.chainId], abi, currentProvider.getSigner());
+        const marketplaceContract = new ethers.Contract(CONTRACTS[appState.type][selectedNetwork.chainId], abi, currentProvider.getSigner());
         const targetFee = beneficiaryFee*100;
         const tx = await marketplaceContract.setRoyaltyFee(targetFee);
         return tx;
@@ -159,13 +161,9 @@ const BlockchainPage = () => {
     const setVersion = async () => {
         try {
             setProcessign(true);
-            appState.template.marketplace.main = {
+            appState.template = {
                 chainId: selectedNetwork.chainId,
-                contract: CONTRACTS.ERC721MarketplaceV1[selectedNetwork.chainId]
-            };
-            appState.template.marketplace.test = {
-                chainId: selectedNetwork.chainId,
-                contract: CONTRACTS.ERC721MarketplaceV1[selectedNetwork.chainId]
+                contract: CONTRACTS[appState.type][selectedNetwork.chainId]
             };
             appState.operator = beneficiary;
             dispatch({ type: UPDATE_APP, configuration: appState });
@@ -244,11 +242,11 @@ const BlockchainPage = () => {
 
     const renderDappifyOptions = () => {
         const list = [];
-        Object.keys(CONTRACTS.ERC721MarketplaceV1).forEach((chainId, index) => {
+        Object.keys(CONTRACTS.marketplace).forEach((chainId, index) => {
             const targetNetwork = NETWORKS[chainId];
-            const contractAddress = CONTRACTS.ERC721MarketplaceV1[chainId];
+            const contractAddress = CONTRACTS.marketplace[chainId];
             const isTestnet = !MAINNETS.includes(chainId);
-            const isCurrentChain = chainId === appState.template.marketplace.main.chainId;
+            const isCurrentChain = chainId === appState.template.chainId;
             const tooltip = isCurrentChain ? `Current beneficiary ${appState.operator}` : 'Not active chain';
             if (contractAddress)
                 list.push(
@@ -340,7 +338,7 @@ const BlockchainPage = () => {
                 <Grid container justifyContent="center" sx={{ mt: 1 }} spacing={1}>
                     <Grid item xs={6}>
                         <Button variant="outlined" fullWidth href={
-                            selectedNetwork.blockExplorerUrls && `${selectedNetwork?.blockExplorerUrls[0]}/address/${appState.template.marketplace.main.contract}`
+                            selectedNetwork.blockExplorerUrls && `${selectedNetwork?.blockExplorerUrls[0]}/address/${appState.template.contract}`
                         } target="_blank">Explore Smart Contract</Button>
                     </Grid>
                     <Grid item xs={6}>

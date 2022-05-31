@@ -131,7 +131,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
                 color="primary"
                 size="small"
                 sx={{ mx: 1 }}
-                href={`https://${appConfiguration.subdomain}.dappify.us/`}
+                href={`https://${appConfiguration.subdomain}.dappify.com/`}
                 target="_blank"
             >
                 Go to site

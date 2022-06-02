@@ -1,7 +1,4 @@
 // third-party
-import { FormattedMessage } from 'react-intl';
-
-import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
 
 // assets
 import {

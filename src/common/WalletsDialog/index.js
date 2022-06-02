@@ -14,7 +14,7 @@ const WalletsDialog = ({ isOpen=false, onClose, isBid, nft, t }) => {
         const list = [];
         supportedWallets.forEach((wallet) => {
             list.push(
-                <Grid item xs={6}>
+                <Grid item xs={6} key={wallet.name}>
                     <Button elevation={1} sx={{ p:4 }} fullWidth onClick={async () => {
                         await authenticate(wallet.payload);
                         onClose();

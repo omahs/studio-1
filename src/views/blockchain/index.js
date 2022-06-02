@@ -30,7 +30,7 @@ const BlockchainPage = () => {
     const [dappifyFee, setDappifyFee] = useState(2.5);
     const [isConfirmationOpen, setConfirmationOpen] = useState();
     const [isRatesOpen, setRatesOpen] = useState();
-    const [selectedNetwork, setSelectedNetwork] = useState(NETWORKS[appState.template.chainId] || {});
+    const [selectedNetwork, setSelectedNetwork] = useState(NETWORKS[appState.chainId] || {});
     const [processing, setProcessign] = useState();
 
     const loadChainProvider = async() => {

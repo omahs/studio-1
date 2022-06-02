@@ -11,9 +11,6 @@ import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography, u
 import { MENU_OPEN, SET_MENU } from 'store/actions';
 
 // assets
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-
-import { IconCircleCheck, IconCircle, IconCheckbox, IconSquare } from '@tabler/icons';
 import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
 import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone';
 

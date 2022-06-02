@@ -1,6 +1,3 @@
-// third-party
-import { FormattedMessage } from 'react-intl';
-
 // assets
 import { IconBrush, IconNews, IconUsers, IconCurrencyEthereum } from '@tabler/icons';
 

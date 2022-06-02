@@ -12,7 +12,7 @@ import { SNACKBAR_OPEN, CLEAR_APP } from 'store/actions';
 import AccountBalanceWalletTwoToneIcon from '@mui/icons-material/AccountBalanceWalletTwoTone';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Project from 'react-dappify/model/Project';
-import { isEqual } from 'lodash';
+import { getUrl } from 'utils/url';
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
@@ -20,7 +20,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
     const theme = useTheme();
     const appConfiguration = useSelector((state) => state.app);
     const { user, isAuthenticated, logout, authenticate } = useMoralis();
-    const [previousConfgiuration, setPreviousConfiguration] = useState(appConfiguration);
+    const [setPreviousConfiguration] = useState(appConfiguration);
     const [hasChanges, setHasChanges] = useState(false);
     const dispatch = useDispatch();
 
@@ -131,7 +131,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
                 color="primary"
                 size="small"
                 sx={{ mx: 1 }}
-                href={`https://${appConfiguration.subdomain}.dappify.com/`}
+                href={getUrl(appConfiguration.subdomain)}
                 target="_blank"
             >
                 Go to site

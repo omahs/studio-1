@@ -15,8 +15,7 @@ IconBrandCodesandbox
 
 const MenuList = () => {
     const appState = useSelector((state) => state.app);
-    const [template, setTemplate] = useState(appState.template);
-    const [items, setItems] = useState(menuItem.items);
+    const [items,] = useState(menuItem.items);
     const [dynamicItems, setDynamicItems] = useState([]);
     // const [templateList] = useState(Object.keys(appState.template));
 

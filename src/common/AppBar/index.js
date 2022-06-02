@@ -1,4 +1,4 @@
-import { cloneElement, useState, useEffect, useContext } from 'react';
+import { cloneElement, useState, useContext } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 
 // material-ui
@@ -61,15 +61,6 @@ const AppBar = ({ ...others }) => {
     const { isAuthenticated, user, logout } = useContext(DappifyContext);
 
     const [showWalletDialog, setShowWalletDialog] = useState();
-
-    // ----------------------- Analytics ----------------------------
-    useEffect(() => {
-        if (isAuthenticated) {
-            window.pendo.initialize({ account: { id: user?.get('ethAddress') }});
-            window.heap.identify(user?.get('ethAddress'));
-        }
-    }, [isAuthenticated, user]);
-    // ------------------------------------------------------------------
 
     /** Method called on multiple components with different event types */
     const drawerToggler = (open) => (event) => {

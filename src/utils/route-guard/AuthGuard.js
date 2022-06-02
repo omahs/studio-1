@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useMoralis } from 'react-moralis';
 
 // project imports
-import useAuth from 'hooks/useAuth';
 import { useContext, useEffect } from 'react';
 import { DappifyContext } from 'react-dappify';
 

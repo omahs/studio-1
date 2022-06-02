@@ -13,7 +13,8 @@ import {
     TableSortLabel,
     TableRow,
     Toolbar,
-    Switch
+    Switch,
+    Button
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import moment from 'moment';
@@ -21,6 +22,8 @@ import moment from 'moment';
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import Transaction from 'react-dappify/model/Transaction';
+
+import constants from 'react-dappify/constants';
 
 // table header
 const headCells = [
@@ -49,16 +52,16 @@ const headCells = [
         label: 'Symbol'
     },
     {
-        id: 'created',
-        numeric: false,
-        disablePadding: false,
-        label: 'Joined'
-    },
-    {
         id: 'updated',
         numeric: false,
         disablePadding: false,
         label: 'Updated'
+    },
+    {
+        id: 'explorer',
+        numeric: false,
+        disablePadding: false,
+        label: 'View in explorer'
     }
 ];
 
@@ -142,13 +145,11 @@ const TransactionList = () => {
     const [count, setCount] = useState(0);
 
     const loadUsers = async() => {
-        console.log("loading here????");
         const profiles = await Transaction.listByProject({
             projectId: appConfiguration.appId,
             page: page,
             limit: rowsPerPage
         });
-        console.log(profiles);
         setRows(profiles.results);
         setCount(profiles.count);
     };
@@ -199,6 +200,11 @@ const TransactionList = () => {
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
+    const getExplorerUrl = (row) => {
+        const network = constants.NETWORKS[row.chainId];
+        return `${network.blockExplorerUrls[0]}/tx/${row.transactionHash}`;
+    };
+
     return (
         <MainCard
             content={false}
@@ -240,9 +246,10 @@ const TransactionList = () => {
                                         </TableCell>
                                         <TableCell align="left">${row.amount.toFixed(4)}</TableCell>
                                         <TableCell align="left">{row.symbol}</TableCell>
-                                        <TableCell align="left">{moment(row.createdAt).fromNow()}</TableCell>
                                         <TableCell align="left">{moment(row.updatedAt).fromNow()}</TableCell>
-                                       
+                                        <TableCell align="left">
+                                            <Button href={getExplorerUrl(row)} target="_blank">View</Button>
+                                        </TableCell>
                                     </TableRow>
                                 );
                             })}

@@ -16,6 +16,7 @@ import constants from 'react-dappify/constants';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { DappifyContext } from 'react-dappify';
+import { getUrl } from 'utils/url';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -62,8 +63,6 @@ const TemplatesItemPage = () => {
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
-
-    const getUrl = () => process.env.NODE_ENV === 'production' ? `https://${appState.template[id].id}.${appState.subdomain}.dappify.com` : `https://${appState.template[id].id}.${appState.subdomain}.${process.env.NODE_ENV}.dappify.com`;
 
     const loadProperties = async() => {
         setProperties([]);
@@ -170,7 +169,7 @@ const TemplatesItemPage = () => {
                     <Typography variant="h3">{appState.template[id].name}</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button sx={{ textTransform: 'none' }} href={getUrl()} target="_blank">{getUrl()}</Button>
+                    <Button sx={{ textTransform: 'none' }} href={getUrl(appState.subdomain, id)} target="_blank">{getUrl(appState.subdomain, id)}</Button>
                 </Grid>
                 <Grid item xs={12}>
                     <Typography variant="body">{appState.template[id].description}</Typography>

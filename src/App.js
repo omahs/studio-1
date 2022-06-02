@@ -16,7 +16,8 @@ import Snackbar from 'ui-component/extended/Snackbar';
 // provider
 import { DappifyProvider, Logger } from 'react-dappify';
 
-Logger.debug(`Environment ${process.env.NODE_ENV}`);
+Logger.debug(`NODE_ENV ${process.env.NODE_ENV}`);
+Logger.debug(`REACT_APP_HOST_ENV ${process.env.REACT_APP_HOST_ENV}`);
 
 // ==============================|| APP ||============================== //
 

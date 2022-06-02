@@ -18,7 +18,6 @@ const AppUserSocialProfile = Loadable(lazy(() => import('views/application/users
 const AppUserAccountProfile1 = Loadable(lazy(() => import('views/application/users/account-profile/Profile1')));
 const AppUserAccountProfile2 = Loadable(lazy(() => import('views/application/users/account-profile/Profile2')));
 const AppUserAccountProfile3 = Loadable(lazy(() => import('views/application/users/account-profile/Profile3')));
-const ApplicationPage = Loadable(lazy(() => import('views/application')));
 
 // application - user cards & list variant routing
 const AppProfileCardStyle1 = Loadable(lazy(() => import('views/application/users/card/CardStyle1')));
@@ -120,15 +119,11 @@ const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')
 const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
 const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
 const UtilsMaterialIcons = Loadable(lazy(() => import('views/utilities/MaterialIcons')));
-const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons')));
 const UtilsAnimation = Loadable(lazy(() => import('views/utilities/Animation')));
 const UtilsGrid = Loadable(lazy(() => import('views/utilities/Grid')));
 
 // sample page routing
-const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 const OverviewPage = Loadable(lazy(() => import('views/overview')));
-const DesignThemePage = Loadable(lazy(() => import('views/design/Theme')));
-const UtilsColorPalette = Loadable(lazy(() => import('views/utilities/ColorPalette')));
 
 const BrandPage = Loadable(lazy(() => import('views/brand')));
 const TemplatePage = Loadable(lazy(() => import('views/template')));

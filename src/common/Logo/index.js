@@ -1,6 +1,5 @@
 import { Grid } from '@mui/material';
-import appLogo from 'assets/images/logo/dark-full.svg';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const Logo = () => {
     const appConfiguration = useSelector((state) => state.app);

@@ -281,6 +281,28 @@ const OverviewPage = () => {
                         {renderFooterColumnItems('right')}
                     </Paper>    
                 </Grid>
+
+
+
+                <Grid item xs={12}>
+                    <Typography variant="h2">App Operator</Typography>
+                    <Typography variant="body">Specify who the default administrator and beneficiary is</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                        <TextField
+                            id="outlined-email"
+                            label="Wallet address of the admin"
+                            value={appState.operator}
+                            onChange={(e) => {
+                                appState.operator = e.target.value;
+                                dispatch({ type: UPDATE_APP, configuration: appState });
+                            }}
+                            fullWidth
+                        />
+                    </Paper>    
+                </Grid>
+
                 {/*<Grid item xs={12}>
                     <Typography variant="h2">Add categories for your dApp content</Typography>
                     <Typography variant="body">Content creators can select from this list of categories when publishing their content on your dApp. It will help users nagivate and filter while searching. Use the string identifier from icons in <a href="https://fonts.google.com/icons?icon.style=Outlined" target="_blank" rel="noreferrer">Material UI</a></Typography>

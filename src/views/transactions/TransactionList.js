@@ -28,28 +28,16 @@ import constants from 'react-dappify/constants';
 // table header
 const headCells = [
     {
-        id: 'from',
+        id: 'status',
         numeric: false,
         disablePadding: true,
-        label: 'From address'
-    },
-    {
-        id: 'to',
-        numeric: false,
-        disablePadding: false,
-        label: 'To address'
+        label: 'Status'
     },
     {
         id: 'amount',
         numeric: false,
         disablePadding: false,
         label: 'Amount'
-    },
-    {
-        id: 'symbol',
-        numeric: false,
-        disablePadding: false,
-        label: 'Symbol'
     },
     {
         id: 'updated',
@@ -62,6 +50,24 @@ const headCells = [
         numeric: false,
         disablePadding: false,
         label: 'View in explorer'
+    },
+    {
+        id: 'symbol',
+        numeric: false,
+        disablePadding: false,
+        label: 'Symbol'
+    },
+    {
+        id: 'uid',
+        numeric: false,
+        disablePadding: false,
+        label: 'Unique Identifier'
+    },
+    {
+        id: 'transactionHash',
+        numeric: false,
+        disablePadding: false,
+        label: 'Transaction Hash'
     }
 ];
 
@@ -86,6 +92,7 @@ function EnhancedTableHead({ onSelectAllClick, order, orderBy, numSelected, rowC
                             active={orderBy === headCell.id}
                             direction={orderBy === headCell.id ? order : 'asc'}
                             onClick={createSortHandler(headCell.id)}
+                            sx={{ minWidth: 150 }}
                         >
                             {headCell.label}
                             {orderBy === headCell.id ? (
@@ -144,18 +151,18 @@ const TransactionList = () => {
     const [rows, setRows] = useState([]);
     const [count, setCount] = useState(0);
 
-    const loadUsers = async() => {
-        const profiles = await Transaction.listByProject({
+    const loadTransactions = async() => {
+        const txs = await Transaction.listByProject({
             projectId: appConfiguration.appId,
             page: page,
             limit: rowsPerPage
         });
-        setRows(profiles.results);
-        setCount(profiles.count);
+        setRows(txs.results);
+        setCount(txs.count);
     };
 
     useEffect(() => {
-        loadUsers({ page: page, limit: rowsPerPage });
+        loadTransactions({ page: page, limit: rowsPerPage });
     }, [page, rowsPerPage]);
 
     const handleRequestSort = (event, property) => {
@@ -239,16 +246,19 @@ const TransactionList = () => {
                                         selected={isItemSelected}
                                     >
                                         <TableCell component="th" id={labelId} scope="row" padding="normal">
-                                            {row.from}
-                                        </TableCell>
-                                        <TableCell align="left">
-                                            {row.to}
+                                            {row.status}
                                         </TableCell>
                                         <TableCell align="left">${row.amount.toFixed(4)}</TableCell>
-                                        <TableCell align="left">{row.symbol}</TableCell>
                                         <TableCell align="left">{moment(row.updatedAt).fromNow()}</TableCell>
                                         <TableCell align="left">
                                             <Button href={getExplorerUrl(row)} target="_blank">View</Button>
+                                        </TableCell>
+                                        <TableCell align="left">{row.symbol}</TableCell>
+                                        <TableCell align="left">
+                                            {row.uid}
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            {row.transactionHash}
                                         </TableCell>
                                     </TableRow>
                                 );

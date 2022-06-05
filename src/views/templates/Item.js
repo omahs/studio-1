@@ -55,7 +55,6 @@ const TemplatesItemPage = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const appState = useSelector((state) => state.app);
-    const [properties, setProperties] = useState([]);
     const { Provider } = useContext(DappifyContext);
    
     const [value, setValue] = useState(0);
@@ -64,39 +63,27 @@ const TemplatesItemPage = () => {
       setValue(newValue);
     };
 
-    const loadProperties = async() => {
-        setProperties([]);
-        const props = await Property.listPropertiesByProject({ projectId: appState.appId, templateId: id  });
-        setProperties(props);
-    }
-
-    useEffect(() => {
-        loadProperties();
-    }, [id]);
-
-    const saveProperty = debounce((prop) => prop.save());
-
     const renderProperties = () => {
-        const list = properties.map((prop) => {
+        const list = appState.template[id].properties.map((prop, index) => {
             return (
                 <Grid item xs={12}>
                     <Grid container xs={prop.id} spacing={2}>
                         <Grid item xs={2}>
                             <TextField placeholder="Type" fullWidth defaultValue={prop.type}  onChange={(e) => {
-                                prop.type = e.target.value;
-                                saveProperty(prop);
+                                appState.template[id].properties[index].type = e.target.value;
+                                dispatch({ type: UPDATE_APP, configuration: {...appState} });
                             }}/>
                         </Grid>
                         <Grid item xs={4}>
                             <TextField placeholder="Key" fullWidth defaultValue={prop.key} onChange={(e) => {
-                                prop.key = e.target.value;
-                                saveProperty(prop);
+                                appState.template[id].properties[index].key = e.target.value;
+                                dispatch({ type: UPDATE_APP, configuration: {...appState} });
                             }} />
                         </Grid>
                         <Grid item xs={4}>
                             <TextField placeholder="Value" fullWidth defaultValue={prop.value} onChange={(e) => {
-                                prop.value = e.target.value;
-                                saveProperty(prop);
+                                appState.template[id].properties[index].value = e.target.value;
+                                dispatch({ type: UPDATE_APP, configuration: {...appState} });
                             }} />
                         </Grid>
                         <Grid item xs={2}>
@@ -109,16 +96,17 @@ const TemplatesItemPage = () => {
                                             const data = e.target.files[0];
                                             const file = new Provider.File('property', data);
                                             const upload = await file.saveIPFS();
-                                            prop.value = upload.ipfs();
-                                            saveProperty(prop);
+                                            appState.template[id].properties[index].value = upload.ipfs();
+                                            console.log(appState.template[id].properties);
+                                            dispatch({ type: UPDATE_APP, configuration: {...appState} });
                                         }}/>
                                 <Button component="span" color="primary">
                                     <FileUploadIcon />
                                 </Button>
                             </label>
                             <Button color="error" size="large" onClick={async() => {
-                                await prop.remove();
-                                await loadProperties();
+                                appState.template[id].properties.splice(index, 1);
+                                dispatch({ type: UPDATE_APP, configuration: {...appState} });
                             }}><RemoveCircleIcon /></Button>
                         </Grid>
                     </Grid>
@@ -153,7 +141,7 @@ const TemplatesItemPage = () => {
                         <TextField fullWidth defaultValue={appState.template[id].translation.resources.en.translation[item]} 
                             onChange={(e) => {
                                 appState.template[id].translation.resources.en.translation[item] = e.target.value;
-                                dispatch({ type: UPDATE_APP, configuration: appState });
+                                dispatch({ type: UPDATE_APP, configuration: {...appState} });
                             }}></TextField>
                     </Grid>
                 </Grid>
@@ -201,11 +189,15 @@ const TemplatesItemPage = () => {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Button variant="contained" disabled={!isSupported()} onClick={async () => {
-                                        await Property.addPropertyForProject({ projectId: appState.appId, templateId: id });
-                                        await loadProperties();
+                                        appState.template[id].properties.push({
+                                            type: null,
+                                            key: null,
+                                            value: null
+                                        })
+                                        dispatch({ type: UPDATE_APP, configuration: {...appState} });
                                     }} endIcon={<AddIcon />}>Add Property</Button>
                                 </Grid>
-                                {!isEmpty(properties) && renderProperties()}
+                                {!isEmpty(appState.template[id].properties) && renderProperties()}
                             </Grid>
                         </TabPanel>
                         <TabPanel value={value} index={1}>

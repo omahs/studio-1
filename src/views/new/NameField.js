@@ -5,6 +5,7 @@ import { TextField, Grid, Typography, Alert, Chip, Tooltip, Button, DialogConten
 import Project from 'react-dappify/model/Project';
 import EditIcon from '@mui/icons-material/Edit';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { getUrl } from 'utils/url';
 
 const NameField = ({ onChange }) => {
     const theme = useTheme();
@@ -81,7 +82,7 @@ const NameField = ({ onChange }) => {
             </Grid>
             <Grid item xs={12}>
                 <Tooltip title="A unique identifier subdomain for your project">
-                    <Chip icon={<EditIcon sx={{ fontSize: '1.2em', paddingLeft: 1, width: 25 , opacity: 0.75 }} />} label={`https://${appSubdomain}.dappify.us`}  variant="outlined" onClick={() => setShowEditor(true)}/>
+                    <Chip icon={<EditIcon sx={{ fontSize: '1.2em', paddingLeft: 1, width: 25 , opacity: 0.75 }} />} label={getUrl(appSubdomain)}  variant="outlined" onClick={() => setShowEditor(true)}/>
                 </Tooltip>
             </Grid>
             <Grid item xs={12} sx={{ p: 0, minHeight: 44 }}>

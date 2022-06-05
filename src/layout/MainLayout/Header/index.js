@@ -20,7 +20,6 @@ const Header = ({ handleLeftDrawerToggle }) => {
     const theme = useTheme();
     const appConfiguration = useSelector((state) => state.app);
     const { user, isAuthenticated, logout, authenticate } = useMoralis();
-    const [setPreviousConfiguration] = useState(appConfiguration);
     const [hasChanges, setHasChanges] = useState(false);
     const dispatch = useDispatch();
 
@@ -39,7 +38,6 @@ const Header = ({ handleLeftDrawerToggle }) => {
                 anchorOrigin: { vertical: 'top', horizontal: 'center' },
                 alertSeverity: 'success'
             });
-            setPreviousConfiguration(appConfiguration);
             setHasChanges(false);
         } catch (e) {
             dispatch({
@@ -134,7 +132,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
                 href={getUrl(appConfiguration.subdomain)}
                 target="_blank"
             >
-                Go to site
+                Visit my dApp
             </Button>
             {loginButton}
             {/* notification & profile 

@@ -12,7 +12,7 @@ import { SNACKBAR_OPEN, CLEAR_APP } from 'store/actions';
 import AccountBalanceWalletTwoToneIcon from '@mui/icons-material/AccountBalanceWalletTwoTone';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Project from 'react-dappify/model/Project';
-import { isEqual } from 'lodash';
+import { getUrl } from 'utils/url';
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
@@ -20,7 +20,6 @@ const Header = ({ handleLeftDrawerToggle }) => {
     const theme = useTheme();
     const appConfiguration = useSelector((state) => state.app);
     const { user, isAuthenticated, logout, authenticate } = useMoralis();
-    const [previousConfgiuration, setPreviousConfiguration] = useState(appConfiguration);
     const [hasChanges, setHasChanges] = useState(false);
     const dispatch = useDispatch();
 
@@ -39,7 +38,6 @@ const Header = ({ handleLeftDrawerToggle }) => {
                 anchorOrigin: { vertical: 'top', horizontal: 'center' },
                 alertSeverity: 'success'
             });
-            setPreviousConfiguration(appConfiguration);
             setHasChanges(false);
         } catch (e) {
             dispatch({
@@ -63,7 +61,6 @@ const Header = ({ handleLeftDrawerToggle }) => {
     };
 
     const cleanupState = () => {
-        console.log('dispatching');
         dispatch({ type: CLEAR_APP });
     };
 
@@ -131,10 +128,10 @@ const Header = ({ handleLeftDrawerToggle }) => {
                 color="primary"
                 size="small"
                 sx={{ mx: 1 }}
-                href={`https://${appConfiguration.subdomain}.dappify.us/`}
+                href={getUrl(appConfiguration.subdomain)}
                 target="_blank"
             >
-                Go to site
+                Visit my dApp
             </Button>
             {loginButton}
             {/* notification & profile 

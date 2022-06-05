@@ -109,7 +109,7 @@ const Loader = ({onChange}) => {
     const loader = (
         <Grid container justifyContent="center" alignItems="center">
             <Grid item xs={12} sx={{ textAlign: 'center', position: 'absolute' }}>
-                <CircularProgressWithLabel value={progress} />;
+                <CircularProgressWithLabel value={progress} />
             </Grid>
             <Grid item sx={{ marginTop: 30, textAlign: 'center', height: 50 }}>
                 {ready}

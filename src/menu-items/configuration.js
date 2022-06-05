@@ -1,7 +1,4 @@
 // third-party
-import { FormattedMessage } from 'react-intl';
-
-import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
 
 // assets
 import {
@@ -41,7 +38,9 @@ import {
     IconAdjustments,
     IconSettingsAutomation,
     IconSettings,
-    IconLanguage
+    IconLanguage,
+    IconApps,
+    IconCurrencyEthereum
 } from '@tabler/icons';
 
 // constant
@@ -82,19 +81,21 @@ const icons = {
     IconAdjustments,
     IconSettingsAutomation,
     IconSettings,
-    IconLanguage
+    IconLanguage,
+    IconApps,
+    IconCurrencyEthereum
 };
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
 const dashboard = {
     id: 'dashboard',
-    title: "1.Configure",
+    title: "DApp",
     type: 'group',
     children: [
         {
             id: 'default',
-            title: "1. Get started",
+            title: "Info",
             type: 'item',
             url: 'overview',
             icon: icons.IconInfoSquare,
@@ -102,7 +103,7 @@ const dashboard = {
         },
         {
             id: 'theme',
-            title: "2. Brand it",
+            title: "Look & Feel",
             type: 'item',
             url: 'theme',
             icon: icons.IconPalette,
@@ -126,14 +127,14 @@ const dashboard = {
             //     }
             // ]
         },
-        {
-            id: 'localization',
-            title: "3. Localize it",
-            type: 'item',
-            url: 'localization',
-            icon: icons.IconLanguage,
-            breadcrumbs: false
-        },
+        // {
+        //     id: 'localization',
+        //     title: "3. Localize it",
+        //     type: 'item',
+        //     url: 'localization',
+        //     icon: icons.IconLanguage,
+        //     breadcrumbs: false
+        // },
         // {
         //     id: 'features',
         //     title: <FormattedMessage id="Features" />,
@@ -142,20 +143,20 @@ const dashboard = {
         //     icon: icons.IconAdjustments,
         //     breadcrumbs: false
         // },
+        // {
+        //     id: 'blockchain',
+        //     title: "4. Your smart contract",
+        //     type: 'item',
+        //     url: 'blockchain',
+        //     icon: icons.IconSettingsAutomation,
+        //     breadcrumbs: false
+        // },
         {
-            id: 'blockchain',
-            title: "4. Your smart contract",
+            id: 'templates',
+            title: "Add Templates",
             type: 'item',
-            url: 'blockchain',
-            icon: icons.IconSettingsAutomation,
-            breadcrumbs: false
-        },
-        {
-            id: 'backend',
-            title: "5. Review settings",
-            type: 'item',
-            url: 'backend',
-            icon: icons.IconSettings,
+            url: 'templates',
+            icon: icons.IconApps,
             breadcrumbs: false
         },
         // {

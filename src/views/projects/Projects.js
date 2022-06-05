@@ -25,7 +25,7 @@ const Projects = () => {
         }
     };
 
-    const [showAcknowledge, setAcknowledge] = useState();
+    const [showAcknowledge, setAcknowledge] = useState(false);
     const acknowledge = () => {
         // Has this person acknowledge beta?
         const ready = localStorage.getItem('acknowledge');

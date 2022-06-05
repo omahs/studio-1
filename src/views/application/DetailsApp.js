@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Paper, Grid, Typography } from '@mui/material';
+import { Paper, Grid, Typography, Button } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { UPDATE_APP } from 'store/actions';
 import moment from 'moment';
 import { getImage } from 'react-dappify/utils/image';
-
-const getAppUrl = (subdomain) => `https://${subdomain}.dappify.us`;
+import { getUrl } from 'utils/url';
 
 const DetailsApp = ({ project = {} }) => {
     const navigate = useNavigate();
@@ -54,7 +53,7 @@ const DetailsApp = ({ project = {} }) => {
                 <Grid item sx={{ mb: 3 }} xs={12}>
                     <Typography variant="h3" sx={{ color: fontColor }}>{project.config.name}</Typography>
                     <Typography variant="h6" fontSize="1em">
-                        <a  style={{ color: fontColor }} href={getAppUrl(project.config.subdomain)}>{getAppUrl(project.config.subdomain)}</a>
+                        <Button sx={{ textTransform: 'none' }} href={getUrl(project.config.subdomain)}>{getUrl(project.config.subdomain)}</Button>
                     </Typography>
                 </Grid>
                 <Typography fontSize="1em">Last updated {moment(project.updatedAt).format('lll')}</Typography>

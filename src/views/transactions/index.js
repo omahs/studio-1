@@ -8,9 +8,9 @@ import { gridSpacing } from 'store/constant';
 import { setField, setImage, setBoolean, setColor, setMoralis, setSocial, setFeature } from 'utils/config';
 import { useMoralis } from 'react-moralis';
 import Loader from 'ui-component/Loader';
-import UserList from 'views/users/UserList';
+import TransactionList from 'views/transactions/TransactionList';
 
-const UsersPage = () => {
+const TransactionsPage = () => {
     const dispatch = useDispatch();
     const appState = useSelector((state) => state.app);
     const [newsList, setNewsList] = useState([]);
@@ -24,7 +24,6 @@ const UsersPage = () => {
         query.equalTo('appId', appState.id);
         const results = await query.find();
         setNewsList(results);
-        console.log(results);
     };
 
     useEffect(() => {
@@ -92,15 +91,14 @@ const UsersPage = () => {
                 </Grid>
             );
         });
-        console.log(list);
         return list;
     };
 
     return (
         <MainCard>
-            <UserList />
+            <TransactionList />
         </MainCard>
     );
 };
 
-export default UsersPage;
+export default TransactionsPage;

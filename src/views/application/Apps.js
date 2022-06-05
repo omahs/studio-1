@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';
@@ -9,12 +9,10 @@ import { SNACKBAR_OPEN } from 'store/actions';
 import {
     Typography,
     Grid,
-    Container,
     Button,
     Select,
     OutlinedInput,
     MenuItem,
-    Box,
     FormControl,
     Input,
     FormHelperText,
@@ -22,7 +20,6 @@ import {
     ListItemIcon,
     Paper
 } from '@mui/material';
-import { gridSpacing } from 'store/constant';
 import useApps from 'hooks/useApps';
 import AddIcon from '@mui/icons-material/Add';
 import { useMoralis } from 'react-moralis';
@@ -31,7 +28,6 @@ import AceEditor from 'react-ace';
 import MobileDevicePreview from 'views/application/MobileDevicePreview';
 import DetailsApp from 'views/application/DetailsApp';
 import Picker from 'views/application/Picker';
-import Loadable from 'ui-component/Loadable';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
 import { ColorPicker, createColor } from 'mui-color';
@@ -152,21 +148,21 @@ export default function Examples() {
     // };
 
     useEffect(() => {
-        const input = {
-            language: 'Solidity',
-            sources: {
-                'test.sol': {
-                    content: 'import "lib.sol"; contract C { function f() public { L.f(); } }'
-                }
-            },
-            settings: {
-                outputSelection: {
-                    '*': {
-                        '*': ['*']
-                    }
-                }
-            }
-        };
+        // const input = {
+        //     language: 'Solidity',
+        //     sources: {
+        //         'test.sol': {
+        //             content: 'import "lib.sol"; contract C { function f() public { L.f(); } }'
+        //         }
+        //     },
+        //     settings: {
+        //         outputSelection: {
+        //             '*': {
+        //                 '*': ['*']
+        //             }
+        //         }
+        //     }
+        // };
         // console.log(solc);
         // function findImports(path) {
         // if (path === 'lib.sol')

@@ -44,7 +44,6 @@ const transition = {
 const Snackbar = () => {
     const [open, setOpen] = useState(false);
     const snackbarInitial = useSelector((state) => state.snackbar);
-    console.log(snackbarInitial);
     const handleClose = (reason) => {
         if (reason === 'clickaway') {
             return;

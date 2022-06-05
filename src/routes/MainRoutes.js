@@ -18,7 +18,6 @@ const AppUserSocialProfile = Loadable(lazy(() => import('views/application/users
 const AppUserAccountProfile1 = Loadable(lazy(() => import('views/application/users/account-profile/Profile1')));
 const AppUserAccountProfile2 = Loadable(lazy(() => import('views/application/users/account-profile/Profile2')));
 const AppUserAccountProfile3 = Loadable(lazy(() => import('views/application/users/account-profile/Profile3')));
-const ApplicationPage = Loadable(lazy(() => import('views/application')));
 
 // application - user cards & list variant routing
 const AppProfileCardStyle1 = Loadable(lazy(() => import('views/application/users/card/CardStyle1')));
@@ -120,23 +119,23 @@ const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')
 const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
 const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
 const UtilsMaterialIcons = Loadable(lazy(() => import('views/utilities/MaterialIcons')));
-const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons')));
 const UtilsAnimation = Loadable(lazy(() => import('views/utilities/Animation')));
 const UtilsGrid = Loadable(lazy(() => import('views/utilities/Grid')));
 
 // sample page routing
-const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 const OverviewPage = Loadable(lazy(() => import('views/overview')));
-const DesignThemePage = Loadable(lazy(() => import('views/design/Theme')));
-const UtilsColorPalette = Loadable(lazy(() => import('views/utilities/ColorPalette')));
 
 const BrandPage = Loadable(lazy(() => import('views/brand')));
 const TemplatePage = Loadable(lazy(() => import('views/template')));
 const FeaturesPage = Loadable(lazy(() => import('views/features')));
 const BlockchainPage = Loadable(lazy(() => import('views/blockchain')));
-const BackendPage = Loadable(lazy(() => import('views/backend')));
+// const BackendPage = Loadable(lazy(() => import('views/backend')));
 
 const UsersPage = Loadable(lazy(() => import('views/users')));
+const TransactionsPage = Loadable(lazy(() => import('views/transactions')));
+
+const TemplatesPage = Loadable(lazy(() => import('views/templates')));
+const TemplatesItemPage = Loadable(lazy(() => import('views/templates/Item')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -519,12 +518,20 @@ const MainRoutes = {
             element: <BlockchainPage />
         },
         {
-            path: '/studio/backend',
-            element: <BackendPage />
-        },
-        {
             path: '/studio/users',
             element: <UsersPage />
+        },
+        {
+            path: '/studio/transactions',
+            element: <TransactionsPage />
+        },
+        {
+            path: '/studio/templates',
+            element: <TemplatesPage />
+        },
+        {
+            path: '/studio/templates/:id',
+            element: <TemplatesItemPage />
         }
     ]
 };

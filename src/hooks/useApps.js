@@ -4,7 +4,7 @@ import { useMoralis } from 'react-moralis';
 // ==============================|| ELEMENT REFERENCE HOOKS  ||============================== //
 
 const useApps = () => {
-    const { Moralis, isAuthenticated, user, logout } = useMoralis();
+    const { Moralis, isAuthenticated, user } = useMoralis();
     const [apps, setApps] = useState([]);
 
     // logout();
@@ -21,7 +21,6 @@ const useApps = () => {
     };
 
     useEffect(() => {
-        console.log(user);
         if (isAuthenticated && user) {
             loadApps();
         } else {

@@ -34,7 +34,6 @@ const TemplatesPage = ({ id }) => {
                 <Grid item xs={12} md={6} lg={4} key={template.schema.id}>
                     <Paper elevation={1} className={optionsClass} sx={{p:2}} onClick={() => {
                         const newState = {...appState};
-                        console.log(template);
                         if (appState.template[template.schema.id]) {
                             // Toggle unselect
                             delete newState.template[template.schema.id];

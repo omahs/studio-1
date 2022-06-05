@@ -45,7 +45,6 @@ export const setFeature = (dispatch, state, field, enabled) => {
 };
 
 export const setNetwork = (dispatch, state, network) => {
-    console.log(network);
     const current = state;
     current.network = network;
     dispatch({ type: UPDATE_APP, configuration: current });

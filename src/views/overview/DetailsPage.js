@@ -23,7 +23,6 @@ const BackendPage = () => {
     };
 
     const cleanupState = () => {
-        console.log('dispatching');
         dispatch({ type: CLEAR_APP });
     };
     

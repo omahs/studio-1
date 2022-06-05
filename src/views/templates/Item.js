@@ -97,7 +97,6 @@ const TemplatesItemPage = () => {
                                             const file = new Provider.File('property', data);
                                             const upload = await file.saveIPFS();
                                             appState.template[id].properties[index].value = upload.ipfs();
-                                            console.log(appState.template[id].properties);
                                             dispatch({ type: UPDATE_APP, configuration: {...appState} });
                                         }}/>
                                 <Button component="span" color="primary">

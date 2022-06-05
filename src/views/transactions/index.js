@@ -91,7 +91,6 @@ const TransactionsPage = () => {
                 </Grid>
             );
         });
-        console.log(list);
         return list;
     };
 

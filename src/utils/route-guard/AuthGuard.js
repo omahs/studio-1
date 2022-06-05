@@ -24,8 +24,6 @@ const AuthGuard = ({ children }) => {
         if (!appState.appId) {
             navigate('/projects', { replace: true });
         }
-        console.log(appState);
-        // console.log(user);
     }, [isAuthenticated, navigate]);
 
     return children;

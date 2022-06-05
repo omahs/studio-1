@@ -83,7 +83,6 @@ const Progress = () => {
                         elevation={1}
                         onClick={async () => {
                             const rawInput = await navigator.clipboard.readText();
-                            console.log(rawInput);
                             if (CSS.supports('color', rawInput)) {
                                 setBgColor(rawInput);
                             } else {
@@ -98,7 +97,6 @@ const Progress = () => {
                     item
                     xs={12}
                     onClick={() => {
-                        console.log('copy??');
                     }}
                 >
                     <UtilsColorPalette />

@@ -23,12 +23,12 @@ const NewPage = () => {
         setCantContinue(!canNextStep || !appName || !subddomain);
         appState.name = appName;
         appState.subdomain = subddomain;
+        appState.operator = user.get('ethAddress');
     }
 
     const handleStepTwo = (chainId) => {
         setCantContinue(!chainId);
         appState.chainId = chainId;
-        console.log(appState);
     };
 
     const handleStepThree = (checked) => {

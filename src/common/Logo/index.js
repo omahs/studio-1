@@ -5,7 +5,7 @@ const Logo = () => {
     const appConfiguration = useSelector((state) => state.app);
     return (
         <Grid container>
-            <img src={appConfiguration.logo} alt={appConfiguration.name} width="100" />
+            <img src={appConfiguration.logo} alt={appConfiguration.name} style={{ maxHeight: 40 }} />
         </Grid>
     );
 };

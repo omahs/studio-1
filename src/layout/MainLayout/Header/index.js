@@ -61,7 +61,6 @@ const Header = ({ handleLeftDrawerToggle }) => {
     };
 
     const cleanupState = () => {
-        console.log('dispatching');
         dispatch({ type: CLEAR_APP });
     };
 

@@ -5,18 +5,17 @@ import {
   } from "react-router-dom";
 import { Paper, Grid, Typography, Input, FormGroup, FormControlLabel, Switch, Checkbox, TextField, Button, Alert, Box, Tabs, Tab } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
-import Property from 'react-dappify/model/Property';
 import { useDispatch, useSelector } from 'react-redux';
 import { UPDATE_APP } from 'store/actions';
 import { SNACKBAR_OPEN } from 'store/actions';
-import { debounce } from 'react-dappify/utils/timer';
 import isEmpty from 'lodash/isEmpty';
 import AddIcon from '@mui/icons-material/Add';
-import constants from 'react-dappify/constants';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, constants, Property, utils } from 'react-dappify';
 import { getUrl } from 'utils/url';
+
+const { debounce } = utils.timer;
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;

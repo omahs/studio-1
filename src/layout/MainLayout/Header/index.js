@@ -11,7 +11,7 @@ import { SNACKBAR_OPEN, CLEAR_APP } from 'store/actions';
 // assets
 import AccountBalanceWalletTwoToneIcon from '@mui/icons-material/AccountBalanceWalletTwoTone';
 import LogoutIcon from '@mui/icons-material/Logout';
-import Project from 'react-dappify/model/Project';
+import { Project } from 'react-dappify';
 import { getUrl } from 'utils/url';
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //

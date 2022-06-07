@@ -9,9 +9,7 @@ import Loader from 'views/new/Loader';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import { UPDATE_APP } from 'store/actions';
-import defaultConfiguration from 'react-dappify/configuration/default.json';
-import Project from 'react-dappify/model/Project';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, defaultConfiguration, Project } from 'react-dappify';
 
 const NewPage = () => {
     const { user } = useContext(DappifyContext);

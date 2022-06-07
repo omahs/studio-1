@@ -1,8 +1,8 @@
 // action - state management
 import { UPDATE_APP, CLEAR_APP } from './actions';
-import configuration from 'react-dappify/configuration/default.json';
+import { defaultConfiguration } from 'react-dappify';
 
-const initialState = configuration;
+const initialState = defaultConfiguration;
 
 const appReducer = (state = initialState, action) => {
     switch (action.type) {

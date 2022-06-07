@@ -11,7 +11,7 @@ import LocalGroceryStoreTwoToneIcon from '@mui/icons-material/LocalGroceryStoreT
 import LocalActivityTwoToneIcon from '@mui/icons-material/LocalActivityTwoTone';
 import templateNftMarketplace from 'assets/images/marketplace.jpeg';
 import SubCard from 'ui-component/cards/SubCard';
-import constants from 'react-dappify/constants';
+import { constants } from 'react-dappify';
 
 const { NETWORKS, LOGO, MAINNETS, CONTRACTS } = constants;
 

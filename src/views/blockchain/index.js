@@ -3,18 +3,17 @@ import { Alert, Box, Tab, Tooltip, Chip, TextField, InputAdornment, Grid,  Circu
 import MainCard from 'ui-component/cards/MainCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { gridSpacing } from 'store/constant';
-import constants from 'react-dappify/constants';
 import { ethers } from 'ethers';
-import MarketplaceBytecode from 'react-dappify/contracts/artifacts/contracts.json';
-import { DappifyContext } from 'react-dappify';
-import { formatAddress } from 'react-dappify/utils/format';
+// import MarketplaceBytecode from 'react-dappify/contracts/artifacts/contracts.json';
+import { DappifyContext, constants, Project, utils } from 'react-dappify';
 import { UPDATE_APP } from 'store/actions';
 import { SNACKBAR_OPEN } from 'store/actions';
-import Project from 'react-dappify/model/Project';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
+
+const { formatAddress } = utils;
 const { NETWORKS, LOGO, MAINNETS, CONTRACTS } = constants;
 
 const BlockchainPage = () => {
@@ -43,23 +42,23 @@ const BlockchainPage = () => {
         return currentProvider;
     };
 
-    const getContractFee = async () => {
-        const currentProvider = await loadChainProvider();
-        const signerAddress = await currentProvider.getSigner().getAddress();
-        setBeneficiary(signerAddress);
-        try {
-            const contract = MarketplaceBytecode.output.contracts['contracts/ERC721MarketplaceV1.sol'].ERC721MarketplaceV1;
-            const abi = contract.abi;
-            const marketplaceContract = new ethers.Contract(appState.template.marketplace.main.contract, abi, currentProvider.getSigner());
-            const operatorFee = await marketplaceContract.getRoyaltyFee(beneficiary);
-            setBeneficiaryFee(operatorFee/100);
-            setOriginalBeneficiaryFee(operatorFee/100);
-            const providerFee = await marketplaceContract.getRoyaltyFee(dappify);
-            setDappifyFee(providerFee/100);
-        } catch (e) {
-            console.log(e);
-        }
-    };
+    // const getContractFee = async () => {
+    //     const currentProvider = await loadChainProvider();
+    //     const signerAddress = await currentProvider.getSigner().getAddress();
+    //     setBeneficiary(signerAddress);
+    //     try {
+    //         const contract = MarketplaceBytecode.output.contracts['contracts/ERC721MarketplaceV1.sol'].ERC721MarketplaceV1;
+    //         const abi = contract.abi;
+    //         const marketplaceContract = new ethers.Contract(appState.template.marketplace.main.contract, abi, currentProvider.getSigner());
+    //         const operatorFee = await marketplaceContract.getRoyaltyFee(beneficiary);
+    //         setBeneficiaryFee(operatorFee/100);
+    //         setOriginalBeneficiaryFee(operatorFee/100);
+    //         const providerFee = await marketplaceContract.getRoyaltyFee(dappify);
+    //         setDappifyFee(providerFee/100);
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // };
 
     // const launch = async() => {
     //     const currentProvider = new ethers.providers.Web3Provider(window.ethereum);
@@ -115,48 +114,48 @@ const BlockchainPage = () => {
     //     }
     // }
 
-    const setContractFee = async(currentProvider) => {
-        const contract = MarketplaceBytecode.output.contracts['contracts/ERC721MarketplaceV1.sol'].ERC721MarketplaceV1;
-        const abi = contract.abi;
-        const marketplaceContract = new ethers.Contract(CONTRACTS[appState.type][selectedNetwork.chainId], abi, currentProvider.getSigner());
-        const targetFee = beneficiaryFee*100;
-        const tx = await marketplaceContract.setRoyaltyFee(targetFee);
-        return tx;
-    }
+    // const setContractFee = async(currentProvider) => {
+    //     const contract = MarketplaceBytecode.output.contracts['contracts/ERC721MarketplaceV1.sol'].ERC721MarketplaceV1;
+    //     const abi = contract.abi;
+    //     const marketplaceContract = new ethers.Contract(CONTRACTS[appState.type][selectedNetwork.chainId], abi, currentProvider.getSigner());
+    //     const targetFee = beneficiaryFee*100;
+    //     const tx = await marketplaceContract.setRoyaltyFee(targetFee);
+    //     return tx;
+    // }
 
-    const setRates = async() => {
-        try {
-            setProcessign(true);
-            const currentProvider = await getProviderInstance();
-            await switchToChain(selectedNetwork, currentProvider.provider);
-            if (hasBeneficiaryFeeChanged()) {
-                await setContractFee(currentProvider);
-            }
-            appState.operator = beneficiary;
-            dispatch({ type: UPDATE_APP, configuration: appState });
-            await Project.publishChanges(appState, user);
-            dispatch({
-                type: SNACKBAR_OPEN,
-                open: true,
-                message: 'Project updated',
-                variant: 'alert',
-                anchorOrigin: { vertical: 'top', horizontal: 'center' },
-                alertSeverity: 'success'
-            });
-        } catch (e) {
-            dispatch({
-                type: SNACKBAR_OPEN,
-                open: true,
-                message: e.message,
-                variant: 'alert',
-                anchorOrigin: { vertical: 'top', horizontal: 'center' },
-                alertSeverity: 'error'
-            });
-        } finally {
-            setProcessign(false);
-            setRatesOpen(false);
-        }
-    }
+    // const setRates = async() => {
+    //     try {
+    //         setProcessign(true);
+    //         const currentProvider = await getProviderInstance();
+    //         await switchToChain(selectedNetwork, currentProvider.provider);
+    //         if (hasBeneficiaryFeeChanged()) {
+    //             await setContractFee(currentProvider);
+    //         }
+    //         appState.operator = beneficiary;
+    //         dispatch({ type: UPDATE_APP, configuration: appState });
+    //         await Project.publishChanges(appState, user);
+    //         dispatch({
+    //             type: SNACKBAR_OPEN,
+    //             open: true,
+    //             message: 'Project updated',
+    //             variant: 'alert',
+    //             anchorOrigin: { vertical: 'top', horizontal: 'center' },
+    //             alertSeverity: 'success'
+    //         });
+    //     } catch (e) {
+    //         dispatch({
+    //             type: SNACKBAR_OPEN,
+    //             open: true,
+    //             message: e.message,
+    //             variant: 'alert',
+    //             anchorOrigin: { vertical: 'top', horizontal: 'center' },
+    //             alertSeverity: 'error'
+    //         });
+    //     } finally {
+    //         setProcessign(false);
+    //         setRatesOpen(false);
+    //     }
+    // }
 
     const setVersion = async () => {
         try {
@@ -265,7 +264,7 @@ const BlockchainPage = () => {
                         </Tooltip>
                         {isCurrentChain && <Button sx={{ borderRadius: 0 }} fullWidth onClick={async () => {
                             setProcessign(true);
-                            await getContractFee();
+                            // await getContractFee();
                             setProcessign(false);
                             setRatesOpen(true);
                         }}>
@@ -353,7 +352,7 @@ const BlockchainPage = () => {
             </DialogContent>
             <DialogActions>
             <Button onClick={() => setRatesOpen(false)} color="error">Cancel</Button>
-            <Button variant="contained" color="error" onClick={() => setRates()} autoFocus>
+            <Button variant="contained" color="error"  autoFocus>
                 {!processing && "Save in blockchain"}
                 {processing && <CircularProgress color="inherit" size={20} />}
             </Button>

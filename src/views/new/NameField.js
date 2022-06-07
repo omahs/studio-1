@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { TextField, Grid, Typography, Alert, Chip, Tooltip, Button, DialogContentText, DialogTitle, DialogActions, Dialog, DialogContent } from '@mui/material';
-import Project from 'react-dappify/model/Project';
+import { Project } from 'react-dappify';
 import EditIcon from '@mui/icons-material/Edit';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { getUrl } from 'utils/url';

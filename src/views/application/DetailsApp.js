@@ -4,8 +4,10 @@ import { Paper, Grid, Typography, Button } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { UPDATE_APP } from 'store/actions';
 import moment from 'moment';
-import { getImage } from 'react-dappify/utils/image';
+import { utils } from 'react-dappify';
 import { getUrl } from 'utils/url';
+
+const  { getImage } = utils.image;
 
 const DetailsApp = ({ project = {} }) => {
     const navigate = useNavigate();

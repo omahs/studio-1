@@ -21,9 +21,8 @@ import {
 
 // assets
 import { useSelector } from 'react-redux';
-import constants from 'react-dappify/constants';
 import isEmpty from 'lodash/isEmpty';
-import defaultConfiguration from 'react-dappify/configuration/default.json';
+import  { defaultConfiguration, constants } from 'react-dappify';
 import { getUrl } from 'utils/url';
 
 const { NETWORKS, LOGO } = constants;

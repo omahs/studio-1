@@ -20,7 +20,7 @@ import moment from 'moment';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-import UserProfile from 'react-dappify/model/UserProfile';
+import {UserProfile} from 'react-dappify';
 
 // table header
 const headCells = [

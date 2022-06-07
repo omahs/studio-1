@@ -2,11 +2,10 @@ import { useEffect, useContext, useState } from 'react';
 import { Typography, Grid, Container, Box, Paper,Dialog, Button, DialogActions, DialogTitle, DialogContent, DialogContentText} from '@mui/material';
 import { gridSpacing } from 'store/constant';
 import DetailsApp from 'views/application/DetailsApp';
-import Project from 'react-dappify/model/Project';
 import { useTheme } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, Project } from 'react-dappify';
 import emptyList from 'assets/images/emptylist.png';
 
 const Projects = () => {
@@ -17,6 +16,8 @@ const Projects = () => {
     const [selected, setSelected] = useState();
 
     const loadApps = async() => {
+        console.log("??????");
+        console.log(Project);
         if (isAuthenticated) {
             const list = await Project.listAll(user);
             setProjects(list);

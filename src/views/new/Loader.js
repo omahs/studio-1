@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { UPDATE_APP } from 'store/actions';
 import { TextField, Grid, Typography, Alert, CircularProgress, Box } from '@mui/material';
 import { withStyles } from '@mui/styles';
-import Project from 'react-dappify/model/Project';
+import { Project } from 'react-dappify';
 import PropTypes from 'prop-types';
 import { useMoralis } from 'react-moralis';
 

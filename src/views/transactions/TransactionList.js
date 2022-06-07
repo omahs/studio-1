@@ -21,9 +21,8 @@ import moment from 'moment';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-import Transaction from 'react-dappify/model/Transaction';
 
-import constants from 'react-dappify/constants';
+import { constants, Transaction } from 'react-dappify';
 
 // table header
 const headCells = [

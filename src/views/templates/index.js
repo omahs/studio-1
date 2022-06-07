@@ -4,7 +4,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { UPDATE_APP } from 'store/actions';
 import { SNACKBAR_OPEN } from 'store/actions';
-import Template from 'react-dappify/model/Template';
+import {Template} from 'react-dappify';
 
 const TemplatesPage = ({ id }) => {
     console.log(id);

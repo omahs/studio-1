@@ -4,7 +4,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { BlockPicker } from 'react-color';
 import { gridSpacing } from 'store/constant';
-import Project from 'react-dappify/model/Project';
+import {Project} from 'react-dappify';
 import { setField, setImage, setBoolean, setColor, setMoralis, setSocial, setFeature } from 'utils/config';
 import { ADD_ITEM_COMMENT, SNACKBAR_OPEN, CLEAR_APP } from 'store/actions';
 import { useMoralis } from 'react-moralis';

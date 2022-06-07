@@ -1,7 +1,6 @@
 import { forwardRef, useContext } from 'react';
 import { Grid, Dialog, DialogContent,Slide, Button, Typography } from '@mui/material';
-import { supportedWallets } from 'react-dappify/wallets';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, supportedWallets } from 'react-dappify';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;

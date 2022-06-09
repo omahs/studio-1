@@ -72,7 +72,7 @@ const MarketplacePage = () => (
             </Grid>
         </HeaderWrapper>
         <SecondWrapper>
-            <Options />
+            <Options readOnly={true} />
         </SecondWrapper>
         <Footer />
     </>

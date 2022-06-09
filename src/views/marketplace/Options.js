@@ -20,7 +20,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import debounce from 'lodash/debounce';
 import isEmpty from 'lodash/isEmpty';
 
-const Options = ({ id }) => {
+const Options = ({ id, readOnly=false }) => {
     console.log(id);
     const dispatch = useDispatch();
     const appState = useSelector((state) => state.app);
@@ -116,7 +116,7 @@ const Options = ({ id }) => {
                             <Grid item xs={6}>
                                 <Button fullWidth href={template?.schema?.sample} target="_blank">Demo</Button>
                             </Grid>
-                            {!isInstalled && (
+                            {!isInstalled && !readOnly && (
                                 <Grid item xs={12}>
                                     <Button variant="contained" 
                                             color="secondary" 
@@ -129,7 +129,7 @@ const Options = ({ id }) => {
                                             >Install Ver. {template?.schema?.version}</Button>
                                 </Grid>)
                             }
-                            {isInstalled && (
+                            {isInstalled && !readOnly && (
                                 <Grid item xs={12}>
                                     <Button variant="contained" 
                                             color="secondary" 

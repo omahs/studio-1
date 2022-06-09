@@ -27,6 +27,12 @@ import { constants, Transaction } from 'react-dappify';
 // table header
 const headCells = [
     {
+        id: 'category',
+        numeric: false,
+        disablePadding: true,
+        label: 'category'
+    },
+    {
         id: 'status',
         numeric: false,
         disablePadding: true,
@@ -245,9 +251,12 @@ const TransactionList = () => {
                                         selected={isItemSelected}
                                     >
                                         <TableCell component="th" id={labelId} scope="row" padding="normal">
+                                            {row.category}
+                                        </TableCell>
+                                        <TableCell component="th" id={labelId} scope="row" padding="normal">
                                             {row.status}
                                         </TableCell>
-                                        <TableCell align="left">${row.amount.toFixed(4)}</TableCell>
+                                        <TableCell align="left">${row.amount?.toFixed(4)}</TableCell>
                                         <TableCell align="left">{moment(row.updatedAt).fromNow()}</TableCell>
                                         <TableCell align="left">
                                             <Button href={getExplorerUrl(row)} target="_blank">View</Button>

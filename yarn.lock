@@ -13900,10 +13900,10 @@ react-currency-format@^1.0.0:
   dependencies:
     prop-types "^15.6.0"
 
-react-dappify@^0.0.16:
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/react-dappify/-/react-dappify-0.0.16.tgz#6503ef6d4dc1d513aca416ca1d25ace5ebe08b8a"
-  integrity sha512-e24s/epd753h1s4iAFb6c2W5jEJoMcYUY742PabGZKdnAMsqCiaXml7fJdzS8L56V7RWOCiBSNCe8m8ixllDvg==
+react-dappify@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/react-dappify/-/react-dappify-0.0.22.tgz#ceb2d3dde466e94122f0274a8b6a0ac0d815bf5a"
+  integrity sha512-FH10vKY3EQRFAlZ6DIV0bEjwBzJXtjwyDqGLKJmP+gMYJs9T+WPkpr9JJezZ3BlWkEPPDDYjMaogpL6UuXV1AA==
   dependencies:
     axios "^0.27.2"
     ethers "^5.6.8"

@@ -11,6 +11,7 @@ const ResourcesPage = Loadable(lazy(() => import('views/resources')));
 const FaqPage = Loadable(lazy(() => import('views/faq')));
 const ProjectsPage = Loadable(lazy(() => import('views/projects')));
 const CasesPage = Loadable(lazy(() => import('views/cases')));
+const MarketplacePage = Loadable(lazy(() => import('views/marketplace')));
 
 // ==============================|| ROUTING RENDER ||============================== //
 
@@ -19,6 +20,7 @@ export default function ThemeRoutes() {
         { path: '/', element: <PagesLanding /> },
         { path: '/cases', element: <CasesPage /> },
         { path: '/faq', element: <FaqPage /> },
+        { path: '/templates', element: <MarketplacePage /> },
         { path: '/resources', element: <ResourcesPage /> },
         { path: '/projects', element: <ProjectsPage /> },
         { path: '/new', element: <NewProject /> },

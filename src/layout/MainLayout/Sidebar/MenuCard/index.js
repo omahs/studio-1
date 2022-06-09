@@ -63,7 +63,7 @@ function LinearProgressWithLabel({ value, ...others }) {
     const theme = useTheme();
 
     return (
-        <Tooltip label="Fill in info page, specify the admin wallet address, add a project template and publish your changes!">
+        <Tooltip title="Fill in info page, specify the admin wallet address, add a project template and publish your changes!">
             <Grid container direction="column" spacing={1} sx={{ mt: 1.5 }}>
                 <Grid item>
                     <Grid container justifyContent="space-between">

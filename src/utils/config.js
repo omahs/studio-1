@@ -38,7 +38,6 @@ export const setSocial = (dispatch, state, field, value) => {
 };
 
 export const setFeature = (dispatch, state, field, enabled) => {
-    console.log(enabled);
     const current = state;
     current.feature[field] = enabled;
     dispatch({ type: UPDATE_APP, configuration: current });

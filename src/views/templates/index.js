@@ -1,50 +1,47 @@
-import { useEffect, useState } from 'react';
-import { Paper, Grid, Typography, FormGroup, FormControlLabel, Checkbox, Switch, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+
+import { Grid, Box, Typography } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { UPDATE_APP } from 'store/actions';
-import { SNACKBAR_OPEN } from 'store/actions';
-import {Template} from 'react-dappify';
 import Marketplace from 'views/marketplace/Options';
+import { motion } from 'framer-motion';
+import background from 'assets/images/landing/bg.svg';
 
 const TemplatesPage = ({ id }) => {
-    // console.log(id);
-    // const dispatch = useDispatch();
-    // const appState = useSelector((state) => state.app);
-    // const [page, setPage] = useState(0);
-    // const [limit, setLimit] = useState(10);
-    // const [search, setSearch] = useState();
-    // const [templates, setTemplates] = useState([]);
-    // const [total, setTotal] = useState(0);
 
     return (
        <MainCard sx={{ width:'100%' }}>
-            <Grid container spacing={3} sx={{ width: '100%' }}>
-                {/*renderTemplates()}
-                <Grid item xs={12}>
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Default landing page</InputLabel>
-                        <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={appState.type}
-                        label="Default landing page"
-                        onChange={(e) => {
-                            const newState = {...appState};
-                            newState.type = e.target.value;
-                            dispatch({ type: UPDATE_APP, configuration: newState });
+            <Grid container textAlign="center" sx={{ mt: 8 }}>
+                <Grid item xs={12} sx={{ background: `url(${background})`, 
+                        backgroundSize: 'cover', 
+                        backgroundRepeat: 'no-repeat',
+                        py: 3 
+                    }}>
+                    <motion.div
+                        initial={{ opacity: 0, translateY: 550 }}
+                        animate={{ opacity: 1, translateY: 0 }}
+                        transition={{
+                            type: 'spring',
+                            stiffness: 150,
+                            damping: 30
                         }}
+                    >
+                        <Typography
+                            variant="h1"
+                            sx={{
+                                fontSize: { xs: '2.25rem', sm: '4rem', md: '4rem', color: '#fff' },
+                                fontWeight: 900,
+                                lineHeight: 1
+                            }}
                         >
-                            {Object.keys(appState.template).map((templateId) => {
-                                const landingTemplateOption = appState.template[templateId];
-                                return (
-                                    <MenuItem value={landingTemplateOption.id}>{landingTemplateOption.name}</MenuItem>
-                                )
-                            })}
-                        </Select>
-                    </FormControl>
-                        </Grid> */}
-                        <Marketplace />
+                            Smart Templates for every<br />use case in
+                            <Box component="span" sx={{ ml: 2, color: '#fff' }}>
+                                <em><b>Web3</b></em>
+                            </Box>
+                        </Typography>
+                    </motion.div>
+                </Grid>
+            </Grid>
+            <Grid container spacing={3} sx={{ width: '100%' }}>
+                <Marketplace />
             </Grid>
        </MainCard>
     );

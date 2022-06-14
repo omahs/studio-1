@@ -16,13 +16,14 @@ import {
     Typography,
     linearProgressClasses,
     Tooltip,
-    Button
+    Button,
+    Box
 } from '@mui/material';
 
 // assets
 import { useSelector } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
-import  { defaultConfiguration, constants } from 'react-dappify';
+import  { constants } from 'react-dappify';
 import { getUrl } from 'utils/url';
 
 const { NETWORKS, LOGO } = constants;
@@ -101,12 +102,6 @@ const MenuCard = () => {
     const targetNetwork = NETWORKS[appState?.chainId];
     const logo = LOGO[targetNetwork?.nativeCurrency?.symbol];
 
-    const footerHasContent = () => {
-        return  appState.footer.left.title !== defaultConfiguration.footer.left.title ||
-                appState.footer.center.title !== defaultConfiguration.footer.center.title ||
-                appState.footer.right.title !== defaultConfiguration.footer.right.title;
-    }
-
     const calculateProgress = () => {
         let currentProgress = 0;
         if (!isEmpty(appState.description)) currentProgress += 20;
@@ -117,8 +112,8 @@ const MenuCard = () => {
             !isEmpty(appState.social.pinterest) || 
             !isEmpty(appState.social.telegram)) currentProgress += 20;
         if (!isEmpty(appState.template)) currentProgress += 20;
-        if (footerHasContent()) currentProgress += 20;
         if (!isEmpty(appState.operator)) currentProgress += 20;
+        if (!isEmpty(appState.type)) currentProgress += 20;
         setProgress(currentProgress);
     };
 
@@ -163,10 +158,15 @@ const MenuCard = () => {
                     </ListItem>
                 </List>
                 <LinearProgressWithLabel value={progress} />
-                <Button fullWidth variant="contained" color="secondary" 
-                        sx={{ mt: 2 }}                 
-                        href={getUrl(appState.subdomain)}
-                        target="_blank">Visit my dApp</Button>
+                <Tooltip title="To view your dApp select first a template and enable it as default landing page">
+                    <Box>
+                        <Button fullWidth variant="contained" color="secondary" 
+                                disabled={isEmpty(appState.type)}
+                                sx={{ mt: 2 }}                 
+                                href={getUrl(appState.subdomain)}
+                                target="_blank">Visit my dApp</Button>
+                    </Box>
+                </Tooltip>
             </CardContent>
         </CardStyle>
     );

@@ -16,8 +16,6 @@ const Projects = () => {
     const [selected, setSelected] = useState();
 
     const loadApps = async() => {
-        console.log("??????");
-        console.log(Project);
         if (isAuthenticated) {
             const list = await Project.listAll(user);
             setProjects(list);

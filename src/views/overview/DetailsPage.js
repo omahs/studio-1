@@ -9,11 +9,12 @@ import { setField, setImage, setBoolean, setColor, setMoralis, setSocial, setFea
 import { ADD_ITEM_COMMENT, SNACKBAR_OPEN, CLEAR_APP } from 'store/actions';
 import { useMoralis } from 'react-moralis';
 import { useNavigate } from 'react-router-dom';
+import { getUrl } from 'utils/url';
 
 const BackendPage = () => {
     const dispatch = useDispatch();
     const appState = useSelector((state) => state.app);
-    const [openDelete, setOpenDelete] = useState();
+    const [openDelete, setOpenDelete] = useState(false);
     const appConfiguration = useSelector((state) => state.app);
     const { Moralis, user, isAuthenticated, logout, authenticate } = useMoralis();
     const navigate = useNavigate();
@@ -75,7 +76,7 @@ const BackendPage = () => {
                 {confirmDialog}
                 <Typography variant="h2">Review your dApp configuration</Typography>
                 <Typography variant="body">Select how to store your data</Typography>
-                <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                <Paper variant="outlined"  sx={{ p: 3, mt: 2 }} className="paper-in">
                     <Grid container spacing={gridSpacing} sx={{ p: 3 }}>
                         <Grid item xs={12}>
                                 <TextField id="outlined-id" disabled label="App Id" value={appState.appId} fullWidth />
@@ -85,7 +86,7 @@ const BackendPage = () => {
                                     id="outlined-id"
                                     disabled
                                     label="Provided Subdomain"
-                                    value={`https://${appState.subdomain}.dappify.com`}
+                                    value={getUrl(appState.subdomain)}
                                     fullWidth
                                 />
                             </Grid>

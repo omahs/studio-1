@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Button, Box, TextField, InputAdornment, Tabs, Tab, Paper, Grid, Typography, FormGroup, FormControlLabel, Checkbox, Switch, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { UPDATE_APP } from 'store/actions';
-import {Template} from 'react-dappify';
+import { UPDATE_APP, SNACKBAR_OPEN } from 'store/actions';
+import { Template, Project, DappifyContext } from 'react-dappify';
 
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -19,6 +19,7 @@ import PaidIcon from '@mui/icons-material/Paid';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 
 const Options = ({ id, readOnly=false }) => {
+    const { user } = useContext(DappifyContext);
     const dispatch = useDispatch();
     const appState = useSelector((state) => state.app);
     const [page, setPage] = useState(0);
@@ -78,6 +79,29 @@ const Options = ({ id, readOnly=false }) => {
         }
     }, [appState.template, page, limit, search, value]);
 
+    const publishChanges = async (newState) => {
+        try {
+            await Project.publishChanges(newState, user);
+            dispatch({
+                type: SNACKBAR_OPEN,
+                open: true,
+                message: 'Project updated',
+                variant: 'alert',
+                anchorOrigin: { vertical: 'top', horizontal: 'center' },
+                alertSeverity: 'success'
+            });
+        } catch (e) {
+            dispatch({
+                type: SNACKBAR_OPEN,
+                open: true,
+                message: e.message,
+                variant: 'alert',
+                anchorOrigin: { vertical: 'top', horizontal: 'center' },
+                alertSeverity: 'error'
+            });
+        }
+    };
+
     const renderTemplates = () => {
         const list = [];
         templates.forEach((template) => {
@@ -125,6 +149,7 @@ const Options = ({ id, readOnly=false }) => {
                                                 if (isEmpty(newState.type)) newState.type = template.schema.id;
                                                 dispatch({ type: UPDATE_APP, configuration: newState });
                                                 setLastTemplate(template?.schema);
+                                                publishChanges(newState);
                                                 setShowAddDialog(true);
                                             }}
                                             >Install Ver. {template?.schema?.version}</Button>
@@ -140,6 +165,7 @@ const Options = ({ id, readOnly=false }) => {
                                                 delete newState.template[template?.schema?.id];
                                                 if (newState.type === template?.schema?.id) newState.type = '';
                                                 dispatch({ type: UPDATE_APP, configuration: newState });
+                                                publishChanges(newState);
                                             }}
                                             >Uninstall Ver. {template?.schema?.version}</Button>
                                 </Grid>)

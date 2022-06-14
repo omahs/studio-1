@@ -50,7 +50,7 @@ const NewPage = () => {
         if (appState.step === 4) {
             const savedProject = await Project.create(appState, user);
             dispatch({ type: UPDATE_APP, configuration: savedProject.get('config') });
-            navigate(`/studio/overview`);
+            navigate(`/studio/templates`);
         }
     }
 

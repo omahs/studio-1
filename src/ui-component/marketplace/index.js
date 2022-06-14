@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UPDATE_APP } from 'store/actions';
 import { SNACKBAR_OPEN } from 'store/actions';
 import {Template} from 'react-dappify';
+import isEmpty from 'lodash/isEmpty';
 
 const Marketplace = ({ id }) => {
-    console.log(id);
     const dispatch = useDispatch();
     const appState = useSelector((state) => state.app);
     const [page, setPage] = useState(0);
@@ -34,14 +34,17 @@ const Marketplace = ({ id }) => {
                 <Grid item xs={12} md={6} lg={4} key={template.schema.id}>
                     <Paper elevation={1} className={optionsClass} sx={{p:2}} onClick={() => {
                         const newState = {...appState};
-                        if (appState.template[template.schema.id]) {
+                        if (newState.template[template.schema.id]) {
                             // Toggle unselect
+                            newState.type = '';
                             delete newState.template[template.schema.id];
                         } else {
                             // Toggle select
                             newState.template[template.schema.id] = template.schema;
+                            // Should be set as default template as well?
+                            if (isEmpty(newState.type)) newState.type = template.schema.id;
                         }
-                        dispatch({ type: UPDATE_APP, configuration: appState });
+                        dispatch({ type: UPDATE_APP, configuration: newState });
                     }}>
                         <Typography variant="h4">{template.schema.name}</Typography>
                         <Typography variant="h6">{template.schema.id}</Typography>

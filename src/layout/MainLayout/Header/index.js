@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Tooltip } from '@mui/material';
 import AppSection from 'common/Logo';
 import { useMoralis } from 'react-moralis';
 import { SNACKBAR_OPEN, CLEAR_APP } from 'store/actions';
@@ -13,6 +13,7 @@ import AccountBalanceWalletTwoToneIcon from '@mui/icons-material/AccountBalanceW
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Project } from 'react-dappify';
 import { getUrl } from 'utils/url';
+import isEmpty from 'lodash/isEmpty';
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
@@ -124,15 +125,20 @@ const Header = ({ handleLeftDrawerToggle }) => {
                     Publish Changes
                 </Button>
             )}
-            <Button
-                color="primary"
-                size="small"
-                sx={{ mx: 1 }}
-                href={getUrl(appConfiguration.subdomain)}
-                target="_blank"
-            >
-                Visit my dApp
-            </Button>
+            <Tooltip title="To view your dApp select first a template and enable it as default landing page">
+                <Box>
+                    <Button
+                        color="primary"
+                        size="small"
+                        disabled={isEmpty(appConfiguration.type)}
+                        sx={{ mx: 1 }}
+                        href={getUrl(appConfiguration.subdomain)}
+                        target="_blank"
+                    >
+                        Visit my dApp
+                    </Button>
+                </Box>
+            </Tooltip>
             {loginButton}
             {/* notification & profile 
             <NotificationSection />

@@ -3,14 +3,9 @@ import { Button, Box, TextField, InputAdornment, Tabs, Tab, Paper, Grid, Typogra
 import MainCard from 'ui-component/cards/MainCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { UPDATE_APP } from 'store/actions';
-import { SNACKBAR_OPEN } from 'store/actions';
 import {Template} from 'react-dappify';
 
-import PhoneIcon from '@mui/icons-material/Phone';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import PersonPinIcon from '@mui/icons-material/PersonPin';
 import SearchIcon from '@mui/icons-material/Search';
-import background from 'assets/images/landing/bg5.svg';
 
 import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
 import TokenIcon from '@mui/icons-material/Token';
@@ -19,9 +14,11 @@ import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import DownloadIcon from '@mui/icons-material/Download';
 import debounce from 'lodash/debounce';
 import isEmpty from 'lodash/isEmpty';
+import AddDialog from 'views/marketplace/AddDialog';
+import PaidIcon from '@mui/icons-material/Paid';
+import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 
 const Options = ({ id, readOnly=false }) => {
-    console.log(id);
     const dispatch = useDispatch();
     const appState = useSelector((state) => state.app);
     const [page, setPage] = useState(0);
@@ -29,6 +26,8 @@ const Options = ({ id, readOnly=false }) => {
     const [search, setSearch] = useState();
     const [templates, setTemplates] = useState([]);
     const [total, setTotal] = useState(0);
+    const [showAddDialog, setShowAddDialog] = useState(false);
+    const [lastTemplate, setLastTemplate] = useState({});
 
     const [value, setValue] = useState("all");
 
@@ -82,7 +81,6 @@ const Options = ({ id, readOnly=false }) => {
     const renderTemplates = () => {
         const list = [];
         templates.forEach((template) => {
-            console.log(template);
             const isInstalled = appState.template[template?.schema?.id];
             list.push(
                 <Grid item xs={12} md={6} lg={4} key={template?.schema?.id}>
@@ -124,7 +122,10 @@ const Options = ({ id, readOnly=false }) => {
                                             onClick={() => {
                                                 const newState = {...appState};
                                                 newState.template[template?.schema?.id] = template?.schema;
-                                                dispatch({ type: UPDATE_APP, configuration: appState });
+                                                if (isEmpty(newState.type)) newState.type = template.schema.id;
+                                                dispatch({ type: UPDATE_APP, configuration: newState });
+                                                setLastTemplate(template?.schema);
+                                                setShowAddDialog(true);
                                             }}
                                             >Install Ver. {template?.schema?.version}</Button>
                                 </Grid>)
@@ -137,7 +138,8 @@ const Options = ({ id, readOnly=false }) => {
                                             onClick={() => {
                                                 const newState = {...appState};
                                                 delete newState.template[template?.schema?.id];
-                                                dispatch({ type: UPDATE_APP, configuration: appState });
+                                                if (newState.type === template?.schema?.id) newState.type = '';
+                                                dispatch({ type: UPDATE_APP, configuration: newState });
                                             }}
                                             >Uninstall Ver. {template?.schema?.version}</Button>
                                 </Grid>)
@@ -178,8 +180,10 @@ const Options = ({ id, readOnly=false }) => {
                         {!isEmpty(installedTemplates) && <Tab value="installed" icon={<DownloadIcon />} label="Installed" />}
                         <Tab value="all" icon={<AllInclusiveIcon />} label="All" />
                         <Tab value="nft" icon={<TokenIcon />} label="NFT" />
-                        <Tab value="defi" icon={<AccountBalanceIcon />} label="DeFi" />
+                        <Tab value="defi" icon={<LocalAtmIcon />} label="DeFi" />
                         <Tab value="gamefi" icon={<SportsEsportsIcon />} label="GameFi" />
+                        <Tab value="dao" icon={<AccountBalanceIcon />} label="DAO" />
+                        <Tab value="token" icon={<PaidIcon />} label="Token" />
                     </Tabs>
                 </Grid>
             </Grid>
@@ -210,6 +214,9 @@ const Options = ({ id, readOnly=false }) => {
                     </FormControl>
                         </Grid>*/}
             </Grid>
+            <AddDialog isOpen={showAddDialog} template={lastTemplate} onClose={() => {
+                setShowAddDialog(false);
+            }} />
        </MainCard>
     );
 };

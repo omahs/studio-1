@@ -2,11 +2,6 @@
 import { styled } from '@mui/material/styles';
 
 // project imports
-import Header from 'views/landing/Header';
-import Feature from 'views/landing/Feature';
-import KeyFeature from 'views/landing/KeyFeature';
-import Steps from 'views/landing/Steps';
-import Subscribe from 'views/landing/Subscribe';
 import Footer from 'views/landing/Footer';
 import Questions from 'views/faq/Questions';
 import AppBar from 'common/AppBar';

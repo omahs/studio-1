@@ -158,6 +158,18 @@ const TemplatesItemPage = () => {
                     <Button sx={{ textTransform: 'none' }} href={getUrl(appState.subdomain, id)} target="_blank">{getUrl(appState.subdomain, id)}</Button>
                 </Grid>
                 <Grid item xs={12}>
+                    <FormGroup>
+                        <FormControlLabel control={<Switch defaultChecked={appState.type === id} onChange={(e) => {
+                            if (e.target.checked) {
+                                appState.type = id;
+                            } else {
+                                appState.type = '';
+                            }
+                            dispatch({ type: UPDATE_APP, configuration: appState });
+                        }} />} label="Set as default landing page" />
+                    </FormGroup>
+                </Grid>
+                <Grid item xs={12}>
                     <Typography variant="body">{appState.template[id].description}</Typography>
                 </Grid>
                 <Grid item xs={12}>

@@ -1,10 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
-import { Alert, Box, Tab, Tooltip, Chip, TextField, InputAdornment, Grid,  CircularProgress, Typography, Paper, Button, DialogActions, Dialog, DialogContentText, DialogTitle, DialogContent } from '@mui/material';
+import { useContext, useState } from 'react';
+import { Alert, Box, Tab, Tooltip, TextField, InputAdornment, Grid,  CircularProgress, Typography, Paper, Button, DialogActions, Dialog, DialogContentText, DialogTitle, DialogContent } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { gridSpacing } from 'store/constant';
-import { ethers } from 'ethers';
-// import MarketplaceBytecode from 'react-dappify/contracts/artifacts/contracts.json';
 import { DappifyContext, constants, Project, utils } from 'react-dappify';
 import { UPDATE_APP } from 'store/actions';
 import { SNACKBAR_OPEN } from 'store/actions';
@@ -17,145 +15,18 @@ const { formatAddress } = utils;
 const { NETWORKS, LOGO, MAINNETS, CONTRACTS } = constants;
 
 const BlockchainPage = () => {
-    const { configuration, user, switchToChain, getProviderInstance } = useContext(DappifyContext);
+    const { user } = useContext(DappifyContext);
 
 
     const dispatch = useDispatch();
     const appState = useSelector((state) => state.app);
     const [beneficiaryFee, setBeneficiaryFee] = useState(0);
-    const [originalBeneficiaryFee, setOriginalBeneficiaryFee] = useState(0);
-    const [beneficiary, setBeneficiary] = useState(user.get('ethAddress'));
-    const [dappify] = useState('0x6a10C54110336937f184bf9A88bFD5998c8E99D4');
-    const [dappifyFee, setDappifyFee] = useState(2.5);
+    const [beneficiary] = useState(user.get('ethAddress'));
     const [isConfirmationOpen, setConfirmationOpen] = useState();
     const [isRatesOpen, setRatesOpen] = useState();
     const [selectedNetwork, setSelectedNetwork] = useState(NETWORKS[appState.chainId] || {});
     const [processing, setProcessign] = useState();
 
-    const loadChainProvider = async() => {
-        const currentProvider = await getProviderInstance();
-        const chain = await currentProvider.getNetwork();
-        const chainIdHex = ethers.utils.hexlify(chain.chainId);
-        if (chainIdHex !== selectedNetwork.chainId) {
-            await switchToChain(selectedNetwork, currentProvider);
-        }
-        return currentProvider;
-    };
-
-    // const getContractFee = async () => {
-    //     const currentProvider = await loadChainProvider();
-    //     const signerAddress = await currentProvider.getSigner().getAddress();
-    //     setBeneficiary(signerAddress);
-    //     try {
-    //         const contract = MarketplaceBytecode.output.contracts['contracts/ERC721MarketplaceV1.sol'].ERC721MarketplaceV1;
-    //         const abi = contract.abi;
-    //         const marketplaceContract = new ethers.Contract(appState.template.marketplace.main.contract, abi, currentProvider.getSigner());
-    //         const operatorFee = await marketplaceContract.getRoyaltyFee(beneficiary);
-    //         setBeneficiaryFee(operatorFee/100);
-    //         setOriginalBeneficiaryFee(operatorFee/100);
-    //         const providerFee = await marketplaceContract.getRoyaltyFee(dappify);
-    //         setDappifyFee(providerFee/100);
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    // };
-
-    // const launch = async() => {
-    //     const currentProvider = new ethers.providers.Web3Provider(window.ethereum);
-    //     const contract = MarketplaceBytecode.output.contracts['contracts/ERC721MarketplaceV1.sol'].Marketplace;
-    //     const abi = contract.abi;
-    //     const bytecode = contract.evm.bytecode;
-    //     const market = new ethers.ContractFactory(abi, bytecode, currentProvider.getSigner());
-    //     const marketplace = await market.deploy();
-    //     const deployment = await marketplace.deployed();
-    //     return deployment.address;
-    // }
-
-    // const deploy = async() => {
-    //     const isMainnet = MAINNETS.includes(selectedNetwork.chainId);
-    //     try {
-    //         setProcessign(true);
-    //         const currentProvider = new ethers.providers.Web3Provider(window.ethereum);
-    //         await switchToChain(selectedNetwork, currentProvider.provider);
-    //         const address = await launch();
-    //         if (isMainnet) {
-    //             appState.template.marketplace.main = {
-    //                 chainId: selectedNetwork.chainId,
-    //                 contract: address
-    //             }
-    //         } else {
-    //             appState.template.marketplace.test = {
-    //                 chainId: selectedNetwork.chainId,
-    //                 contract: address
-    //             }
-    //         }
-    //         dispatch({ type: UPDATE_APP, configuration: appState });
-    //         await Project.publishChanges(appState, user);
-    //         dispatch({
-    //             type: SNACKBAR_OPEN,
-    //             open: true,
-    //             message: 'Project updated',
-    //             variant: 'alert',
-    //             anchorOrigin: { vertical: 'top', horizontal: 'center' },
-    //             alertSeverity: 'success'
-    //         });
-    //     } catch (e) {
-    //         dispatch({
-    //             type: SNACKBAR_OPEN,
-    //             open: true,
-    //             message: e.message,
-    //             variant: 'alert',
-    //             anchorOrigin: { vertical: 'top', horizontal: 'center' },
-    //             alertSeverity: 'error'
-    //         });
-    //     } finally {
-    //         setProcessign(false);
-    //         setConfirmationOpen(false);
-    //     }
-    // }
-
-    // const setContractFee = async(currentProvider) => {
-    //     const contract = MarketplaceBytecode.output.contracts['contracts/ERC721MarketplaceV1.sol'].ERC721MarketplaceV1;
-    //     const abi = contract.abi;
-    //     const marketplaceContract = new ethers.Contract(CONTRACTS[appState.type][selectedNetwork.chainId], abi, currentProvider.getSigner());
-    //     const targetFee = beneficiaryFee*100;
-    //     const tx = await marketplaceContract.setRoyaltyFee(targetFee);
-    //     return tx;
-    // }
-
-    // const setRates = async() => {
-    //     try {
-    //         setProcessign(true);
-    //         const currentProvider = await getProviderInstance();
-    //         await switchToChain(selectedNetwork, currentProvider.provider);
-    //         if (hasBeneficiaryFeeChanged()) {
-    //             await setContractFee(currentProvider);
-    //         }
-    //         appState.operator = beneficiary;
-    //         dispatch({ type: UPDATE_APP, configuration: appState });
-    //         await Project.publishChanges(appState, user);
-    //         dispatch({
-    //             type: SNACKBAR_OPEN,
-    //             open: true,
-    //             message: 'Project updated',
-    //             variant: 'alert',
-    //             anchorOrigin: { vertical: 'top', horizontal: 'center' },
-    //             alertSeverity: 'success'
-    //         });
-    //     } catch (e) {
-    //         dispatch({
-    //             type: SNACKBAR_OPEN,
-    //             open: true,
-    //             message: e.message,
-    //             variant: 'alert',
-    //             anchorOrigin: { vertical: 'top', horizontal: 'center' },
-    //             alertSeverity: 'error'
-    //         });
-    //     } finally {
-    //         setProcessign(false);
-    //         setRatesOpen(false);
-    //     }
-    // }
 
     const setVersion = async () => {
         try {
@@ -190,55 +61,6 @@ const BlockchainPage = () => {
         }
     }
 
-    // const renderSupportedMainNetsChains = () => {
-    //     const list = [];
-    //     Object.keys(NETWORKS).forEach((chainId, index) => {
-    //         const targetNetwork = NETWORKS[chainId];
-    //         if (MAINNETS.includes(chainId)  && (!appState.template.marketplace.main.chainId || (appState.template.marketplace.main.chainId === chainId))) {
-    //             const explorer = `${targetNetwork.blockExplorerUrls[0]}/address/${appState.template.marketplace.main.contract}`;
-    //             list.push(
-    //                 <Grid item xs={12} sm={6} lg={3} textAlign="center" key={chainId}>
-    //                     <Paper variant="outlined" elevation="20" sx={{ p: 3, minHeight: 160 }} className={`paper-blockchain ${chainId === appState.template.marketplace.main.chainId ? 'paper-blockchain-selected': ''}`} onClick={() => {
-    //                         setSelectedNetwork(targetNetwork);
-    //                         setConfirmationOpen(true);
-    //                     }}>
-    //                         <img src={LOGO[targetNetwork.nativeCurrency.symbol]} alt="Ava" height="50px"/>
-    //                         <Typography variant="h4" sx={{ mt: 2 }}>{targetNetwork.chainName}</Typography>
-    //                         {chainId === appState.template.marketplace.main.chainId && (<Button fullWidth size="small" href={explorer} target="_blank">View in explorer {formatAddress(appState.template.marketplace.main.contract)}</Button>)}
-    //                     </Paper>
-    //                 </Grid>
-    //             );
-    //         }
-    //     });
-    //     return list;
-    // }
-
-    // const renderSupportedTestnetChains = () => {
-    //     const list = [];
-    //     Object.keys(NETWORKS).forEach((chainId, index) => {
-    //         const targetNetwork = NETWORKS[chainId];
-    //         if (!MAINNETS.includes(chainId) && (!appState.template.marketplace.test.chainId || (appState.template.marketplace.test.chainId === chainId))) {
-    //             const explorer = `${targetNetwork.blockExplorerUrls[0]}/address/${appState.template.marketplace.test.contract}`;
-    //             list.push(
-    //                 <Grid item xs={12} sm={6} lg={3} textAlign="center" key={chainId}>
-    //                     <Paper variant="outlined" elevation="20" sx={{ p: 3, minHeight: 160 }} className={`paper-blockchain ${chainId === appState.template.marketplace.test.chainId ? 'paper-blockchain-selected': ''}`} onClick={() => {
-    //                         setSelectedNetwork(targetNetwork);
-    //                         setConfirmationOpen(true);
-    //                     }}>
-    //                         <img src={LOGO[targetNetwork.nativeCurrency.symbol]} alt="Ava" height="50px"/>
-    //                         <Typography variant="h4" sx={{ mt: 2 }}>{targetNetwork.chainName}</Typography>
-    //                         {chainId === appState.template.marketplace.test.chainId && (<Button fullWidth size="small" href={explorer} target="_blank">View in explorer {formatAddress(appState.template.marketplace.test.contract)}</Button>)}
-    //                         {FAUCETS[chainId] && (<Button fullWidth size="small" href={FAUCETS[chainId]} target="_blank">Get funds</Button>)}
-    //                     </Paper>
-    //                 </Grid>
-    //             );
-    //         }
-    //     });
-    //     return list;
-    // }
-
-    const hasBeneficiaryFeeChanged = () => originalBeneficiaryFee !== beneficiaryFee;
-
     const renderDappifyOptions = () => {
         const list = [];
         Object.keys(CONTRACTS.marketplace).forEach((chainId, index) => {
@@ -251,7 +73,7 @@ const BlockchainPage = () => {
                 list.push(
                     <Grid item xs={12} sm={6} md={3} lg={2} textAlign="center" key={chainId}>
                         <Tooltip title={tooltip}>
-                            <Paper variant="outlined" elevation="20" sx={{ p: 3 }} className={`paper-blockchain ${isCurrentChain ? 'paper-blockchain-selected': ''}`} onClick={() => {
+                            <Paper variant="outlined" sx={{ p: 3 }} className={`paper-blockchain ${isCurrentChain ? 'paper-blockchain-selected': ''}`} onClick={() => {
                                 if (isTestnet) {
                                     setSelectedNetwork(targetNetwork);
                                     setConfirmationOpen(true);

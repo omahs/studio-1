@@ -24,7 +24,6 @@ const UsersPage = () => {
         query.equalTo('appId', appState.id);
         const results = await query.find();
         setNewsList(results);
-        console.log(results);
     };
 
     useEffect(() => {
@@ -92,7 +91,6 @@ const UsersPage = () => {
                 </Grid>
             );
         });
-        console.log(list);
         return list;
     };
 

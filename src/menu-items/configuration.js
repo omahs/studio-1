@@ -94,11 +94,11 @@ const dashboard = {
     type: 'group',
     children: [
         {
-            id: 'default',
-            title: "Info",
+            id: 'templates',
+            title: "Add Templates",
             type: 'item',
-            url: 'overview',
-            icon: icons.IconInfoSquare,
+            url: 'templates',
+            icon: icons.IconApps,
             breadcrumbs: false
         },
         {
@@ -127,6 +127,14 @@ const dashboard = {
             //     }
             // ]
         },
+        {
+            id: 'default',
+            title: "dApp Info",
+            type: 'item',
+            url: 'overview',
+            icon: icons.IconInfoSquare,
+            breadcrumbs: false
+        },
         // {
         //     id: 'localization',
         //     title: "3. Localize it",
@@ -151,14 +159,6 @@ const dashboard = {
         //     icon: icons.IconSettingsAutomation,
         //     breadcrumbs: false
         // },
-        {
-            id: 'templates',
-            title: "Add Templates",
-            type: 'item',
-            url: 'templates',
-            icon: icons.IconApps,
-            breadcrumbs: false
-        },
         // {
         //     id: 'content',
         //     title: <FormattedMessage id="Content" />,

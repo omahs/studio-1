@@ -20,7 +20,7 @@ const OverviewPage = () => {
         const list = [];
         appState.footer[column].items.forEach((item, index) => {
             list.push(
-                <Grid container direction="row" spacing={2}sx={{ py: 1 }}>
+                <Grid container direction="row" spacing={2} sx={{ py: 1 }} key={index}>
                     <Grid item xs={6}>
                         <TextField
                             label="Displayed label"
@@ -116,7 +116,7 @@ const OverviewPage = () => {
                 <Grid item xs={12} md={6}>
                     <Typography variant="h2">Get started here!</Typography>
                     <Typography variant="body">Tell us more about your dApp</Typography>
-                    <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                    <Paper variant="outlined" sx={{ p: 3, mt: 2 }} className="paper-in">
                         <Grid container spacing={gridSpacing}>
                             <Grid item xs={12}>
                                 <TextField
@@ -168,7 +168,7 @@ const OverviewPage = () => {
                 <Grid item xs={12} md={6}>
                     <Typography variant="h2">How can your users contact you?</Typography>
                     <Typography variant="body">These links are optional and are displayed in the footer.</Typography>
-                    <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                    <Paper variant="outlined" sx={{ p: 3, mt: 2 }} className="paper-in">
                         <Grid container spacing={gridSpacing}>
                             <Grid item xs={6}>
                                 <TextField
@@ -237,7 +237,7 @@ const OverviewPage = () => {
                     <Typography variant="body">These links are also optional</Typography>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                    <Paper variant="outlined" sx={{ p: 3, mt: 2 }} className="paper-in">
                         <TextField
                             id="outlined-email"
                             label="Left footer column header title"
@@ -252,7 +252,7 @@ const OverviewPage = () => {
                     </Paper>    
                 </Grid>
                     <Grid item xs={12} md={4}>
-                    <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                    <Paper variant="outlined" sx={{ p: 3, mt: 2 }} className="paper-in">
                         <TextField
                             id="outlined-email"
                             label="Center footer column header title"
@@ -267,7 +267,7 @@ const OverviewPage = () => {
                     </Paper>    
                 </Grid>
                     <Grid item xs={12} md={4}>
-                    <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                    <Paper variant="outlined" sx={{ p: 3, mt: 2 }} className="paper-in">
                         <TextField
                             id="outlined-email"
                             label="Right footer column header title"
@@ -289,7 +289,7 @@ const OverviewPage = () => {
                     <Typography variant="body">Specify who the default administrator and beneficiary is</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                    <Paper variant="outlined" sx={{ p: 3, mt: 2 }} className="paper-in">
                         <TextField
                             id="outlined-email"
                             label="Wallet address of the admin"
@@ -314,7 +314,7 @@ const OverviewPage = () => {
                           });
                           dispatch({ type: UPDATE_APP, configuration: appState });
                     }}>Add</Button>
-                    <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                    <Paper variant="outlined"  sx={{ p: 3, mt: 2 }} className="paper-in">
                         {renderCategoryItems()}
                     </Paper>    
                 </Grid> */}

@@ -1,28 +1,17 @@
 // material-ui
 import { useEffect, useState } from 'react';
-import { useTheme } from '@mui/material/styles';
-import { Container, Grid, Typography, Box, Chip, Button, IconButton } from '@mui/material';
+import { Container, Grid, Typography, Box, Chip, Button } from '@mui/material';
 import { useDispatch } from 'react-redux';
 // project imports
 import FadeInWhenVisible from './Animation';
 import SubCard from 'ui-component/cards/SubCard';
-import Avatar from 'ui-component/extended/Avatar';
 import { gridSpacing } from 'store/constant';
 
 import templateNftMarketplace from 'assets/images/marketplace.jpeg';
-import templateQrCode from 'assets/images/qr_code.png';
 
-import howItWorks from 'assets/images/how-it-works.svg';
 import { SNACKBAR_OPEN } from 'store/actions';
 // assets
-import PaletteTwoToneIcon from '@mui/icons-material/PaletteTwoTone';
-import ReorderTwoToneIcon from '@mui/icons-material/ReorderTwoTone';
-import SpeedTwoToneIcon from '@mui/icons-material/SpeedTwoTone';
 import background from 'assets/images/landing/bg.svg';
-import likeImg from 'assets/images/like.png';
-
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useMoralis } from 'react-moralis';
 
 import imageBooking from 'assets/images/booking.jpeg';
@@ -37,7 +26,6 @@ import imageMembership from 'assets/images/membership.jpeg';
 
 const FeaturePage = () => {
     const dispatch = useDispatch();
-    const theme = useTheme();
     const { Moralis } = useMoralis();
     const [votes, setVotes] = useState({});
     const [myVotes, setMyVotes] = useState({});

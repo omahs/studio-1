@@ -18,6 +18,7 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import ShieldIcon from '@mui/icons-material/Shield';
 import ViewCompactIcon from '@mui/icons-material/ViewCompact';
+import landingVideo from 'assets/videos/Build.mp4';
 
 // ============================|| LANDING - KEY FEATURE PAGE ||============================ //
 
@@ -32,16 +33,21 @@ const KeyFeaturePage = () => {
 
     return (
         <Container sx={{ position: 'relative' }}>
-            <Grid container justifyContent="center" spacing={gridSpacing} sx={{ textAlign: 'center' }}>
-                <Grid item sx={{ mb: 5 }}>
+            <Grid container justifyContent="left" spacing={gridSpacing} sx={{ textAlign: 'left' }}>
+                <Grid item xs={12} sm={6}>
+                    <video loop autoplay="autoplay" muted style={{ borderRadius: 6, width: '100%', height: 'auto' }}>
+                        <source src={landingVideo} type="video/mp4" />
+                        Your browser does not support HTML video.
+                    </video>
+                </Grid>
+                <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
                     <Grid item xs={12} sx={{ mt: 5, mb: 3 }}>
-                        <Typography className="landing-title" component="h1">Beautiful and Customizable</Typography>
+                        <Typography className="landing-title" component="h1">Simple yet Flexible, Free yet Priceless</Typography>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography className="landing-description" component="h2">
-                            Our templates are beautiful and of high quality, allowing you to customize and adapt them to your own brand. The
-                            configuration and behavior of your dApp is coded into smart contracts you launch and control as part of your
-                            project.
+                            Dappify is a DYI Builder platform for Web3 applications from ready-made, modular templates. 
+                            Launching your custom branded dApp is as simple as selecting a template and configuring it to meet your needs.
                         </Typography>
                     </Grid>
                 </Grid>

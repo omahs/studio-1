@@ -12,6 +12,7 @@ import AnimateButton from 'ui-component/extended/AnimateButton';
 import { gridSpacing } from 'store/constant';
 import mockup from 'assets/images/landing/banner.svg';
 import DiscordButton from 'views/landing/Discord';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 
 // ==============================|| LANDING - HEADER PAGE ||============================== //
 
@@ -56,14 +57,14 @@ const HeaderPage = () => {
                                     <Typography
                                         variant="h1"
                                         sx={{
-                                            fontSize: { xs: '2.25rem', sm: '4rem', md: '4rem', color: '#fff' },
+                                            fontSize: { xs: '2.25rem', sm: '4rem', md: '4.5rem', color: '#fff' },
                                             fontWeight: 900,
                                             lineHeight: 1
                                         }}
                                     >
-                                        The Squarespace of
-                                        <Box component="span" sx={{ ml: 2, color: 'white' }}>
-                                            <em>Web3</em>
+                                        <span style={{ opacity: 0.8 }}>The simplest way to build</span><br></br>
+                                        <Box component="span" sx={{ color: 'white', lineHeight: 1.2 }}>
+                                            <em style={{ mt: 2 }}>Web3 Apps</em>
                                         </Box>
                                     </Typography>
                                 </motion.div>
@@ -90,8 +91,7 @@ const HeaderPage = () => {
                                             color: 'white'
                                         }}
                                     >
-                                        We enable millions to build a brand, share their stories, and transact with their customers with a
-                                        beautiful online presence, in a decentralized way.
+                                        Launch your MVP in minutes, without writing any code, for free. Powered by 1-click install smart templates maintained by the community.
                                     </Typography>
                                 </motion.div>
                             </Grid>
@@ -109,10 +109,27 @@ const HeaderPage = () => {
                                                 endIcon={<ArrowForwardTwoToneIcon />}
                                             >
                                                 GET STARTED
-                                            </Button> */}
-                                            <DiscordButton />
+                                            </Button>
+                                            <DiscordButton /> */}
+
+                                            <Button
+                                                component={RouterLink}
+                                                to="/projects" 
+                                                variant="contained"
+                                                size="large"
+                                                className="join__discord"
+                                                color="secondary"
+                                                sx={{ px: 5, py: 2 }}
+                                                endIcon={
+                                                    <AutoFixHighIcon />
+                                                }
+                                            >
+                                                START BUIDLING
+                                            </Button>
+
                                         </AnimateButton>
                                     </Grid>
+
                                 </Grid>
                             </Grid>
                         </Grid>

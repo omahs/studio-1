@@ -57,12 +57,12 @@ const HeaderPage = () => {
                                     <Typography
                                         variant="h1"
                                         sx={{
-                                            fontSize: { xs: '2.25rem', sm: '4rem', md: '4.5rem', color: '#fff' },
+                                            fontSize: { xs: '2.25rem', sm: '2.5rem', md: '3.25rem', color: '#fff' },
                                             fontWeight: 900,
                                             lineHeight: 1
                                         }}
                                     >
-                                        <span style={{ opacity: 0.8 }}>The simplest way to build</span><br></br>
+                                        <span style={{ opacity: 1 }}>The simplest way to build</span>
                                         <Box component="span" sx={{ color: 'white', lineHeight: 1.2 }}>
                                             <em style={{ mt: 2 }}>Web3 Apps</em>
                                         </Box>
@@ -91,7 +91,7 @@ const HeaderPage = () => {
                                             color: 'white'
                                         }}
                                     >
-                                        Launch your MVP in minutes, without writing any code, for free. Powered by 1-click install smart templates maintained by the community.
+                                        Launch your MVP in minutes, for free, without writing any code. Powered by 1-click install smart templates maintained by the community.
                                     </Typography>
                                 </motion.div>
                             </Grid>
@@ -99,36 +99,31 @@ const HeaderPage = () => {
                                 <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', lg: 'flex-start' } }}>
                                     <Grid item>
                                         <AnimateButton>
-                                            {/* <Button
-                                                component={RouterLink}
-                                                to="new"
-                                                variant="contained"
-                                                size="large"
-                                                color="primary"
-                                                sx={{ px: 5, py: 2 }}
-                                                endIcon={<ArrowForwardTwoToneIcon />}
-                                            >
-                                                GET STARTED
-                                            </Button>
-                                            <DiscordButton /> */}
-
-                                            <Button
-                                                component={RouterLink}
-                                                to="/projects" 
-                                                variant="contained"
-                                                size="large"
-                                                className="join__discord"
-                                                color="secondary"
-                                                sx={{ px: 5, py: 2 }}
-                                                endIcon={
-                                                    <AutoFixHighIcon />
-                                                }
-                                            >
-                                                START BUIDLING
-                                            </Button>
+                                            <DiscordButton />
 
                                         </AnimateButton>
                                     </Grid>
+
+                                    <Grid item>
+                                    <AnimateButton>
+
+                                        <Button
+                                            component={RouterLink}
+                                            to="/projects" 
+                                            variant="contained"
+                                            size="large"
+                                            className="join__discord"
+                                            color="primary"
+                                            sx={{ px: 5, py: 2 }}
+                                            endIcon={
+                                                <AutoFixHighIcon />
+                                            }
+                                        >
+                                            START BUIDLING
+                                        </Button>
+
+                                    </AnimateButton>
+                                </Grid>
 
                                 </Grid>
                             </Grid>

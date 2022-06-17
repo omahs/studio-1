@@ -8,12 +8,14 @@ import background from 'assets/images/landing/bg.svg';
 const TemplatesPage = ({ id }) => {
 
     return (
-       <MainCard sx={{ width:'100%' }}>
-            <Grid container textAlign="center" sx={{ mt: 8 }}>
-                <Grid item xs={12} sx={{ background: `url(${background})`, 
+       <MainCard sx={{ width:'100%', position: 'relative' }}>
+            <Grid item xs={12} sx={{ background: `url(${background})`, 
                         backgroundSize: 'cover', 
                         backgroundRepeat: 'no-repeat',
-                        py: 3 
+                        m: -3,
+                        minHeight: 550,
+                        textAlign: 'center',
+                        py: 8
                     }}>
                     <motion.div
                         initial={{ opacity: 0, translateY: 550 }}
@@ -37,8 +39,10 @@ const TemplatesPage = ({ id }) => {
                                 <em><b>Web3</b></em>
                             </Box>
                         </Typography>
+                        <Typography variant="h3" sx={{ mt: 2, color: '#fff', opacity: 0.75 }}>
+                            <i>Scroll down and install templates below</i>
+                        </Typography>
                     </motion.div>
-                </Grid>
             </Grid>
             <Grid container spacing={3} sx={{ width: '100%' }}>
                 <Marketplace />

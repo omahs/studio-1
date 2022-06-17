@@ -148,6 +148,8 @@ const TemplatesItemPage = () => {
         return list;
     }
 
+    const isCurrentLandingPage = appState.type === id;
+
     return (
        <MainCard>
             <Grid container spacing={2}>
@@ -159,7 +161,7 @@ const TemplatesItemPage = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <FormGroup>
-                        <FormControlLabel control={<Switch defaultChecked={appState.type === id} onChange={(e) => {
+                        <FormControlLabel control={<Switch checked={isCurrentLandingPage} onChange={(e) => {
                             if (e.target.checked) {
                                 appState.type = id;
                             } else {
@@ -173,8 +175,6 @@ const TemplatesItemPage = () => {
                     <Typography variant="body">{appState.template[id].description}</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    {isSupported() && (<Button variant="contained" color="secondary" sx={{ textTransform: 'none' }} href={getSmartContractExplorerUrl()} target="_blank">View in explorer {getSmartContract()}</Button>)}
-                    {!isSupported() && (<Button variant="contained" color="error" sx={{ textTransform: 'none' }} disabled>Not supported in current blockchain</Button>)}
                     <Button variant="outlined" sx={{ textTransform: 'none', ml: 1  }} href={appState.template[id].source} target="_blank">Source code</Button>
                     <Button variant="outlined" sx={{ textTransform: 'none', ml: 1 }} href={appState.template[id].guide} target="_blank">Documentation</Button>
                     {appState.template[id].admin && (<Button variant="outlined" sx={{ textTransform: 'none', ml: 1 }} href={`${getUrl()}${appState.template[id].admin}`} target="_blank">Manage Blockchain Settings</Button>)}
@@ -198,7 +198,7 @@ const TemplatesItemPage = () => {
                                     <Typography variant="body">Configurable settings for the template</Typography>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Button variant="contained" disabled={!isSupported()} onClick={async () => {
+                                    <Button variant="contained" onClick={async () => {
                                         appState.template[id].properties.push({
                                             type: null,
                                             key: null,

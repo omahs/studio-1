@@ -317,10 +317,10 @@ const OverviewPage = () => {
                     <Paper variant="outlined"  sx={{ p: 3, mt: 2 }} className="paper-in">
                         {renderCategoryItems()}
                     </Paper>    
-                </Grid> */}
+                </Grid> 
                 <Grid item xs={12}>
                     <Alert severity="success" variant="filled">Once done here you can continue with step - 2. Brand it - to setup look & feel!</Alert>
-                </Grid>
+                </Grid>*/}
             </Grid>
             <DetailsPage />
         </MainCard>

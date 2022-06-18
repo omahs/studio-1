@@ -54,7 +54,7 @@ const TemplatesItemPage = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const appState = useSelector((state) => state.app);
-    const { Provider } = useContext(DappifyContext);
+    // const { Provider } = useContext(DappifyContext);
    
     const [value, setValue] = useState(0);
 
@@ -86,22 +86,23 @@ const TemplatesItemPage = () => {
                             }} />
                         </Grid>
                         <Grid item xs={2}>
-                            <label htmlFor="contained-button-file">
+                            {/*<label htmlFor="contained-button-file">
                                 <Input  sx={{ display: 'none' }} 
                                         accept="image/*" 
                                         id="contained-button-file" 
                                         type="file"
                                         onChange={async(e) => {
+                                            console.log(e);
                                             const data = e.target.files[0];
                                             const file = new Provider.File('property', data);
                                             const upload = await file.saveIPFS();
                                             appState.template[id].properties[index].value = upload.ipfs();
                                             dispatch({ type: UPDATE_APP, configuration: {...appState} });
                                         }}/>
-                                <Button component="span" color="primary">
+                                <Button disabled={isEmpty(prop.type) || isEmpty(prop.key)}  component="span" color="primary">
                                     <FileUploadIcon />
                                 </Button>
-                            </label>
+                                    </label> */}
                             <Button color="error" size="large" onClick={async() => {
                                 appState.template[id].properties.splice(index, 1);
                                 dispatch({ type: UPDATE_APP, configuration: {...appState} });
@@ -156,8 +157,11 @@ const TemplatesItemPage = () => {
                 <Grid item xs={12}>
                     <Typography variant="h3">{appState.template[id].name}</Typography>
                 </Grid>
+                <Grid item xs={12} alignContent="center">
+                    <Alert severity="info" sx={{ fontSize: '1.5em' }}>Follow the <a href={appState.template[id].guide} target="_blank" rel="noreferrer">how to guide</a> for instructions on how to set up the properties for this template</Alert>
+                </Grid>
                 <Grid item xs={12}>
-                    <Button sx={{ textTransform: 'none' }} href={getUrl(appState.subdomain, id)} target="_blank">{getUrl(appState.subdomain, id)}</Button>
+                    <Button sx={{ textTransform: 'none' }} href={getUrl(appState.subdomain, id)} target="_blank">My template URL: {getUrl(appState.subdomain, id)}</Button>
                 </Grid>
                 <Grid item xs={12}>
                     <FormGroup>
@@ -168,19 +172,8 @@ const TemplatesItemPage = () => {
                                 appState.type = '';
                             }
                             dispatch({ type: UPDATE_APP, configuration: appState });
-                        }} />} label="Set as default landing page" />
+                        }} />} label={`Set as default landing page at ${getUrl(appState.subdomain)}`} />
                     </FormGroup>
-                </Grid>
-                <Grid item xs={12}>
-                    <Typography variant="body">{appState.template[id].description}</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                    <Button variant="outlined" sx={{ textTransform: 'none', ml: 1  }} href={appState.template[id].source} target="_blank">Source code</Button>
-                    <Button variant="outlined" sx={{ textTransform: 'none', ml: 1 }} href={appState.template[id].guide} target="_blank">Documentation</Button>
-                    {appState.template[id].admin && (<Button variant="outlined" sx={{ textTransform: 'none', ml: 1 }} href={`${getUrl()}${appState.template[id].admin}`} target="_blank">Manage Blockchain Settings</Button>)}
-                </Grid>
-                <Grid item xs={12} alignContent="center">
-                    <Alert severity="info">Follow the <a href={appState.template[id].guide} target="_blank" rel="noreferrer">how to guide</a> for instructions on how to set up the properties for this template</Alert>
                 </Grid>
                 <Grid container sx={{ p: 2 }} spacing={2}>
 

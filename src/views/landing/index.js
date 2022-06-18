@@ -49,7 +49,7 @@ const Landing = () => (
         <SecondWrapper sx={{ minHeight: '950px' }}>
             <Box sx={{ position: 'relative' }}>
                 <Box className="landing-dark">
-                    <img src={background2} alt="background" width="80%" />
+                    <img src={background2} alt="background" width="100%" />
                 </Box>
             </Box>
             <Feature />
@@ -60,7 +60,7 @@ const Landing = () => (
         <SecondWrapper sx={{ minHeight: '500px', pt: 50, pb: 10 }}>
             <Box sx={{ position: 'relative' }}>
                 <Box className="landing-dark">
-                    <img src={background3} alt="background" width="80%" />
+                    <img src={background3} alt="background" width="100%" />
                 </Box>
             </Box>
             <Tools />

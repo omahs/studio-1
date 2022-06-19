@@ -28,6 +28,9 @@ const UseCase = ({ onChange }) => {
         {id:'marketplace', label:"Marketplace", ready: true, tooltip: 
         `White Label NFT Marketplace.
         From tokenized artwork to audio and ingame items, you name it, there is one template that will fit your needs. Launch a beautiful, custom branded NFT marketplace you control in seconds.`},
+        {id:'tokenizer', label:"NFT Creator", ready: true, tooltip: 
+        `Tokenize and Create NFTs.
+        Tokenize anything and create NFTs for any EVM supported blockchain, setup royalties, properties, attributes and more.`},
         {id:'membership', label:"Memberships", ready: false},
         {id:'bookings', label:"Event Bookings", ready: false},
         {id:'blog', label:"Blog", ready: false},

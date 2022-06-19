@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 // material-ui
@@ -13,11 +14,19 @@ import {
     ListItemAvatar,
     ListItemText,
     Typography,
-    linearProgressClasses
+    linearProgressClasses,
+    Tooltip,
+    Button,
+    Box
 } from '@mui/material';
 
 // assets
-import PublishTwoToneIcon from '@mui/icons-material/PublishTwoTone';
+import { useSelector } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
+import  { constants } from 'react-dappify';
+import { getUrl } from 'utils/url';
+
+const { NETWORKS, LOGO } = constants;
 
 // styles
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -55,26 +64,28 @@ function LinearProgressWithLabel({ value, ...others }) {
     const theme = useTheme();
 
     return (
-        <Grid container direction="column" spacing={1} sx={{ mt: 1.5 }}>
-            <Grid item>
-                <Grid container justifyContent="space-between">
-                    <Grid item>
-                        <Typography
-                            variant="h6"
-                            sx={{ color: theme.palette.mode === 'dark' ? theme.palette.dark.light : theme.palette.primary[800] }}
-                        >
-                            Progress
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6" color="inherit">{`${Math.round(value)}%`}</Typography>
+        <Tooltip title="Fill in info page, specify the admin wallet address, add a project template and publish your changes!">
+            <Grid container direction="column" spacing={1} sx={{ mt: 1.5 }}>
+                <Grid item>
+                    <Grid container justifyContent="space-between">
+                        <Grid item>
+                            <Typography
+                                variant="h6"
+                                sx={{ color: theme.palette.mode === 'dark' ? theme.palette.dark.light : theme.palette.primary[800] }}
+                            >
+                                Configuration Progress
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="h6" color="inherit">{`${Math.round(value)}%`}</Typography>
+                        </Grid>
                     </Grid>
                 </Grid>
+                <Grid item>
+                    <BorderLinearProgress variant="determinate" value={value} {...others} />
+                </Grid>
             </Grid>
-            <Grid item>
-                <BorderLinearProgress variant="determinate" value={value} {...others} />
-            </Grid>
-        </Grid>
+        </Tooltip>
     );
 }
 
@@ -86,6 +97,29 @@ LinearProgressWithLabel.propTypes = {
 
 const MenuCard = () => {
     const theme = useTheme();
+    const [progress, setProgress] = useState(0);
+    const appState = useSelector((state) => state.app);
+    const targetNetwork = NETWORKS[appState?.chainId];
+    const logo = LOGO[targetNetwork?.nativeCurrency?.symbol];
+
+    const calculateProgress = () => {
+        let currentProgress = 0;
+        if (!isEmpty(appState.description)) currentProgress += 20;
+        if (!isEmpty(appState.social.twitter) || 
+            !isEmpty(appState.social.facebook) || 
+            !isEmpty(appState.social.email) || 
+            !isEmpty(appState.social.instagram) || 
+            !isEmpty(appState.social.pinterest) || 
+            !isEmpty(appState.social.telegram)) currentProgress += 20;
+        if (!isEmpty(appState.template)) currentProgress += 20;
+        if (!isEmpty(appState.operator)) currentProgress += 20;
+        if (!isEmpty(appState.type)) currentProgress += 20;
+        setProgress(currentProgress);
+    };
+
+    useEffect(() => {
+        calculateProgress();
+    }, [appState]);
 
     return (
         <CardStyle>
@@ -102,10 +136,11 @@ const MenuCard = () => {
                                     border: theme.palette.mode === 'dark' ? '1px solid' : 'none',
                                     borderColor: theme.palette.primary.main,
                                     background: theme.palette.mode === 'dark' ? theme.palette.dark.dark : '#fff',
-                                    marginRight: '12px'
+                                    marginRight: '12px',
+                                    p: 3
                                 }}
                             >
-                                <PublishTwoToneIcon fontSize="large" />
+                                    <img src={logo} alt="Deployed chain" height="40px"/>
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText
@@ -115,14 +150,23 @@ const MenuCard = () => {
                                     variant="subtitle1"
                                     sx={{ color: theme.palette.mode === 'dark' ? theme.palette.dark.light : theme.palette.primary[800] }}
                                 >
-                                    My dApp
+                                    {appState?.name}
                                 </Typography>
                             }
-                            secondary={<Typography variant="caption"> Steps to Completion</Typography>}
+                            secondary={<Typography variant="caption">{targetNetwork?.chainName}</Typography>}
                         />
                     </ListItem>
                 </List>
-                <LinearProgressWithLabel value={80} />
+                <LinearProgressWithLabel value={progress} />
+                <Tooltip title="To view your dApp select first a template and enable it as default landing page">
+                    <Box>
+                        <Button fullWidth variant="contained" color="secondary" 
+                                disabled={isEmpty(appState.type)}
+                                sx={{ mt: 2 }}                 
+                                href={getUrl(appState.subdomain)}
+                                target="_blank">Visit my dApp</Button>
+                    </Box>
+                </Tooltip>
             </CardContent>
         </CardStyle>
     );

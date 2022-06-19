@@ -18,6 +18,7 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import ShieldIcon from '@mui/icons-material/Shield';
 import ViewCompactIcon from '@mui/icons-material/ViewCompact';
+import landingVideo from 'assets/videos/Build.mp4';
 
 // ============================|| LANDING - KEY FEATURE PAGE ||============================ //
 
@@ -33,205 +34,24 @@ const KeyFeaturePage = () => {
     return (
         <Container sx={{ position: 'relative' }}>
             <Grid container justifyContent="center" spacing={gridSpacing} sx={{ textAlign: 'center' }}>
-                <Grid item sx={{ mb: 5 }}>
-                    <Grid item xs={12} sx={{ mt: 5, mb: 3 }}>
-                        <Typography className="landing-title" component="h1">Beautiful and Customizable</Typography>
+                <Grid item xs={12}>
+                    <Grid item xs={12} sx={{ mt: 0, mb: 3 }}>
+                        <Typography className="landing-title" component="h1">Simple yet Flexible, Free yet Priceless</Typography>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography className="landing-description" component="h2">
-                            Our templates are beautiful and of high quality, allowing you to customize and adapt them to your own brand. The
-                            configuration and behavior of your dApp is coded into smart contracts you launch and control as part of your
-                            project.
+                            Craft and launch web3 projects, from templates, without having to write a single line of code. Dappify lowers
+                            the entry barrier for builders into web3 by abstracting them on the complexities of blockchain & UX with
+                            pre-built templates they can adapt for their own needs that offer an ultra friendly end experience for their
+                            users.
                         </Typography>
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    <Grid container justifyContent="center" spacing={gridSpacing}>
-                        <Grid item lg={3} md={4} xs={12} sm={6}>
-                            <FadeInWhenVisible>
-                                <SubCard>
-                                    <Grid container alignItems="center" spacing={2}>
-                                        <Grid item>
-                                            <Avatar
-                                                variant="rounded"
-                                                sx={{
-                                                    ...avatarIconSx,
-                                                    bgcolor: theme.palette.mode === 'dark' ? theme.palette.dark[800] : 'primary.light',
-                                                    color: theme.palette.primary.main
-                                                }}
-                                            >
-                                                <SpeedIcon fontSize="large" />
-                                            </Avatar>
-                                        </Grid>
-                                        <Grid item xs zeroMinWidth className="landing-description">
-                                            No-code, Fast
-                                        </Grid>
-                                    </Grid>
-                                </SubCard>
-                            </FadeInWhenVisible>
-                        </Grid>
-                        <Grid item lg={3} md={4} xs={12} sm={6}>
-                            <FadeInWhenVisible>
-                                <SubCard>
-                                    <Grid container alignItems="center" spacing={2}>
-                                        <Grid item>
-                                            <Avatar
-                                                variant="rounded"
-                                                sx={{
-                                                    ...avatarIconSx,
-                                                    bgcolor: theme.palette.mode === 'dark' ? theme.palette.dark[900] : 'secondary.light',
-                                                    color: theme.palette.secondary.main
-                                                }}
-                                            >
-                                                <MonetizableIcon fontSize="large" />
-                                            </Avatar>
-                                        </Grid>
-                                        <Grid item xs zeroMinWidth className="landing-description">
-                                            Monetizable
-                                        </Grid>
-                                    </Grid>
-                                </SubCard>
-                            </FadeInWhenVisible>
-                        </Grid>
-                        <Grid item lg={3} md={4} xs={12} sm={6}>
-                            <FadeInWhenVisible>
-                                <SubCard>
-                                    <Grid container alignItems="center" spacing={2}>
-                                        <Grid item>
-                                            <Avatar
-                                                variant="rounded"
-                                                sx={{
-                                                    ...avatarIconSx,
-                                                    bgcolor: theme.palette.mode === 'dark' ? theme.palette.dark[800] : 'primary.light',
-                                                    color: theme.palette.primary.main
-                                                }}
-                                            >
-                                                <AspectRatioIcon fontSize="large" />
-                                            </Avatar>
-                                        </Grid>
-                                        <Grid item xs zeroMinWidth className="landing-description">
-                                            Responsive
-                                        </Grid>
-                                    </Grid>
-                                </SubCard>
-                            </FadeInWhenVisible>
-                        </Grid>
-                        <Grid item lg={3} md={4} xs={12} sm={6}>
-                            <FadeInWhenVisible>
-                                <SubCard>
-                                    <Grid container alignItems="center" spacing={2}>
-                                        <Grid item>
-                                            <Avatar
-                                                variant="rounded"
-                                                sx={{
-                                                    ...avatarIconSx,
-                                                    bgcolor: theme.palette.mode === 'dark' ? theme.palette.dark[900] : 'secondary.light',
-                                                    color: theme.palette.secondary.main
-                                                }}
-                                            >
-                                                <ViewCompactIcon fontSize="large" />
-                                            </Avatar>
-                                        </Grid>
-                                        <Grid item xs zeroMinWidth className="landing-description">
-                                            Multi-layout
-                                        </Grid>
-                                    </Grid>
-                                </SubCard>
-                            </FadeInWhenVisible>
-                        </Grid>
-                        <Grid item lg={3} md={4} xs={12} sm={6}>
-                            <FadeInWhenVisible>
-                                <SubCard>
-                                    <Grid container alignItems="center" spacing={2}>
-                                        <Grid item>
-                                            <Avatar
-                                                variant="rounded"
-                                                sx={{
-                                                    ...avatarIconSx,
-                                                    bgcolor: theme.palette.mode === 'dark' ? theme.palette.dark[900] : 'secondary.light',
-                                                    color: theme.palette.secondary.main
-                                                }}
-                                            >
-                                                <SettingsIcon fontSize="large" />
-                                            </Avatar>
-                                        </Grid>
-                                        <Grid item xs zeroMinWidth className="landing-description">
-                                            Configurable
-                                        </Grid>
-                                    </Grid>
-                                </SubCard>
-                            </FadeInWhenVisible>
-                        </Grid>
-                        <Grid item lg={3} md={4} xs={12} sm={6}>
-                            <FadeInWhenVisible>
-                                <SubCard>
-                                    <Grid container alignItems="center" spacing={2}>
-                                        <Grid item>
-                                            <Avatar
-                                                variant="rounded"
-                                                sx={{
-                                                    ...avatarIconSx,
-                                                    bgcolor: theme.palette.mode === 'dark' ? theme.palette.dark[800] : 'primary.light',
-                                                    color: theme.palette.primary.main
-                                                }}
-                                            >
-                                                <NotificationsActiveIcon fontSize="large" />
-                                            </Avatar>
-                                        </Grid>
-                                        <Grid item xs zeroMinWidth className="landing-description">
-                                            Engaging
-                                        </Grid>
-                                    </Grid>
-                                </SubCard>
-                            </FadeInWhenVisible>
-                        </Grid>
-                        <Grid item lg={3} md={4} xs={12} sm={6}>
-                            <FadeInWhenVisible>
-                                <SubCard>
-                                    <Grid container alignItems="center" spacing={2}>
-                                        <Grid item>
-                                            <Avatar
-                                                variant="rounded"
-                                                sx={{
-                                                    ...avatarIconSx,
-                                                    bgcolor: theme.palette.mode === 'dark' ? theme.palette.dark[900] : 'secondary.light',
-                                                    color: theme.palette.secondary.main
-                                                }}
-                                            >
-                                                <DashboardCustomizeIcon fontSize="large" />
-                                            </Avatar>
-                                        </Grid>
-                                        <Grid item xs zeroMinWidth className="landing-description">
-                                            Modular
-                                        </Grid>
-                                    </Grid>
-                                </SubCard>
-                            </FadeInWhenVisible>
-                        </Grid>
-                        <Grid item lg={3} md={4} xs={12} sm={6}>
-                            <FadeInWhenVisible>
-                                <SubCard>
-                                    <Grid container alignItems="center" spacing={2}>
-                                        <Grid item>
-                                            <Avatar
-                                                variant="rounded"
-                                                sx={{
-                                                    ...avatarIconSx,
-                                                    background: theme.palette.mode === 'dark' ? theme.palette.dark[800] : 'primary.light',
-                                                    color: theme.palette.primary.main
-                                                }}
-                                            >
-                                                <ShieldIcon fontSize="large" />
-                                            </Avatar>
-                                        </Grid>
-                                        <Grid item xs zeroMinWidth className="landing-description">
-                                            Secure
-                                        </Grid>
-                                    </Grid>
-                                </SubCard>
-                            </FadeInWhenVisible>
-                        </Grid>
-                    </Grid>
+                    <video loop autoplay="autoplay" muted style={{ borderRadius: 6, width: '60%', height: 'auto' }}>
+                        <source src={landingVideo} type="video/mp4" />
+                        Your browser does not support HTML video.
+                    </video>
                 </Grid>
             </Grid>
         </Container>

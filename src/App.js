@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
-import { MoralisProvider } from 'react-moralis';
 
 // routing
 import Routes from 'routes';
@@ -16,27 +15,27 @@ import Snackbar from 'ui-component/extended/Snackbar';
 // provider
 import { DappifyProvider } from 'react-dappify';
 
-// ==============================|| APP ||============================== //
+// Logger.debug(`NODE_ENV ${process.env.NODE_ENV}`);
+// Logger.debug(`REACT_APP_HOST_ENV ${process.env.REACT_APP_HOST_ENV}`);
 
+// ==============================|| APP ||============================== //
 const App = () => {
     const customization = useSelector((state) => state.customization);
 
     return (
-        <MoralisProvider appId={process.env.REACT_APP_MORALIS_APP_ID} serverUrl={process.env.REACT_APP_MORALIS_SERVER_URL}>
-            <DappifyProvider template="studio">
-                <StyledEngineProvider injectFirst>
-                    <ThemeProvider theme={themes(customization)}>
-                        <CssBaseline />
-                        <Locales>
-                            <>
-                                <Routes />
-                                <Snackbar />
-                            </>
-                        </Locales>
-                    </ThemeProvider>
-                </StyledEngineProvider>
-            </DappifyProvider>
-        </MoralisProvider>
+        <DappifyProvider>
+            <StyledEngineProvider injectFirst>
+                <ThemeProvider theme={themes(customization)}>
+                    <CssBaseline />
+                    <Locales>
+                        <>
+                            <Routes />
+                            <Snackbar />
+                        </>
+                    </Locales>
+                </ThemeProvider>
+            </StyledEngineProvider>
+        </DappifyProvider>
     );
 };
 

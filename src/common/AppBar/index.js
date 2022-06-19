@@ -1,4 +1,4 @@
-import { cloneElement, useState, useEffect, useContext } from 'react';
+import { cloneElement, useState, useContext } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 
 // material-ui
@@ -62,15 +62,6 @@ const AppBar = ({ ...others }) => {
 
     const [showWalletDialog, setShowWalletDialog] = useState();
 
-    // ----------------------- Analytics ----------------------------
-    useEffect(() => {
-        if (isAuthenticated) {
-            window.pendo.initialize({ account: { id: user?.get('ethAddress') }});
-            window.heap.identify(user?.get('ethAddress'));
-        }
-    }, [isAuthenticated, user]);
-    // ------------------------------------------------------------------
-
     /** Method called on multiple components with different event types */
     const drawerToggler = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -79,7 +70,7 @@ const AppBar = ({ ...others }) => {
         setDrawerToggle(open);
     };
 
-    const myDappsButton = location.pathname === '/' && (
+    const myDappsButton = (location.pathname === '/' || location.pathname === '/templates') && (
             <Button disableElevation component={RouterLink} variant="contained" to="/projects" size="small" color="secondary">
                 Sign in to the Console
             </Button>
@@ -131,6 +122,9 @@ const AppBar = ({ ...others }) => {
                             </Button>
                         </Typography>
                         <Stack direction="row" sx={{ display: { xs: 'none', md: 'block' } }} spacing={2}>
+                            <Button color="inherit" component={RouterLink} to="/templates" size="large">
+                                Templates
+                            </Button>
                             <Button color="inherit" href={roadmap} size="large" target="_blank">
                                 Roadmap
                             </Button>
@@ -141,7 +135,7 @@ const AppBar = ({ ...others }) => {
                                 Changelog
                             </Button>
                             {myDappsButton}
-                            {location.pathname !== '/' && loginButton}
+                            {!(location.pathname === '/' || location.pathname === '/templates') && loginButton}
                         </Stack>
                         <Box sx={{ display: { xs: 'block', md: 'none' } }}>
                             <IconButton color="inherit" onClick={drawerToggler(true)} size="large">

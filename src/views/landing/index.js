@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import Header from './Header';
 import Feature from './Feature';
 import KeyFeature from './KeyFeature';
+import Benefits from './Benefits';
 import Steps from './Steps';
 import Subscribe from './Subscribe';
 import Footer from './Footer';
@@ -45,7 +46,7 @@ const Landing = () => (
         <SecondWrapper>
             <KeyFeature />
         </SecondWrapper>
-        <SecondWrapper sx={{ minHeight: '1200px' }}>
+        <SecondWrapper sx={{ minHeight: '950px' }}>
             <Box sx={{ position: 'relative' }}>
                 <Box className="landing-dark">
                     <img src={background2} alt="background" width="100%" />
@@ -53,15 +54,18 @@ const Landing = () => (
             </Box>
             <Feature />
         </SecondWrapper>
-        <SecondWrapper sx={{ minHeight: '500px', pt: 50, pb: 10 }}>
-            <Tools />
+        <SecondWrapper>
+            <Benefits />
         </SecondWrapper>
-        <SecondWrapper sx={{ minHeight: '1300px' }}>
+        <SecondWrapper sx={{ minHeight: '500px', pt: 50, pb: 10 }}>
             <Box sx={{ position: 'relative' }}>
                 <Box className="landing-dark">
                     <img src={background3} alt="background" width="100%" />
                 </Box>
             </Box>
+            <Tools />
+        </SecondWrapper>
+        <SecondWrapper >
             <Steps />
         </SecondWrapper>
         <SecondWrapper>

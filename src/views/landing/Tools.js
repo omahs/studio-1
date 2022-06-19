@@ -24,27 +24,30 @@ import EthLogo from 'assets/images/logo_eth.svg';
 import AvaLogo from 'assets/images/logo_avalanche.svg';
 import PolygonLogo from 'assets/images/logo_polygon.svg';
 import BscLogo from 'assets/images/logo_bsc.svg';
+import { constants } from 'react-dappify';
+
+const { NETWORKS, LOGO } = constants;
 
 // ============================|| LANDING - KEY FEATURE PAGE ||============================ //
 
-const supportedChains = [
-    {
-        name: 'Ethereum',
-        logo: EthLogo
-    },
-    {
-        name: 'Avalanche',
-        logo: AvaLogo
-    },
-    {
-        name: 'Polygon',
-        logo: PolygonLogo
-    },
-    {
-        name: 'BNB Chain',
-        logo: BscLogo
-    }
-];
+// const supportedChains = [
+//     {
+//         name: 'Ethereum',
+//         logo: EthLogo
+//     },
+//     {
+//         name: 'Avalanche',
+//         logo: AvaLogo
+//     },
+//     {
+//         name: 'Polygon',
+//         logo: PolygonLogo
+//     },
+//     {
+//         name: 'BNB Chain',
+//         logo: BscLogo
+//     }
+// ];
 
 const ToolsPage = () => {
     const theme = useTheme();
@@ -57,15 +60,18 @@ const ToolsPage = () => {
 
     const displayChains = () => {
         const chains = [];
-        supportedChains.forEach((chain) => {
+        const supportedNetworks = Object.keys(NETWORKS);
+        supportedNetworks.forEach((chain) => {
+            const network = NETWORKS[chain];
+            const logo = LOGO[network.nativeCurrency.symbol];
             chains.push(
-                <Grid item xs={6} md={2} key={chain.name} sx={{ my: 2 }}>
+                <Grid item xs={6} md={2} key={network.chainName} sx={{ my: 2 }}>
                     <Box>
                         <Grid item xs={12}>
-                            <img src={chain.logo} alt={chain.name} height="128" />
+                            <img src={logo} alt={network.chainName} height="96" />
                         </Grid>
                         <Grid item xs={12} sx={{ py: 2 }}>
-                            <Typography variant="h5">{chain.name}</Typography>
+                            <Typography variant="h5">{network.chainName}</Typography>
                         </Grid>
                     </Box>
                 </Grid>

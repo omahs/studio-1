@@ -19,13 +19,11 @@ const UsersPage = () => {
     const [isLoading, setLoading] = useState();
 
     const loadNews = async () => {
-        console.log(appState);
         const News = Moralis.Object.extend('News');
         const query = new Moralis.Query(News);
         query.equalTo('appId', appState.id);
         const results = await query.find();
         setNewsList(results);
-        console.log(results);
     };
 
     useEffect(() => {
@@ -93,7 +91,6 @@ const UsersPage = () => {
                 </Grid>
             );
         });
-        console.log(list);
         return list;
     };
 

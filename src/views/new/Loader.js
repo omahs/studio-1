@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { UPDATE_APP } from 'store/actions';
 import { TextField, Grid, Typography, Alert, CircularProgress, Box } from '@mui/material';
 import { withStyles } from '@mui/styles';
-import Project from 'react-dappify/model/Project';
+import { Project } from 'react-dappify';
 import PropTypes from 'prop-types';
 import { useMoralis } from 'react-moralis';
 
@@ -109,7 +109,7 @@ const Loader = ({onChange}) => {
     const loader = (
         <Grid container justifyContent="center" alignItems="center">
             <Grid item xs={12} sx={{ textAlign: 'center', position: 'absolute' }}>
-                <CircularProgressWithLabel value={progress} />;
+                <CircularProgressWithLabel value={progress} />
             </Grid>
             <Grid item sx={{ marginTop: 30, textAlign: 'center', height: 50 }}>
                 {ready}

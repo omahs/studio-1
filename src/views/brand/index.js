@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import { Typography, Grid, Paper, TextField, Button } from '@mui/material';
+import { Typography, Grid, Paper, Button } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
 import Loader from 'ui-component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { BlockPicker } from 'react-color';
 import { gridSpacing } from 'store/constant';
 import { useMoralis } from 'react-moralis';
-import { setField, setColor } from 'utils/config';
+import { setField } from 'utils/config';
 import { UPDATE_APP } from 'store/actions';
-import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Slider from '@mui/material/Slider';
 import CropSquareIcon from '@mui/icons-material/CropSquare';
@@ -18,7 +17,7 @@ const BrandPage = () => {
     const dispatch = useDispatch();
     const appState = useSelector((state) => state.app);
     const [isLoading, setLoading] = useState();
-    const [background, setBackground] = useState(appState.landingPage.background);
+    // const [background, setBackground] = useState(appState.landingPage.background);
     const [buttonRadius, setButtonRadius] = useState(appState.theme.components.MuiButton.styleOverrides.root.borderRadius);
     const [shapeRadius, setShapeRadius] = useState(appState.theme.shape.borderRadius);
     const { Moralis } = useMoralis();
@@ -52,20 +51,20 @@ const BrandPage = () => {
         return upload.ipfs();
     }
 
-    const uploadBackground = async (e) => {
-        const upload = await uploadIpfs(e);
-        appState.landingPage.background = upload;
-        console.log(appState.landingPage.background);
-        setBackground(appState.landingPage.background);
-        dispatch({ type: UPDATE_APP, configuration: appState });
-    }
+    // const uploadBackground = async (e) => {
+    //     const upload = await uploadIpfs(e);
+    //     appState.landingPage.background = upload;
+    //     console.log(appState.landingPage.background);
+    //     setBackground(appState.landingPage.background);
+    //     dispatch({ type: UPDATE_APP, configuration: appState });
+    // }
 
-    const removeBackground = () => {
-        appState.landingPage.background = "";
-        console.log(appState.landingPage.background);
-        setBackground(appState.landingPage.background);
-        dispatch({ type: UPDATE_APP, configuration: appState });
-    }
+    // const removeBackground = () => {
+    //     appState.landingPage.background = "";
+    //     console.log(appState.landingPage.background);
+    //     setBackground(appState.landingPage.background);
+    //     dispatch({ type: UPDATE_APP, configuration: appState });
+    // }
 
     const configureShapeRadius = (e, value) => {
         appState.theme.shape.borderRadius = value;
@@ -88,7 +87,7 @@ const BrandPage = () => {
                 <Grid item xs={12} justifyContent="center">
                     <Typography variant="h2">Color Palette</Typography>
                     <Typography variant="body">Colors displayed as part of the theme</Typography>
-                    <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                    <Paper variant="outlined" sx={{ p: 3, mt: 2 }} className="paper-in">
                         <Grid container spacing={gridSpacing} sx={{ p: 3, textAlign: 'center' }}
                             alignItems="center"
                             justifyContent="center">
@@ -119,7 +118,7 @@ const BrandPage = () => {
                 <Grid item xs={12}>
                     <Typography variant="h2">Style</Typography>
                     <Typography variant="body">Look & Feel</Typography>
-                    <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                    <Paper variant="outlined"  sx={{ p: 3, mt: 2 }} className="paper-in">
                         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
                             <Button disabled variant="contained" sx={{minWidth: '200px', borderRadius:`${buttonRadius}px`}}>Button Radius</Button>
                             <CropSquareIcon />
@@ -137,7 +136,7 @@ const BrandPage = () => {
                 <Grid item xs={12}>
                     <Typography variant="h2">App Logo</Typography>
                     <Typography variant="body">Displayed on the top left corner and the footer</Typography>
-                    <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                    <Paper variant="outlined"  sx={{ p: 3, mt: 2 }} className="paper-in">
                         <Grid container spacing={gridSpacing} sx={{ p: 3 }}>
                             <Grid item xs={12} sx={{ minHeight: 225, p: 3, textAlign: 'center'}}>
                                 <img src={appState.logo} alt="Logo" style={{ maxWidth: '260px' }} />
@@ -154,7 +153,7 @@ const BrandPage = () => {
                 <Grid item xs={12}>
                     <Typography variant="h2">App Icon</Typography>
                     <Typography variant="body">Displayed as html metadata</Typography>
-                    <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                    <Paper variant="outlined"  sx={{ p: 3, mt: 2 }} className="paper-in">
                         <Grid container spacing={gridSpacing} sx={{ p: 3 }}>
                             <Grid item xs={12} sx={{ minHeight: 225, p: 3, textAlign: 'center'}}>
                                 <img src={appState.icon} alt="Icon" style={{ maxWidth: '260px' }} />
@@ -168,10 +167,10 @@ const BrandPage = () => {
                         </Grid>
                     </Paper>
                 </Grid>
-                <Grid item xs={12}>
+                {/*<Grid item xs={12}>
                     <Typography variant="h2">Landing Page Background</Typography>
                     <Typography variant="body">Displayed as Background</Typography>
-                    <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                    <Paper variant="outlined"  sx={{ p: 3, mt: 2 }} className="paper-in">
                         <Grid container spacing={gridSpacing} sx={{ p: 3 }}>
                             <Grid item xs={12} sx={{ minHeight: 225, p: 3, textAlign: 'center'}}>
                                 { !background &&
@@ -191,11 +190,11 @@ const BrandPage = () => {
                             </Grid>
                         </Grid>
                     </Paper>
-                </Grid>
+                                </Grid> */}
                 {/*<Grid item xs={12}>
                     <Typography variant="h2">Landing Page Title & Subtitle</Typography>
                     <Typography variant="body">These texts are shown in the landing page for those templates that display them.</Typography>
-                    <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                    <Paper variant="outlined"  sx={{ p: 3, mt: 2 }} className="paper-in">
                         <Grid container spacing={gridSpacing} sx={{ p: 3 }}>
                             <Grid item xs={12}>
                                 <TextField

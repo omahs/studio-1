@@ -1,7 +1,6 @@
 import { forwardRef, useContext } from 'react';
 import { Grid, Dialog, DialogContent,Slide, Button, Typography } from '@mui/material';
-import { supportedWallets } from 'react-dappify/wallets';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, supportedWallets } from 'react-dappify';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -14,7 +13,7 @@ const WalletsDialog = ({ isOpen=false, onClose, isBid, nft, t }) => {
         const list = [];
         supportedWallets.forEach((wallet) => {
             list.push(
-                <Grid item xs={6}>
+                <Grid item xs={6} key={wallet.name}>
                     <Button elevation={1} sx={{ p:4 }} fullWidth onClick={async () => {
                         await authenticate(wallet.payload);
                         onClose();

@@ -20,6 +20,7 @@ import MobileFriendlyIcon from '@mui/icons-material/MobileFriendly';
 import PublishIcon from '@mui/icons-material/Publish';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import AddIcon from '@mui/icons-material/Add';
 
 // =============================|| LANDING - FEATURE PAGE ||============================= //
 
@@ -55,14 +56,14 @@ const StepsPage = () => {
                                                     fontSize: '4em'
                                                 }}
                                             >
-                                                <SettingsIcon fontSize="large" />
+                                                <AddIcon fontSize="large" />
                                             </Avatar>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Typography variant="h3">1. Configure</Typography>
+                                            <Typography variant="h3">1. Create a project</Typography>
                                         </Grid>
                                         <Grid item xs={12} className="use-case-description">
-                                            Select your template and select features, set permissions and define revenue model
+                                            Start a new project to get your domain assigned and select your default network
                                         </Grid>
                                     </Grid>
                                 </SubCard>
@@ -81,14 +82,14 @@ const StepsPage = () => {
                                                     fontSize: '4em'
                                                 }}
                                             >
-                                                <PublishIcon fontSize="large" />
+                                                <SettingsIcon fontSize="large" />
                                             </Avatar>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Typography variant="h3">2. Publish</Typography>
+                                            <Typography variant="h3">2. Add and configure templates</Typography>
                                         </Grid>
                                         <Grid item xs={12} className="use-case-description">
-                                            Launch your dApp live and have your users engage.
+                                            Add templates from the library and configure each one to fit your needs
                                         </Grid>
                                     </Grid>
                                 </SubCard>
@@ -108,14 +109,14 @@ const StepsPage = () => {
                                                     fontSize: '4em'
                                                 }}
                                             >
-                                                <AttachMoneyIcon fontSize="large" />
+                                                <PublishIcon fontSize="large" />
                                             </Avatar>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Typography variant="h3">3. Profit</Typography>
+                                            <Typography variant="h3">3. Launch and Share</Typography>
                                         </Grid>
                                         <Grid item xs={12} className="use-case-description">
-                                            Track your revenue and traffic, control permissions for users and content creators
+                                            Click publish changes and share your app url with your users
                                         </Grid>
                                     </Grid>
                                 </SubCard>

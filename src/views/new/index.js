@@ -3,14 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box, Stack, Grid, Typography, IconButton, Button, Slide } from '@mui/material';
 import NameField from 'views/new/NameField';
 import UseCase from 'views/new/UseCase';
+import Blockchain from 'views/new/Blockchain';
 import TermsAndConditions from 'views/new/TermsAndConditions';
 import Loader from 'views/new/Loader';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import { UPDATE_APP } from 'store/actions';
-import defaultConfiguration from 'react-dappify/configuration/default.json';
-import Project from 'react-dappify/model/Project';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, defaultConfiguration, Project } from 'react-dappify';
 
 const NewPage = () => {
     const { user } = useContext(DappifyContext);
@@ -22,11 +21,12 @@ const NewPage = () => {
         setCantContinue(!canNextStep || !appName || !subddomain);
         appState.name = appName;
         appState.subdomain = subddomain;
+        appState.operator = user.get('ethAddress');
     }
 
-    const handleStepTwo = (category) => {
-        setCantContinue(!category);
-        appState.type = category;
+    const handleStepTwo = (chainId) => {
+        setCantContinue(!chainId);
+        appState.chainId = chainId;
     };
 
     const handleStepThree = (checked) => {
@@ -38,7 +38,7 @@ const NewPage = () => {
     };
 
     const stepOne = !appState.step && <NameField onChange={handleStepOne}/>;
-    const stepTwo = appState.step === 1 && <UseCase onChange={handleStepTwo}/>;
+    const stepTwo = appState.step === 1 && <Blockchain onChange={handleStepTwo} />; //<UseCase onChange={handleStepTwo}/>;
     const stepThree = appState.step === 2 && <TermsAndConditions onChange={handleStepThree} />;
     const loader = appState.step === 3 && <Loader onChange={handleStepFour}  />;
     const [cantContinue, setCantContinue] = useState(true);
@@ -50,7 +50,7 @@ const NewPage = () => {
         if (appState.step === 4) {
             const savedProject = await Project.create(appState, user);
             dispatch({ type: UPDATE_APP, configuration: savedProject.get('config') });
-            navigate(`/studio/overview`);
+            navigate(`/studio/templates`);
         }
     }
 

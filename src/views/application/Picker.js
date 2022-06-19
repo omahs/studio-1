@@ -1,17 +1,10 @@
-import { useEffect, useState, forwardRef } from 'react';
+import { useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { styled } from '@mui/material/styles';
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
-import MuiAccordion from '@mui/material/Accordion';
-import MuiAccordionSummary from '@mui/material/AccordionSummary';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import { Typography, Grid, Container, Button, Link, Chip, LinearProgress } from '@mui/material';
+import { Typography, Grid, Container, Button, Chip, LinearProgress } from '@mui/material';
 import { gridSpacing } from 'store/constant';
-import AnimateButton from 'ui-component/extended/AnimateButton';
-import FadeInWhenVisible from 'views/landing/Animation';
 import SubCard from 'ui-component/cards/SubCard';
 import { useMoralis } from 'react-moralis';
-import { Compiler, CompilerInput } from '@remix-project/remix-solidity';
+import { Compiler } from '@remix-project/remix-solidity';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -222,6 +215,7 @@ const Picker = ({ onSelect }) => {
     };
 
     const deployContract = async (tContract) => {
+        console.log(3);
         const web3Provider = await Moralis.enableWeb3();
         const contract = new web3Provider.eth.Contract(tContract.abi);
         contract
@@ -308,6 +302,7 @@ const Picker = ({ onSelect }) => {
     const isValidChain = async (t) => {
         let isValid = false;
         try {
+            console.log(4);
             const web3 = await Moralis.enableWeb3();
             const chainIdHex = web3.currentProvider.chainId;
             const chainIdDec = await web3.eth.getChainId();

@@ -38,14 +38,12 @@ export const setSocial = (dispatch, state, field, value) => {
 };
 
 export const setFeature = (dispatch, state, field, enabled) => {
-    console.log(enabled);
     const current = state;
     current.feature[field] = enabled;
     dispatch({ type: UPDATE_APP, configuration: current });
 };
 
 export const setNetwork = (dispatch, state, network) => {
-    console.log(network);
     const current = state;
     current.network = network;
     dispatch({ type: UPDATE_APP, configuration: current });

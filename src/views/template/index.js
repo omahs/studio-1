@@ -45,7 +45,7 @@ const TemplatePage = () => {
                 <Grid item xs={12}>
                     <Typography variant="h2">Localization</Typography>
                     <Typography variant="body">Translate default text from the template</Typography>
-                    <Paper variant="outlined" elevation="20" sx={{ p: 3, mt: 2 }} className="paper-in">
+                    <Paper variant="outlined"  sx={{ p: 3, mt: 2 }} className="paper-in">
                         <Grid container spacing={gridSpacing} sx={{ p: 3 }}>
                             {renderItems()}
                         </Grid>

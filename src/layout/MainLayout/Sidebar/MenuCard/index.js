@@ -77,7 +77,7 @@ function LinearProgressWithLabel({ value, ...others }) {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <Typography variant="h6" color="inherit">{`${Math.round(value)}%`}</Typography>
+                            <Typography data-cy="configuration-progress-percentage" variant="h6" color="inherit">{`${Math.round(value)}%`}</Typography>
                         </Grid>
                     </Grid>
                 </Grid>

@@ -57,15 +57,12 @@ const HeaderPage = () => {
                                     <Typography
                                         variant="h1"
                                         sx={{
-                                            fontSize: { xs: '2.25rem', sm: '2.5rem', md: '3.25rem', color: '#fff' },
+                                            fontSize: { xs: '2.25rem', sm: '2.5rem', md: '3.5rem', color: '#fff' },
                                             fontWeight: 900,
                                             lineHeight: 1
                                         }}
                                     >
-                                        <span style={{ opacity: 1 }}>The simplest way to build</span>
-                                        <Box component="span" sx={{ color: 'white', lineHeight: 1.2 }}>
-                                            <em style={{ mt: 2 }}>Web3 Apps</em>
-                                        </Box>
+                                        <span style={{ opacity: 0.85 }}>The simplest way<br/>to build</span> <span><i>Web3 Apps</i></span><br/>
                                     </Typography>
                                 </motion.div>
                             </Grid>

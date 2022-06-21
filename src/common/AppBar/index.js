@@ -109,6 +109,7 @@ const AppBar = ({ ...others }) => {
     const roadmap = process.env.REACT_APP_ROADMAP_URL;
     const micropaper = process.env.REACT_APP_MICROPAPER_URL;
     const changelog = process.env.REACT_APP_CHANGELOG_URL;
+    const blog = process.env.REACT_APP_BLOG_URL;
 
     return (
         <ElevationScroll {...others}>
@@ -125,6 +126,9 @@ const AppBar = ({ ...others }) => {
                             <Button color="inherit" component={RouterLink} to="/templates" size="large">
                                 Templates
                             </Button>
+                            <Button color="inherit" href={blog} size="large" target="_blank">
+                                Blog
+                            </Button>        
                             <Button color="inherit" href={roadmap} size="large" target="_blank">
                                 Roadmap
                             </Button>
@@ -151,6 +155,22 @@ const AppBar = ({ ...others }) => {
                                     onKeyDown={drawerToggler(false)}
                                 >
                                     <List>
+                                        <Link style={{ textDecoration: 'none' }} component={RouterLink} to="/templates">
+                                            <ListItemButton component="a">
+                                                <ListItemIcon>
+                                                    <DirectionsIcon />
+                                                </ListItemIcon>
+                                                <ListItemText primary="Templates" />
+                                            </ListItemButton>
+                                        </Link>
+                                        <Link style={{ textDecoration: 'none' }} href={blog}>
+                                            <ListItemButton component="a">
+                                                <ListItemIcon>
+                                                    <DirectionsIcon />
+                                                </ListItemIcon>
+                                                <ListItemText primary="Blog" />
+                                            </ListItemButton>
+                                        </Link>
                                         <Link style={{ textDecoration: 'none' }} href={roadmap}>
                                             <ListItemButton component="a">
                                                 <ListItemIcon>

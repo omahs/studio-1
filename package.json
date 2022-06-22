@@ -93,8 +93,6 @@
         "build": "env-cmd -f .env react-scripts build",
         "start:cli": "react-scripts start",
         "build:cli":"react-scripts build",
-        "deploy:development":"aws s3 sync build s3://dev.dappify.com/studio/ --region 'us-east-1'; aws cloudfront create-invalidation --distribution-id E37NUL5H5WPHYU --paths '/*';",
-        "deploy:production":"aws s3 sync build s3://dappify.com/studio/ --region 'us-east-1'; aws cloudfront create-invalidation --distribution-id E11LCV8YMPAM5W --paths '/*';",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },

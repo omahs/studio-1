@@ -1,8 +1,8 @@
-name: Studio Deploy Development
+name: Studio Deploy Production
 on:
   push:
     branches:
-      - development
+      - production
 jobs:
   build:
     runs-on: macos-latest
@@ -27,17 +27,17 @@ jobs:
         run: yarn install
       - name: Build
         env: 
-          REACT_APP_MORALIS_APP_ID: ${{ secrets.MORALIS_APP_ID_DEV }}
-          REACT_APP_MORALIS_SERVER_URL: ${{ secrets.MORALIS_SERVER_URL_DEV }}
-          REACT_APP_HOST_ENV: dev
+          REACT_APP_MORALIS_APP_ID: ${{ secrets.MORALIS_APP_ID }}
+          REACT_APP_MORALIS_SERVER_URL: ${{ secrets.MORALIS_SERVER_URL }}
+          REACT_APP_HOST_ENV: production
           CI: false
           NODE_OPTIONS: "--max-old-space-size=8192"
         run: yarn build:cli
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Deploy to S3
         env:
@@ -47,5 +47,5 @@ jobs:
         run: aws s3 sync build s3://$ENV_PREFIXdappify.com/$PROJECT_NAME/ --region $AWS_REGION
       - name: Invalidate Cloudfront Cache
         env:
-          CF_DIST: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID_DEV }}
+          CF_DIST: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
         run: aws cloudfront create-invalidation --distribution-id $CF_DIST --paths '/*'

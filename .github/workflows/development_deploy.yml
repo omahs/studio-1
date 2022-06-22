@@ -1,0 +1,37 @@
+name: Studio Deploy Development
+on:
+  push:
+    branches:
+      - development
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - name: Caching
+        id: react-cache-build
+        uses: actions/cache@v2
+        with:
+          path: |
+            public
+            .cache
+            node_modules
+          key: ${{ runner.os }}-react-studio-dappify-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-react-studio-dappify-
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: yarn build:development
+      - name: Set AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Deploy to S3
+        run: yarn deploy:development

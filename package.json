@@ -99,6 +99,7 @@
         "build:development": "BUILD_ENV=development npm run build",
         "build:staging": "BUILD_ENV=staging npm run build",
         "build:production": "BUILD_ENV=production npm run build",
+        "deploy:development":"aws s3 sync build s3://dev.dappify.com/studio/ --region 'us-east-1'; aws cloudfront create-invalidation --distribution-id E37NUL5H5WPHYU --paths '/*';",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },

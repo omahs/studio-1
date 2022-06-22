@@ -117,7 +117,7 @@ const OverviewPage = () => {
                     <Typography variant="h2">Get started here!</Typography>
                     <Typography variant="body">Tell us more about your dApp</Typography>
                     <Paper variant="outlined" sx={{ p: 3, mt: 2 }} className="paper-in">
-                        <Grid container spacing={gridSpacing}>
+                        <Grid data-cy="get-started-name-and-description" container spacing={gridSpacing}>
                             <Grid item xs={12}>
                                 <TextField
                                     id="outlined-name"
@@ -130,6 +130,7 @@ const OverviewPage = () => {
                             <Grid item xs={12}>
                                 <TextField
                                     id="outlined-desc"
+                                    data-cy="project-description-textfield"
                                     label="Shortly, what is it about?"
                                     multiline
                                     rows={5}
@@ -173,6 +174,7 @@ const OverviewPage = () => {
                             <Grid item xs={6}>
                                 <TextField
                                     id="outlined-email"
+                                    data-cy="email-address-textfield"
                                     label="Email Address"
                                     value={appState?.social?.email}
                                     onChange={(e) => setSocial(dispatch, appState, 'email', e.target.value)}

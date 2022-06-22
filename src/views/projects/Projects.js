@@ -123,7 +123,7 @@ const Projects = () => {
 
     return (
         <Container sx={{ pb: 5 }}>
-            <Grid container spacing={gridSpacing} justifyContent="center" alignItems="center">
+            <Grid data-cy="created-dapps-overview" container spacing={gridSpacing} justifyContent="center" alignItems="center">
                 {listApps()}
                 {projects.length === 0 && welcome}
             </Grid>

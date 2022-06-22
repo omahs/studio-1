@@ -32,6 +32,7 @@ const NavGroup = ({ item }) => {
     return (
         <>
             <List
+                data-cy="dApp-sub-section-sidebar-nav-studio"
                 subheader={
                     item.title && (
                         <Typography variant="caption" sx={{ ...theme.typography.menuCaption }} display="block" gutterBottom>

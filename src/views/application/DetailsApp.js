@@ -24,6 +24,7 @@ const DetailsApp = ({ project = {} }) => {
 
     return (
         <Paper
+            data-cy={`${project.config.name} box`}
             sx={{
                 borderRadius: 4,
                 p: 3,

@@ -56,6 +56,7 @@ const NavItem = ({ item, level }) => {
         <ListItemButton
             {...listItemProps}
             disabled={item.disabled}
+            data-cy={item.title}
             sx={{
                 borderRadius: `${customization.borderRadius}px`,
                 mb: 0.5,

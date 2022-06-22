@@ -15,7 +15,7 @@ const AddDialog = ({ template, onClose, isOpen, }) => {
                     </DialogContentText>
                 </DialogContent>
             <DialogActions sx={{ p: 3, textAlign: 'center' }} justifyContent="center" alignItems="center">
-                <Button fullWidth variant="contained" href={getUrl(appState.subdomain, appState.type === template.id ? null : template.id)} target="_blank" color="info" sx={{ margin: '0 auto' }} onClick={onClose} autoFocus>
+                <Button data-cy="dialog-preview-my-dapp-button" fullWidth variant="contained" href={getUrl(appState.subdomain, appState.type === template.id ? null : template.id)} target="_blank" color="info" sx={{ margin: '0 auto' }} onClick={onClose} autoFocus>
                     Preview my dApp
                 </Button>
             </DialogActions>

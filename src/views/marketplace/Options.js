@@ -141,7 +141,8 @@ const Options = ({ id, readOnly=false }) => {
                             {!isInstalled && !readOnly && (
                                 <Grid item xs={12}>
                                     <Button variant="contained" 
-                                            color="secondary" 
+                                            color="secondary"
+                                            data-cy={`${template?.schema?.name} Install Button`}
                                             fullWidth 
                                             onClick={() => {
                                                 const newState = {...appState};

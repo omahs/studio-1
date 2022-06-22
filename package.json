@@ -89,17 +89,12 @@
         "yup": "^0.32.9"
     },
     "scripts": {
-        "start": "export HTTPS=true&&SSL_CRT_FILE=cert.pem&&SSL_KEY_FILE=key.pem env-cmd -f .env.${BUILD_ENV} react-scripts start",
-        "start:local": "BUILD_ENV=local npm run start",
-        "start:development": "BUILD_ENV=development npm run start",
-        "start:staging": "BUILD_ENV=staging npm run start",
-        "start:production": "BUILD_ENV=production npm run start",
-        "build": "env-cmd -f .env.${BUILD_ENV} react-scripts build",
-        "build:local": "BUILD_ENV=local npm run build",
-        "build:development": "BUILD_ENV=development npm run build",
-        "build:staging": "BUILD_ENV=staging npm run build",
-        "build:production": "BUILD_ENV=production npm run build",
+        "start": "export HTTPS=true&&SSL_CRT_FILE=cert.pem&&SSL_KEY_FILE=key.pem env-cmd -f .env react-scripts start",
+        "build": "env-cmd -f .env react-scripts build",
+        "start:cli": "react-scripts start",
+        "build:cli":"react-scripts build",
         "deploy:development":"aws s3 sync build s3://dev.dappify.com/studio/ --region 'us-east-1'; aws cloudfront create-invalidation --distribution-id E37NUL5H5WPHYU --paths '/*';",
+        "deploy:production":"aws s3 sync build s3://dappify.com/studio/ --region 'us-east-1'; aws cloudfront create-invalidation --distribution-id E11LCV8YMPAM5W --paths '/*';",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },

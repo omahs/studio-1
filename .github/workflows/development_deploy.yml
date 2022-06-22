@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Build
-        run: yarn build:development
+        run: REACT_APP_MORALIS_APP_ID=${{ secrets.REACT_APP_MORALIS_APP_ID_DEV }} REACT_APP_MORALIS_SERVER_URL=${{ secrets.REACT_APP_MORALIS_SERVER_URL_DEV }} REACT_APP_HOST_ENV=dev yarn build:cli
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

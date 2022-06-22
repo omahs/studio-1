@@ -30,7 +30,9 @@ jobs:
           REACT_APP_MORALIS_APP_ID: ${{ secrets.MORALIS_APP_ID_DEV }}
           REACT_APP_MORALIS_APP_URL: ${{ secrets.MORALIS_SERVER_URL_DEV }}
           REACT_APP_HOST_ENV: dev
-        run: NODE_OPTIONS="--max-old-space-size=8192" REACT_APP_MORALIS_APP_ID=env.REACT_APP_MORALIS_APP_ID REACT_APP_MORALIS_SERVER_URL=env.REACT_APP_MORALIS_SERVER_URL REACT_APP_HOST_ENV=env.REACT_APP_HOST_ENV yarn build:cli
+          CI: false
+          NODE_OPTIONS: "--max-old-space-size=8192"
+        run: yarn build:cli
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

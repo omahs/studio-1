@@ -43,8 +43,7 @@ jobs:
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           PROJECT_NAME: studio
-          ENV_PREFIX: 'dev.'
-        run: aws s3 sync build s3://$ENV_PREFIXdappify.com/$PROJECT_NAME/ --region $AWS_REGION
+        run: aws s3 sync build s3://dappify.com/$PROJECT_NAME/ --region $AWS_REGION
       - name: Invalidate Cloudfront Cache
         env:
           CF_DIST: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}

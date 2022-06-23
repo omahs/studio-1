@@ -48,7 +48,7 @@ const KeyFeaturePage = () => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    <video loop autoplay="autoplay" muted style={{ borderRadius: 6, width: '60%', height: 'auto' }}>
+                    <video loop autoplay="autoplay" muted style={{ borderRadius: 6, width: '100%', height: 'auto', maxWidth: 800, border: '1px solid rgba(0,0,0,0.15)' }}>
                         <source src={landingVideo} type="video/mp4" />
                         Your browser does not support HTML video.
                     </video>

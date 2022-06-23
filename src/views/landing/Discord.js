@@ -13,7 +13,9 @@ const DiscordButton = () => {
             variant="contained"
             size="large"
             className="join__discord"
+            id="join-discord-btn"
             color="secondary"
+            fullWidth
             sx={{ px: 5, py: 2 }}
             endIcon={
                 <SvgIcon component="object" sx={{ fontSize: '48px' }}>

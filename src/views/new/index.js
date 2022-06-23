@@ -90,7 +90,7 @@ const NewPage = () => {
                                 dispatch({ type: UPDATE_APP, configuration: appState });
                             }}>Previous</Button>)}
                             {appState.step > 0 && appState.step < 3 && (<Box sx={{ flexGrow: 1 }} />)}
-                            <Button variant="contained" size="large" sx={{ px: 8 }} disabled={cantContinue} onClick={handleNextStep}>{appState.step === 2 ? 'Create project': 'Continue'}</Button>
+                            <Button id="create-project-btn" variant="contained" size="large" sx={{ px: 8 }} disabled={cantContinue} onClick={handleNextStep}>{appState.step === 2 ? 'Create project': 'Continue'}</Button>
                         </Grid>
                     </Box>
                 </Grid>

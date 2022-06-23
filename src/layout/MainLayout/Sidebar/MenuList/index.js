@@ -53,7 +53,7 @@ const MenuList = () => {
     const renderItems = () => items.concat(dynamicItems).map((item) => {
         switch (item.type) {
             case 'group':
-                return <NavGroup key={item.id} item={item} />;
+                return <NavGroup key={item.id} item={item} id={`sidemenu-${item.id}-btn`} />;
             default:
                 return (
                     <Typography key={item.id} variant="h6" color="error" align="center">

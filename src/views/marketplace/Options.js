@@ -181,7 +181,7 @@ const Options = ({ id, readOnly=false }) => {
     }
 
     return (
-       <MainCard sx={{ backgroundColor: 'rgba(255,255,255, 0.85)', border: 0, m: 5, borderRadius: 3, pt: 0, width: '100%' }}>
+       <MainCard sx={{ backgroundColor: 'rgba(255,255,255, 0.85)', border: 0, borderRadius: 3, pt: 0, width: '100%' }}>
             <Grid container spacing={2}>
                 <Grid item xs={12} sx={{ mt: 1 }}>
                     <TextField

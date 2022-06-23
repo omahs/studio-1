@@ -71,7 +71,7 @@ const AppBar = ({ ...others }) => {
     };
 
     const myDappsButton = (location.pathname === '/' || location.pathname === '/templates') && (
-            <Button disableElevation component={RouterLink} variant="contained" to="/projects" size="small" color="secondary">
+            <Button id="go-to-projects" disableElevation component={RouterLink} variant="contained" to="/projects" size="small" color="secondary">
                 Sign in to the Console
             </Button>
     );
@@ -87,6 +87,7 @@ const AppBar = ({ ...others }) => {
             variant="contained"
             color="primary"
             size="large"
+            id="disconnect-wallet-btn"
             onClick={logout}
             startIcon={<AccountBalanceWalletTwoToneIcon />}
             endIcon={<LogoutIcon />}
@@ -99,6 +100,7 @@ const AppBar = ({ ...others }) => {
             variant="contained"
             color="primary"
             size="large"
+            id="connect-wallet-btn"
             onClick={() => setShowWalletDialog(true)}
             startIcon={<AccountBalanceWalletTwoToneIcon />}
         >
@@ -123,19 +125,19 @@ const AppBar = ({ ...others }) => {
                             </Button>
                         </Typography>
                         <Stack direction="row" sx={{ display: { xs: 'none', md: 'block' } }} spacing={2}>
-                            <Button color="inherit" component={RouterLink} to="/templates" size="large">
+                            <Button color="inherit" component={RouterLink} to="/templates" size="large" id="templates-btn">
                                 Templates
                             </Button>
-                            <Button color="inherit" href={blog} size="large" target="_blank">
+                            <Button color="inherit" href={blog} size="large" target="_blank" id="blog-btn">
                                 Blog
                             </Button>        
-                            <Button color="inherit" href={roadmap} size="large" target="_blank">
+                            <Button color="inherit" href={roadmap} size="large" target="_blank" id="roadmap-btn">
                                 Roadmap
                             </Button>
-                            <Button color="inherit" href={micropaper} size="large" target="_blank">
+                            <Button color="inherit" href={micropaper} size="large" target="_blank" id="micropaper-btn">
                                 Micropaper
                             </Button>
-                            <Button color="inherit" href={changelog} size="large" target="_blank">
+                            <Button color="inherit" href={changelog} size="large" target="_blank" id="changelog-btn">
                                 Changelog
                             </Button>
                             {myDappsButton}

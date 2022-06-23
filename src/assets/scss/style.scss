@@ -35,8 +35,9 @@ $primary-font:  sans-serif;
     }
 }
 
-body {
-    overflow-x:hidden;
+html, body {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
 }
 
 // ==============================|| LIGHT BOX ||============================== //
@@ -372,11 +373,15 @@ body {
 }
 
 .landing-dark {
-    width: 110%;
-    min-width: 2000px;
+    width: 100%;
     position: absolute;
     z-index: -1;
     top: - 100px;
+    overflow-x: hidden !important;
+}
+
+.landing-dark img {
+    min-width: 2500px;
 }
 
 .banner-background {

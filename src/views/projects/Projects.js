@@ -78,6 +78,7 @@ const Projects = () => {
                         cursor: 'pointer',
                         height: '207px'
                     }}
+                    id="add-project-btn"
                     onClick={() => navigate('/new')}
                     onMouseOver={() => setSelected('create')}
                     onMouseOut={() => setSelected()}

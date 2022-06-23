@@ -75,7 +75,7 @@ const MailerSubscriber = ({ ...others }) => {
             {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
                 <form noValidate onSubmit={handleSubmit} {...others}>
                     <Grid container alignItems="center" spacing={gridSpacing}>
-                        <Grid item xs zeroMinWidth>
+                        <Grid item xs={12} md={6} zeroMinWidth>
                             <FormControl fullWidth error={Boolean(touched.email && errors.email)}>
                                 <InputLabel htmlFor="outlined-adornment-email-forgot">Email Address</InputLabel>
                                 <OutlinedInput
@@ -89,9 +89,10 @@ const MailerSubscriber = ({ ...others }) => {
                                 />
                             </FormControl>
                         </Grid>
-                        <Grid item>
+                        <Grid item xs={12} md={6}>
                             <AnimateButton>
                                 <Button
+                                    fullWidth
                                     disableElevation
                                     disabled={isSubmitting}
                                     type="submit"

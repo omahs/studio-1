@@ -94,14 +94,14 @@ const HeaderPage = () => {
                             </Grid>
                             <Grid item xs={12} sx={{ my: 3.25 }}>
                                 <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', lg: 'flex-start' } }}>
-                                    <Grid item>
+                                    <Grid item xs={12} md={6}>
                                         <AnimateButton>
                                             <DiscordButton />
 
                                         </AnimateButton>
                                     </Grid>
 
-                                    <Grid item>
+                                    <Grid item xs={12} md={6}>
                                     <AnimateButton>
 
                                         <Button
@@ -110,13 +110,15 @@ const HeaderPage = () => {
                                             variant="contained"
                                             size="large"
                                             className="join__discord"
+                                            id="start-building-btn"
                                             color="primary"
+                                            fullWidth
                                             sx={{ px: 5, py: 2 }}
                                             endIcon={
                                                 <AutoFixHighIcon />
                                             }
                                         >
-                                            START BUIDLING
+                                            Start Building
                                         </Button>
 
                                     </AnimateButton>

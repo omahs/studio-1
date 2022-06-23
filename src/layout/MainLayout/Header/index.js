@@ -121,6 +121,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
             { hasChanges && (
                 <Button color="secondary" 
                         variant="contained" 
+                        id="publish-changes-btn"
                         size="small" sx={{ mx: 1 }} onClick={publishChanges}>
                     Publish Changes
                 </Button>
@@ -134,6 +135,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
                         sx={{ mx: 1 }}
                         href={getUrl(appConfiguration.subdomain)}
                         target="_blank"
+                        id="view-dapp-btn"
                     >
                         Visit my dApp
                     </Button>

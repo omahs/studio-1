@@ -164,6 +164,7 @@ const MenuCard = () => {
                                 disabled={isEmpty(appState.type)}
                                 sx={{ mt: 2 }}                 
                                 href={getUrl(appState.subdomain)}
+                                id="visit-dapp-btn"
                                 target="_blank">Visit my dApp</Button>
                     </Box>
                 </Tooltip>

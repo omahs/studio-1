@@ -92,9 +92,10 @@
         "start": "export HTTPS=true&&SSL_CRT_FILE=cert.pem&&SSL_KEY_FILE=key.pem env-cmd -f .env react-scripts start",
         "build": "env-cmd -f .env react-scripts build",
         "start:cli": "react-scripts start",
-        "build:cli":"react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "build:cli": "react-scripts build",
+        "test": "cross-env CI=true react-scripts test --collect-coverage",
+        "eject": "react-scripts eject",
+        "prepare": "husky install"
     },
     "eslintConfig": {
         "extends": [
@@ -114,6 +115,18 @@
         ]
     },
     "devDependencies": {
-        "env-cmd": "^10.1.0"
+        "cross-env": "^7.0.3",
+        "env-cmd": "^10.1.0",
+        "enzyme": "^3.11.0",
+        "enzyme-adapter-react-16": "^1.15.6",
+        "eslint": "^8.19.0",
+        "eslint-config-prettier": "^8.5.0",
+        "husky": "^8.0.1",
+        "lint-staged": ">=10",
+        "prettier": "^2.7.1"
+    },
+    "lint-staged": {
+        "*.js": "eslint --cache --fix",
+        "*.{js,css,md}": "prettier --write"
     }
 }

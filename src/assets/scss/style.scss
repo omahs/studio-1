@@ -215,7 +215,7 @@ html, body {
     height: 100vh;
     position: relative;
     padding-bottom: 10%;
-    background: rgb(242, 243, 245);
+    background: white;
 }
 
 .new-project-input {
@@ -522,3 +522,12 @@ html, body {
     margin: 0 auto;
     text-align: center;
 }
+
+.nft-image {
+    transition: transform .5s; /* Animation */
+    cursor: pointer;
+  }
+  
+  .nft-image:hover {
+    transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }

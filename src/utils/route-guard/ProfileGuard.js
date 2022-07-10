@@ -12,7 +12,7 @@ import { DappifyContext } from "react-dappify";
  * Authentication guard for routes
  * @param {PropTypes.node} children children element/node
  */
-const AuthGuard = ({ children }) => {
+const ProfileGuard = ({ children }) => {
 	const { isAuthenticated } = useContext(DappifyContext);
 	const appState = useSelector((state) => state.app);
 	// const { user, isAuthenticated } = useMoralis();
@@ -20,16 +20,16 @@ const AuthGuard = ({ children }) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!appState.appId) {
-			navigate("/profile", { replace: true });
+		if (!isAuthenticated) {
+			navigate("/signin", { replace: true });
 		}
 	}, [isAuthenticated, navigate]);
 
 	return children;
 };
 
-AuthGuard.propTypes = {
+ProfileGuard.propTypes = {
 	children: PropTypes.node
 };
 
-export default AuthGuard;
+export default ProfileGuard;

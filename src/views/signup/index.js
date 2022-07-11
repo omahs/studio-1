@@ -14,7 +14,8 @@ import {
 	TextField,
 	InputAdornment,
 	Link,
-	Tooltip
+	Tooltip,
+	CircularProgress
 } from "@mui/material";
 import Logo from "common/Logo";
 import { DappifyContext, supportedWallets } from "react-dappify";
@@ -29,6 +30,7 @@ const Signup = () => {
 	const [handle, setHandle] = useState(id);
 	const [error, setError] = useState();
 	const [emailError, setEmailError] = useState();
+	const [processing, setProcessing] = useState(false);
 	const isDataSet =
 		!isEmpty(email) &&
 		!isEmpty(handle) &&
@@ -88,22 +90,29 @@ const Signup = () => {
 						fullWidth
 						disabled={!isDataSet}
 						onClick={async () => {
-							const provider = "magicLink";
-							const props = {
-								signingMessage: "Dappify wants to connect!",
-								provider: provider,
-								email: email,
-								apiKey: process.env.REACT_APP_MAGIC,
-								network: "ropsten"
-							};
-							const u = await Provider.authenticate(props);
-							u.set("email", email);
-							u.set("contact", email);
-							u.set("username", handle);
-							u.set("nickname", handle);
-							u.set("provider", provider);
-							await u.save();
-							// navigate('/profile');
+							try {
+								setProcessing(true);
+								const provider = "magicLink";
+								const props = {
+									signingMessage: "Dappify wants to connect!",
+									provider: provider,
+									email: email,
+									apiKey: process.env.REACT_APP_MAGIC,
+									network: "ropsten"
+								};
+								const u = await Provider.authenticate(props);
+								u.set("email", email);
+								u.set("contact", email);
+								u.set("username", handle);
+								u.set("nickname", handle);
+								u.set("provider", provider);
+								await u.save();
+								window.location.href = "/profile/admin";
+							} catch (e) {
+								console.log(e);
+							} finally {
+								setProcessing(false);
+							}
 						}}
 					>
 						<Grid container direction="column" alignItems="left">
@@ -133,16 +142,23 @@ const Signup = () => {
 							fullWidth
 							disabled={!isDataSet}
 							onClick={async () => {
-								const u = await Provider.authenticate(
-									wallet.payload
-								);
-								u.set("email", email);
-								u.set("contact", email);
-								u.set("username", handle);
-								u.set("nickname", handle);
-								u.set("provider", wallet.id);
-								await u.save();
-								// navigate('/profile');
+								try {
+									setProcessing(true);
+									const u = await Provider.authenticate(
+										wallet.payload
+									);
+									u.set("email", email);
+									u.set("contact", email);
+									u.set("username", handle);
+									u.set("nickname", handle);
+									u.set("provider", wallet.id);
+									await u.save();
+									window.location.href = "/profile/admin";
+								} catch (e) {
+									console.log(e);
+								} finally {
+									setProcessing(false);
+								}
 							}}
 						>
 							<Grid
@@ -359,7 +375,12 @@ const Signup = () => {
 						</Typography>
 					</Grid>
 					<Grid item xs={12}>
-						<Grid container>{renderSupportedWallets()}</Grid>
+						{!processing && (
+							<Grid container>{renderSupportedWallets()}</Grid>
+						)}
+						{processing && (
+							<CircularProgress color="inherit" size={36} />
+						)}
 					</Grid>
 					<Grid item xs={12}>
 						<Button component={RouterLink} to="/signin">

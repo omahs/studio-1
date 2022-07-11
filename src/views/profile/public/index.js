@@ -49,9 +49,11 @@ const PublicProfile = () => {
 	const loadNfts = async (targetAddress) => {
 		console.log("loading nfts for " + targetAddress);
 		let items = [];
+		console.log(profile);
+		const chainId = profile?.profile?.chainId || "0x1";
 		try {
 			items = await axios.get(
-				`https://deep-index.moralis.io/api/v2/${targetAddress}/nft?chain=0x1&format=decimal`,
+				`https://deep-index.moralis.io/api/v2/${targetAddress}/nft?chain=${chainId}&format=decimal`,
 				{
 					headers: {
 						"X-API-Key": process.env.REACT_APP_MORALIS_API_KEY,

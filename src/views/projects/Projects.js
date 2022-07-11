@@ -9,8 +9,11 @@ import {
 	Avatar,
 	Button,
 	InputAdornment,
-	Accordion,
-	Collapse
+	FormControl,
+	Collapse,
+	InputLabel,
+	Select,
+	MenuItem
 } from "@mui/material";
 import { gridSpacing } from "store/constant";
 import DetailsApp from "views/application/DetailsApp";
@@ -24,6 +27,11 @@ import debounce from "lodash/debounce";
 import Identicon from "react-identicons";
 import { TwitterPicker } from "react-color";
 import isEmpty from "lodash/isEmpty";
+import { TwitterIcon, TwitterShareButton } from "react-share";
+import { getUrl } from "utils/url";
+import { constants } from "react-dappify";
+
+const { NETWORKS, LOGO, MAINNETS, CONTRACTS } = constants;
 
 const Projects = () => {
 	const context = useContext(DappifyContext);
@@ -263,6 +271,37 @@ const Projects = () => {
 		return items;
 	};
 
+	const [selectedItem, setSelectedItem] = useState();
+	const renderMenuItems = () => {
+		const list = [];
+		const supportedNetworks = Object.keys(NETWORKS);
+		supportedNetworks.forEach((chainId) => {
+			const targetNetwork = NETWORKS[chainId];
+			const item = (
+				<MenuItem value={chainId} key={chainId}>
+					<Grid container>
+						<Box sx={{ minWidth: 30 }}>
+							<img
+								src={LOGO[targetNetwork.nativeCurrency.symbol]}
+								alt="Ava"
+								height="20px"
+							/>
+						</Box>
+						<Typography
+							variant="h3"
+							fontWeight={200}
+							sx={{ ml: 2 }}
+						>
+							{targetNetwork.chainName}
+						</Typography>
+					</Grid>
+				</MenuItem>
+			);
+			list.push(item);
+		});
+		return list;
+	};
+
 	const avatarControls = (
 		<Paper elevation={4} sx={{ borderRadius: 3, p: 2 }}>
 			<Grid container direction="row" spacing={1}>
@@ -342,7 +381,30 @@ const Projects = () => {
 								}}
 							/>
 						</Grid>
-						<Grid item>
+						<Grid item xs={12}>
+							<FormControl fullWidth>
+								<InputLabel id="demo-simple-select-label">
+									Showcase your NFTs from network
+								</InputLabel>
+								<Select
+									labelId="demo-simple-select-label"
+									id="demo-simple-select"
+									label="Showcase your NFTs from network"
+									onChange={async (e) => {
+										console.log(profile);
+										profile.chainId = e.target.value;
+										const newProfile = { ...profile };
+										setProfile(newProfile);
+										user.set("profile", newProfile);
+										await saveUser();
+										console.log(newProfile);
+									}}
+								>
+									{renderMenuItems()}
+								</Select>
+							</FormControl>
+						</Grid>
+						<Grid item xs={6}>
 							<Button
 								variant="outlined"
 								href={`/${user.get("username")}`}
@@ -350,6 +412,26 @@ const Projects = () => {
 							>
 								View my public profile
 							</Button>
+						</Grid>
+						<Grid item xs={6}>
+							<TwitterShareButton
+								title={
+									"Check out my new @DappifyWeb3 profile 🤩"
+								}
+								url={`${getUrl()}/${user.get("username")}`}
+								hashtags={["crypto", "blockchain"]}
+							>
+								<Grid container direction="row" spacing={1}>
+									<Grid item>
+										<TwitterIcon size={32} round />
+									</Grid>
+									<Grid item>
+										<Box sx={{ height: 32, pt: "8px" }}>
+											Share on Twitter
+										</Box>
+									</Grid>
+								</Grid>
+							</TwitterShareButton>
 						</Grid>
 					</Grid>
 				</Grid>

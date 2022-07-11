@@ -90,7 +90,7 @@ const Signin = () => {
 								signingMessage: "Dappify wants to connect!",
 								provider: provider,
 								email: email,
-								apiKey: "pk_live_09E96B175A890AA5",
+								apiKey: process.env.REACT_APP_MAGIC,
 								network: "ropsten"
 							};
 							const u = await Provider.authenticate(props);

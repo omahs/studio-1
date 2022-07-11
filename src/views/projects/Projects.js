@@ -445,7 +445,7 @@ const Projects = () => {
 										</Grid>
 										<TwitterPicker
 											sx={{ mt: 2 }}
-											color={profile.backgroundColor}
+											color={profile?.backgroundColor}
 											onChangeComplete={async (e) => {
 												console.log(e.hex);
 												profile.backgroundColor = e.hex;
@@ -463,7 +463,7 @@ const Projects = () => {
 											<Typography>Text Color</Typography>
 										</Grid>
 										<TwitterPicker
-											color={profile.textColor}
+											color={profile?.textColor}
 											onChangeComplete={async (e) => {
 												console.log(e.hex);
 												profile.textColor = e.hex;
@@ -483,7 +483,7 @@ const Projects = () => {
 											</Typography>
 										</Grid>
 										<TwitterPicker
-											color={profile.buttonColor}
+											color={profile?.buttonColor}
 											onChangeComplete={async (e) => {
 												console.log(e.hex);
 												profile.buttonColor = e.hex;
@@ -503,7 +503,7 @@ const Projects = () => {
 											</Typography>
 										</Grid>
 										<TwitterPicker
-											color={profile.buttonColorHover}
+											color={profile?.buttonColorHover}
 											onChangeComplete={async (e) => {
 												console.log(e.hex);
 												profile.buttonColorHover =

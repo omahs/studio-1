@@ -2,7 +2,8 @@ node_modules
 build
 coverage
 .vscode
-.env.*
+.env*
 firebase*
 *pem
 .firebase*
+.eslintcache

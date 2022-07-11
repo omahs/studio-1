@@ -29,6 +29,8 @@ jobs:
         env: 
           REACT_APP_MORALIS_APP_ID: ${{ secrets.MORALIS_APP_ID_DEV }}
           REACT_APP_MORALIS_SERVER_URL: ${{ secrets.MORALIS_SERVER_URL_DEV }}
+          REACT_APP_MORALIS_API_KEY: ${{ secrets.MORALIS_API_KEY }}
+          REACT_APP_MAGIC: ${{ secrets.MAGIC }}
           REACT_APP_HOST_ENV: dev
           CI: false
           NODE_OPTIONS: "--max-old-space-size=8192"

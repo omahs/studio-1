@@ -23,6 +23,7 @@ import ProfileDialog from "common/ProfileDialog";
 import debounce from "lodash/debounce";
 import Identicon from "react-identicons";
 import { TwitterPicker } from "react-color";
+import isEmpty from "lodash/isEmpty";
 
 const Projects = () => {
 	const context = useContext(DappifyContext);
@@ -51,7 +52,9 @@ const Projects = () => {
 
 	const [profile, setProfile] = useState({});
 	useEffect(() => {
-		setProfile(user?.get("profile"));
+		const existingProfile = user?.get("profile");
+		const initProfile = !isEmpty(existingProfile) ? existingProfile : {};
+		setProfile(initProfile);
 	}, [user]);
 
 	const createNew = isAuthenticated && (

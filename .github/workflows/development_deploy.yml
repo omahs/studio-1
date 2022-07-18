@@ -31,6 +31,10 @@ jobs:
           REACT_APP_MORALIS_SERVER_URL: ${{ secrets.MORALIS_SERVER_URL_DEV }}
           REACT_APP_MORALIS_API_KEY: ${{ secrets.MORALIS_API_KEY }}
           REACT_APP_MAGIC: ${{ secrets.MAGIC }}
+          REACT_APP_MICROPAPER_URL: "https://mirage-property-c46.notion.site/Micropaper-a0836d7575b0400a8362797c9b21731a" 
+          REACT_APP_ROADMAP_URL: "https://app.dework.xyz/dappify-1"
+          REACT_APP_CHANGELOG_URL: "https://mirage-property-c46.notion.site/Change-log-310735dc8fa44a0ab777feadf7558abd"
+          REACT_APP_BLOG_URL: "https://medium.com/@dappify"
           REACT_APP_HOST_ENV: dev
           CI: false
           NODE_OPTIONS: "--max-old-space-size=8192"

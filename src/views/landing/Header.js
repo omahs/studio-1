@@ -3,17 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 // material-ui
 import { useTheme } from "@mui/material/styles";
-import {
-	Box,
-	Button,
-	Container,
-	Grid,
-	Typography,
-	SvgIcon,
-	Icon,
-	TextField,
-	InputAdornment
-} from "@mui/material";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 
 // third party
 import { motion } from "framer-motion";
@@ -21,9 +11,7 @@ import { motion } from "framer-motion";
 // project imports
 import AnimateButton from "ui-component/extended/AnimateButton";
 import { gridSpacing } from "store/constant";
-import mockup from "assets/images/landing/banner.svg";
-import DiscordButton from "views/landing/Discord";
-import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import astronaut from "assets/images/landing/astronaut.png";
 
 // ==============================|| LANDING - HEADER PAGE ||============================== //
 
@@ -94,23 +82,24 @@ const HeaderPage = () => {
 										variant="h1"
 										sx={{
 											fontSize: {
-												xs: "2.25rem",
-												sm: "2.5rem",
-												md: "3.5rem",
+												xs: "4.1rem",
 												color: "#fff"
 											},
 											fontWeight: 900,
 											lineHeight: 1
 										}}
 									>
-										<span style={{ opacity: 0.85 }}>
-											The simplest way
-											<br />
-											to build
+										<span style={{ opacity: 1 }}>
+											Let's launch that project, today!
 										</span>{" "}
+										{/*<div class="scroller">
 										<span>
-											<i>Web3 Apps</i>
+											<i>Apps</i><br/>
+											<i>Landing Pages</i><br/>
+											<i>Dashboards</i><br/>
+											<i>Sites</i>
 										</span>
+									</div> */}
 										<br />
 									</Typography>
 								</motion.div>
@@ -137,14 +126,14 @@ const HeaderPage = () => {
 											color: "white"
 										}}
 									>
-										Launch your MVP in minutes, for free,
-										without writing any code. Powered by
-										1-click install smart templates
-										maintained by the community.
+										Everything you need to design, build and
+										launch your web3 apps, without code in
+										1-click.
 									</Typography>
 								</motion.div>
 							</Grid>
 
+							{/*}
 							<Grid item xs={12} sx={{ my: 3.25 }}>
 								<Grid
 									container
@@ -202,16 +191,32 @@ const HeaderPage = () => {
 											/>
 										</AnimateButton>
 									</Grid>
+								</Grid>
+											</Grid> */}
 
-									<Grid item xs={12} sm={6}>
+							<Grid item xs={12} sx={{ my: 4.25 }}>
+								<Grid
+									container
+									spacing={2}
+									sx={{
+										justifyContent: {
+											xs: "center",
+											lg: "flex-start"
+										}
+									}}
+								>
+									{/* <Grid item xs={12} md={6}>
+                                        <AnimateButton>
+                                            <DiscordButton />
+
+                                        </AnimateButton>
+											</Grid>  */}
+
+									<Grid item>
 										<AnimateButton>
 											<Button
 												component={RouterLink}
-												to={
-													claim
-														? `/signup/${claim}`
-														: "signup"
-												}
+												to="/profile"
 												variant="contained"
 												size="large"
 												className="join__discord"
@@ -219,52 +224,25 @@ const HeaderPage = () => {
 												color="primary"
 												fullWidth
 												sx={{
-													py: 1.5,
-													fontSize: "1.3em",
-													borderRadius: 30
+													px: 5,
+													py: 2,
+													fontSize: "1.5em",
+													textTransform: "none"
 												}}
 											>
-												Claim your Dappify 🏆
+												Launch a Project{" "}
+												<Typography
+													fontSize="1.25em"
+													sx={{ ml: 1 }}
+												>
+													{" "}
+													🚀
+												</Typography>
 											</Button>
 										</AnimateButton>
 									</Grid>
 								</Grid>
 							</Grid>
-
-							{/* <Grid item xs={12} sx={{ my: 3.25 }}>
-                                <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', lg: 'flex-start' } }}>
-                                    <Grid item xs={12} md={6}>
-                                        <AnimateButton>
-                                            <DiscordButton />
-
-                                        </AnimateButton>
-                                    </Grid>
-
-                                    <Grid item xs={12} md={6}>
-                                    <AnimateButton>
-
-                                        <Button
-                                            component={RouterLink}
-                                            to="/projects" 
-                                            variant="contained"
-                                            size="large"
-                                            className="join__discord"
-                                            id="start-building-btn"
-                                            color="primary"
-                                            fullWidth
-                                            sx={{ px: 5, py: 2 }}
-                                            endIcon={
-                                                <AutoFixHighIcon />
-                                            }
-                                        >
-                                            Start Building
-                                        </Button>
-
-                                    </AnimateButton>
-                                </Grid>
-
-                                </Grid>
-                                        </Grid>*/}
 						</Grid>
 					</Grid>
 					<Grid
@@ -278,9 +256,9 @@ const HeaderPage = () => {
 							style={{ textAlign: "center", margin: "0 auto" }}
 						>
 							<img
-								src={mockup}
-								alt="Dappify"
-								style={{ width: "115%" }}
+								src={astronaut}
+								alt="Astronaut"
+								style={{ width: "100%" }}
 							/>
 						</Box>
 					</Grid>

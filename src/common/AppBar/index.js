@@ -174,24 +174,6 @@ const AppBar = ({ ...others }) => {
 							>
 								Blog
 							</Button>
-							{/* <Button
-								color="inherit"
-								href={roadmap}
-								size="large"
-								target="_blank"
-								id="roadmap-btn"
-							>
-								Roadmap
-							</Button>
-							<Button
-								color="inherit"
-								href={micropaper}
-								size="large"
-								target="_blank"
-								id="micropaper-btn"
-							>
-								Micropaper
-	</Button> */}
 							<Button
 								color="inherit"
 								href={changelog}
@@ -201,7 +183,6 @@ const AppBar = ({ ...others }) => {
 							>
 								Changelog
 							</Button>
-							{/*myDappsButton*/}
 							{!(
 								location.pathname === "/" ||
 								location.pathname === "/templates"

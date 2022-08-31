@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useParams } from "react-router-dom";
 
@@ -9,20 +9,19 @@ import {
 	Box,
 	CssBaseline,
 	Toolbar,
-	useMediaQuery,
-	Button
+	useMediaQuery
 } from "@mui/material";
 
 // project imports
+import Breadcrumbs from "ui-component/extended/Breadcrumbs";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
+import SidePanel from "layout/SidePanel";
+import navigation from "menu-items";
 import { drawerWidth } from "store/constant";
-import Sidebar from "layout/ProfileLayout/Sidebar";
 import { SET_MENU, UPDATE_APP } from "store/actions";
-import { DappifyContext, supportedWallets } from "react-dappify";
-import { useMoralis } from "react-moralis";
 
-import AccountBalanceWalletTwoToneIcon from "@mui/icons-material/AccountBalanceWalletTwoTone";
-import LogoutIcon from "@mui/icons-material/Logout";
-import Logo from "common/Logo";
+import { useMoralis } from "react-moralis";
 
 // assets
 import { IconChevronRight } from "@tabler/icons";
@@ -60,8 +59,6 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 				duration: theme.transitions.duration.enteringScreen
 			}),
 			marginLeft: 0,
-			borderRadius: "8px",
-			border: "1px solid rgba(144, 202, 249, 0.16)",
 			borderBottomLeftRadius: 0,
 			borderBottomRightRadius: 0,
 			width: `calc(100% - ${drawerWidth}px)`,
@@ -77,11 +74,11 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
-const ProfileAdmin = () => {
+const MainLayout = () => {
 	const { appId } = useParams();
 
 	const theme = useTheme();
-	const { Provider, logout, user } = useContext(DappifyContext);
+	const { Moralis, user } = useMoralis();
 	const matchDownMd = useMediaQuery(theme.breakpoints.down("lg"));
 
 	// Handle left drawer
@@ -91,22 +88,24 @@ const ProfileAdmin = () => {
 		dispatch({ type: SET_MENU, opened: !leftDrawerOpened });
 	};
 
-	const renderAddress = () => {
-		const address = user.get("ethAddress");
-		return `${address.substring(0, 4)}...${address.substring(
-			address.length - 8,
-			address.length
-		)}`;
+	const loadConfig = async () => {
+		const Project = Moralis.Object.extend("Project");
+		const query = new Moralis.Query(Project);
+		query.equalTo("objectId", appId);
+		query.equalTo("owner", user.get("ethAddress"));
+		const appObj = await query.first();
+		const config = appObj?.attributes?.config;
+		dispatch({ type: UPDATE_APP, configuration: config });
 	};
+
+	useEffect(() => {
+		loadConfig();
+	}, []);
 
 	useEffect(() => {
 		dispatch({ type: SET_MENU, opened: !matchDownMd });
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [matchDownMd]);
-
-	useEffect(() => {
-		console.log(user);
-	}, [user]);
 
 	return (
 		<Box sx={{ display: "flex" }}>
@@ -116,7 +115,7 @@ const ProfileAdmin = () => {
 				enableColorOnDark
 				position="fixed"
 				color="inherit"
-				elevation={0}
+				elevation={4}
 				sx={{
 					bgcolor: theme.palette.background.default,
 					transition: leftDrawerOpened
@@ -125,24 +124,11 @@ const ProfileAdmin = () => {
 				}}
 			>
 				<Toolbar>
-					<Box sx={{ width: 150 }}>
-						<Logo />
-					</Box>
-					<Box display="flex" flexGrow={1} />
-					<Button
-						disableElevation
-						variant="contained"
-						color="primary"
-						size="small"
-						onClick={logout}
-						startIcon={<AccountBalanceWalletTwoToneIcon />}
-						endIcon={<LogoutIcon />}
-					>
-						{user && renderAddress()}
-					</Button>
+					<Header handleLeftDrawerToggle={handleLeftDrawerToggle} />
 				</Toolbar>
 			</AppBar>
 
+			{/* drawer */}
 			<Sidebar
 				drawerOpen={leftDrawerOpened}
 				drawerToggle={handleLeftDrawerToggle}
@@ -151,11 +137,18 @@ const ProfileAdmin = () => {
 			{/* main content */}
 			<Main theme={theme} open={leftDrawerOpened}>
 				{/* breadcrumb */}
-				{user && <Outlet />}
+				<Breadcrumbs
+					separator={IconChevronRight}
+					navigation={navigation}
+					icon
+					title
+					rightAlign
+				/>
+				<Outlet />
 			</Main>
 			{/* <SidePanel /> */}
 		</Box>
 	);
 };
 
-export default ProfileAdmin;
+export default MainLayout;

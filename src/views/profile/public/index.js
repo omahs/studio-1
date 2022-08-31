@@ -136,7 +136,6 @@ const PublicProfile = () => {
 
 	const listLinks = () => {
 		const items = [];
-		console.log(profile);
 		profile?.profile?.links?.forEach((prop) => {
 			items.push(
 				<Grid item xs={12}>
@@ -188,7 +187,7 @@ const PublicProfile = () => {
 	const profileImage = profile?.profile?.image ? (
 		<img src={profile?.profile?.image} alt="" width="96" height="auto" />
 	) : (
-		<Identicon string={id} size={96} />
+		<Identicon string={profile?.ethAddress} size={96} />
 	);
 
 	const defaultBackgrounds = [
@@ -209,6 +208,9 @@ const PublicProfile = () => {
 			return `url(${defaultBackgrounds[0]})`;
 		}
 	};
+
+	const showNfts =
+		profile?.profile?.chainId && profile?.profile?.chainId !== 0;
 
 	return (
 		<Container
@@ -261,6 +263,14 @@ const PublicProfile = () => {
 						{profile?.ethAddress}
 					</Typography>
 				</Grid>
+				<Grid item xs={12}>
+					<Typography
+						variant="h5"
+						sx={{ color: profile?.profile?.textColor }}
+					>
+						{profile?.bio}
+					</Typography>
+				</Grid>
 			</Grid>
 
 			<Grid
@@ -271,15 +281,17 @@ const PublicProfile = () => {
 				sx={{ maxWidth: 800, margin: "0 auto", mt: 3 }}
 			>
 				{listLinks()}
-				<Grid item xs={12}>
-					<Typography
-						variant="h3"
-						sx={{ color: profile?.profile?.textColor, mt: 5 }}
-					>
-						My NFT
-					</Typography>
-				</Grid>
-				{listNfts()}
+				{showNfts && (
+					<Grid item xs={12}>
+						<Typography
+							variant="h3"
+							sx={{ color: profile?.profile?.textColor, mt: 5 }}
+						>
+							My NFT
+						</Typography>
+					</Grid>
+				)}
+				{showNfts && listNfts()}
 			</Grid>
 		</Container>
 	);

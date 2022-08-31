@@ -16,9 +16,11 @@ const CasesPage = Loadable(lazy(() => import("views/cases")));
 const MarketplacePage = Loadable(lazy(() => import("views/marketplace")));
 const PublicProfile = Loadable(lazy(() => import("views/profile/public")));
 const ProfileAdmin = Loadable(lazy(() => import("views/profile/admin")));
-const Signup = Loadable(lazy(() => import("views/signup")));
 const Signin = Loadable(lazy(() => import("views/signin")));
-const ProjectsView = Loadable(lazy(() => import("views/projects/Projects")));
+const ProjectsView = Loadable(
+	lazy(() => import("views/profile/admin/projects"))
+);
+const ProfileView = Loadable(lazy(() => import("views/profile/admin/user")));
 
 // ==============================|| ROUTING RENDER ||============================== //
 
@@ -30,8 +32,6 @@ export default function ThemeRoutes() {
 		{ path: "/templates", element: <MarketplacePage /> },
 		{ path: "/resources", element: <ResourcesPage /> },
 		{ path: "/projects", element: <ProjectsPage /> },
-		{ path: "/signup", element: <Signup /> },
-		{ path: "/signup/:id", element: <Signup /> },
 		{ path: "/signin", element: <Signin /> },
 		{ path: "/new", element: <NewProject /> },
 		{ path: "/:id", element: <PublicProfile /> },
@@ -45,6 +45,10 @@ export default function ThemeRoutes() {
 			children: [
 				{
 					path: "/profile/admin",
+					element: <ProfileView />
+				},
+				{
+					path: "/profile/projects",
 					element: <ProjectsView />
 				}
 			]

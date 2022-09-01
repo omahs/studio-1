@@ -215,7 +215,6 @@ html, body {
     height: 100vh;
     position: relative;
     padding-bottom: 10%;
-    background: white;
 }
 
 .new-project-input {
@@ -321,6 +320,21 @@ html, body {
 
 .MuiButton-root {
     font-family: $primary-font;
+}
+
+.main-card {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(144, 202, 249, 0.46);
+    padding: 24px;
+}
+
+.bordered {
+    border: 1px solid rgba(144, 202, 249, 0.46);
+}
+
+.main-view-container {
+    padding-left: 0px !important;
 }
 
 .paper-in {

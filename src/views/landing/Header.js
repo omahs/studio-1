@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 // material-ui
@@ -17,22 +16,6 @@ import astronaut from "assets/images/landing/astronaut.png";
 
 const HeaderPage = () => {
 	const theme = useTheme();
-	const [claim, setClaim] = useState();
-
-	const styles = {
-		container: {
-			display: "flex",
-			flexWrap: "wrap"
-		},
-		textField: {
-			width: 300,
-			margin: 100
-		},
-		//style for font size
-		resize: {
-			fontSize: 50
-		}
-	};
 
 	return (
 		<Container>
@@ -92,14 +75,6 @@ const HeaderPage = () => {
 										<span style={{ opacity: 1 }}>
 											Let's launch that project, today!
 										</span>{" "}
-										{/*<div class="scroller">
-										<span>
-											<i>Apps</i><br/>
-											<i>Landing Pages</i><br/>
-											<i>Dashboards</i><br/>
-											<i>Sites</i>
-										</span>
-									</div> */}
 										<br />
 									</Typography>
 								</motion.div>
@@ -133,67 +108,6 @@ const HeaderPage = () => {
 								</motion.div>
 							</Grid>
 
-							{/*}
-							<Grid item xs={12} sx={{ my: 3.25 }}>
-								<Grid
-									container
-									spacing={2}
-									sx={{
-										justifyContent: {
-											xs: "center",
-											lg: "flex-start"
-										}
-									}}
-								>
-									<Grid item xs={12} sm={6}>
-										<AnimateButton>
-											<TextField
-												placeholder="yourname"
-												fullWidth
-												onChange={(e) =>
-													setClaim(e.target.value)
-												}
-												sx={{
-													borderRadius: "8px",
-													overflow: "hidden",
-													input: {
-														"&::placeholder": {
-															fontSize: "1.2em",
-															color: "rgba(0,0,0,0.5)"
-														}
-													}
-												}}
-												inputProps={{
-													style: {
-														fontSize: "1.3em"
-													}
-												}} // font size of input text
-												InputProps={{
-													fontSize: "2em",
-													startAdornment: (
-														<InputAdornment
-															position="start"
-															sx={{ mr: 0 }}
-														>
-															<span
-																style={{
-																	fontSize:
-																		"1.3em",
-																	fontWeight:
-																		"100"
-																}}
-															>
-																dappify.com/
-															</span>
-														</InputAdornment>
-													)
-												}}
-											/>
-										</AnimateButton>
-									</Grid>
-								</Grid>
-											</Grid> */}
-
 							<Grid item xs={12} sx={{ my: 4.25 }}>
 								<Grid
 									container
@@ -205,18 +119,11 @@ const HeaderPage = () => {
 										}
 									}}
 								>
-									{/* <Grid item xs={12} md={6}>
-                                        <AnimateButton>
-                                            <DiscordButton />
-
-                                        </AnimateButton>
-											</Grid>  */}
-
 									<Grid item>
 										<AnimateButton>
 											<Button
 												component={RouterLink}
-												to="/profile"
+												to="/profile/admin"
 												variant="contained"
 												size="large"
 												className="join__discord"

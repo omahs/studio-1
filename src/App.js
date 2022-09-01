@@ -1,42 +1,46 @@
-import { useSelector } from 'react-redux';
-import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, StyledEngineProvider } from '@mui/material';
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { ThemeProvider } from "@mui/material/styles";
+import { CssBaseline, StyledEngineProvider } from "@mui/material";
 
 // routing
-import Routes from 'routes';
+import Routes from "routes";
 
 // defaultTheme
-import themes from 'themes';
+import themes from "themes";
 
 // project imports
-import Locales from 'ui-component/Locales';
-import Snackbar from 'ui-component/extended/Snackbar';
+import Locales from "ui-component/Locales";
+import Snackbar from "ui-component/extended/Snackbar";
 
 // provider
-import { DappifyProvider } from 'react-dappify';
+import { DappifyProvider } from "react-dappify";
 
-// Logger.debug(`NODE_ENV ${process.env.NODE_ENV}`);
-// Logger.debug(`REACT_APP_HOST_ENV ${process.env.REACT_APP_HOST_ENV}`);
+import mixpanel from "mixpanel-browser";
 
 // ==============================|| APP ||============================== //
 const App = () => {
-    const customization = useSelector((state) => state.customization);
+	useEffect(() => {
+		mixpanel.init("237ebb3e3f5930e0618b6138c96bfac6", { debug: true });
+	}, []);
 
-    return (
-        <DappifyProvider>
-            <StyledEngineProvider injectFirst>
-                <ThemeProvider theme={themes(customization)}>
-                    <CssBaseline />
-                    <Locales>
-                        <>
-                            <Routes />
-                            <Snackbar />
-                        </>
-                    </Locales>
-                </ThemeProvider>
-            </StyledEngineProvider>
-        </DappifyProvider>
-    );
+	const customization = useSelector((state) => state.customization);
+
+	return (
+		<DappifyProvider>
+			<StyledEngineProvider injectFirst>
+				<ThemeProvider theme={themes(customization)}>
+					<CssBaseline />
+					<Locales>
+						<>
+							<Routes />
+							<Snackbar />
+						</>
+					</Locales>
+				</ThemeProvider>
+			</StyledEngineProvider>
+		</DappifyProvider>
+	);
 };
 
 export default App;

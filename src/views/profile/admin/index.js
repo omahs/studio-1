@@ -104,10 +104,6 @@ const ProfileAdmin = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [matchDownMd]);
 
-	useEffect(() => {
-		console.log(user);
-	}, [user]);
-
 	return (
 		<Box sx={{ display: "flex" }}>
 			<CssBaseline />

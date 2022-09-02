@@ -16,8 +16,10 @@ import {
 } from "@mui/material";
 
 // assets
-import isEmpty from "lodash/isEmpty";
 import { DappifyContext } from "react-dappify";
+import { TwitterIcon, TwitterShareButton } from "react-share";
+import { getUrl } from "utils/url";
+import { ProgressContext } from "contexts/ProgressContext";
 
 // styles
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -111,26 +113,8 @@ LinearProgressWithLabel.propTypes = {
 
 const MenuCard = () => {
 	const context = useContext(DappifyContext);
+	const { progress } = useContext(ProgressContext);
 	const { user } = context;
-
-	useEffect(() => {
-		console.log("use changing");
-		const bio = user.get("bio");
-		const email = user.get("email");
-		const username = user.get("username");
-		const address = user.get("ethAddress");
-		const calculateProgress = () => {
-			let currentProgress = 0;
-			if (!isEmpty(address)) currentProgress += 25;
-			if (!isEmpty(username)) currentProgress += 25;
-			if (!isEmpty(email)) currentProgress += 25;
-			if (!isEmpty(bio)) currentProgress += 25;
-			setProgress(currentProgress);
-		};
-		calculateProgress();
-	}, [user]);
-
-	const [progress, setProgress] = useState(0);
 
 	return (
 		<CardStyle>
@@ -151,6 +135,30 @@ const MenuCard = () => {
 						</Button>
 					</Box>
 				</Tooltip>
+
+				<TwitterShareButton
+					title={
+						"Check out my new Web3 builder profile at @DappifyWeb3 🤩"
+					}
+					url={`${getUrl()}/${user.get("username")}`}
+					hashtags={["crypto", "blockchain"]}
+				>
+					<Grid
+						container
+						direction="row"
+						spacing={1}
+						sx={{ margin: "5px auto" }}
+					>
+						<Grid item>
+							<TwitterIcon size={32} round />
+						</Grid>
+						<Grid item>
+							<Box sx={{ height: 32, pt: "8px" }}>
+								Share on Twitter
+							</Box>
+						</Grid>
+					</Grid>
+				</TwitterShareButton>
 			</CardContent>
 		</CardStyle>
 	);

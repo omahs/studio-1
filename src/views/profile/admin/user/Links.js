@@ -8,30 +8,12 @@ import SubCard from "ui-component/cards/SubCard";
 import ProfileAvatar from "views/profile/admin/user/ProfileAvatar";
 
 const Links = () => {
-	const { Provider, user } = useContext(DappifyContext);
+	const { user } = useContext(DappifyContext);
 	const [profile, setProfile] = useState(user.get("profile"));
 
 	useEffect(() => {
 		setProfile(user.get("profile"));
 	}, [user]);
-
-	const onLinkImageUploaded = async (e, index) => {
-		const f = e.target.files[0];
-		const file = new Provider.File(f.name, f);
-		const r = await file.saveIPFS();
-		const currLinks = profile?.links;
-		console.log(currLinks);
-		currLinks[index]["image"] = r.ipfs();
-		const newProfile = {
-			...profile
-		};
-		newProfile.links = currLinks;
-		console.log(newProfile);
-		setProfile(newProfile);
-		user.set("profile", newProfile);
-		await saveUser(user);
-		console.log(newProfile);
-	};
 
 	const onLinkUpdated = async (e, index, label) => {
 		const currLinks = profile?.links;
@@ -44,7 +26,6 @@ const Links = () => {
 	};
 
 	const removeLinkFromProfile = async (index) => {
-		console.log(index);
 		const currLinks = profile?.links;
 		currLinks.splice(index, 1);
 		const newProfile = { ...profile };
@@ -167,7 +148,6 @@ const Links = () => {
 								orgProfile.links = links;
 								setProfile(orgProfile);
 								user.set("profile", orgProfile);
-								console.log(orgProfile);
 								await saveUser(user);
 							} catch (e) {
 								console.log(e);

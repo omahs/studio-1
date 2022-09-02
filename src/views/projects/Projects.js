@@ -13,7 +13,8 @@ import {
 	Collapse,
 	InputLabel,
 	Select,
-	MenuItem
+	MenuItem,
+	Alert
 } from "@mui/material";
 import { gridSpacing } from "store/constant";
 import DetailsApp from "views/application/DetailsApp";
@@ -29,6 +30,7 @@ import { TwitterPicker } from "react-color";
 import isEmpty from "lodash/isEmpty";
 import { TwitterIcon, TwitterShareButton } from "react-share";
 import { getUrl } from "utils/url";
+import CheckIcon from "@mui/icons-material/Check";
 import { constants } from "react-dappify";
 
 const { NETWORKS, LOGO, MAINNETS, CONTRACTS } = constants;
@@ -50,8 +52,13 @@ const Projects = () => {
 		}
 	};
 
-	const saveUser = debounce(async () => {
-		await user.save();
+	const saveUser = debounce(async (setterFn) => {
+		try {
+			await user.save();
+		} catch (e) {
+			// console.log(e.message);
+			setterFn(e.message);
+		}
 	}, 300);
 
 	useEffect(() => {
@@ -140,7 +147,7 @@ const Projects = () => {
 	const profileImage = profile?.image ? (
 		<img src={profile?.image} alt="" width="96" height="auto" />
 	) : (
-		<Identicon string={user.get("username")} size={96} />
+		<Identicon string={user.get("ethAddress")} size={96} />
 	);
 
 	const editableLinks = () => {
@@ -302,66 +309,216 @@ const Projects = () => {
 		return list;
 	};
 
+	const isEmailValid = (email) => {
+		return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+	};
+
+	const isUsernameValid = (username) => {
+		return /^[a-zA-Z0-9-_]+$/.test(username);
+	};
+
+	const [emailError, setEmailError] = useState();
+	const [usernameError, setUsernameError] = useState();
+
 	const avatarControls = (
-		<Paper elevation={4} sx={{ borderRadius: 3, p: 2 }}>
+		<Paper className="main-card">
 			<Grid container direction="row" spacing={1}>
 				<Grid item xs={12}>
-					<Typography variant="h5">Profile image</Typography>
+					<Typography variant="h2" fontWeight={300}>
+						Edit and share your Web3 profile! 😎
+					</Typography>
 				</Grid>
-				<Grid item xs={12} sm={4}>
-					<Grid container direction="column" spacing={1}>
+				<Grid item xs={12} sx={{ mt: 1, mb: 3 }}>
+					<Typography variant="body" fontWeight={100}>
+						Your Dappify profile is a customizable space to showcase
+						your Web3 journey as a builder. Make it your own by
+						customizing it to your liking. Share your projects, NFTs
+						and achievements with other builders.
+					</Typography>
+					<Typography variant="body" fontWeight={800}>
+						Complete your profile to access the rest of Dappify
+						Tools.
+					</Typography>
+				</Grid>
+				<Grid item>
+					<Grid
+						container
+						direction="column"
+						spacing={1}
+						alignItems="center"
+						justifyContent="center"
+						sx={{ px: 4 }}
+					>
 						<Grid item>
 							<Avatar
-								sx={{ bgcolor: "white", width: 96, height: 96 }}
+								sx={{
+									bgcolor: "white",
+									width: 96,
+									height: 96,
+									border: "1px solid rgba(0, 0, 0, 0.25)"
+								}}
 							>
 								{" "}
 								{profileImage}{" "}
 							</Avatar>
 						</Grid>
 						<Grid item>
-							<input
-								type="file"
-								onChange={async (e) => {
-									const f = e.target.files[0];
-									const file = new Provider.File(f.name, f);
-									const r = await file.saveIPFS();
-									profile.image = r.ipfs();
-									const newProfile = { ...profile };
-									setProfile(newProfile);
-									user.set("profile", newProfile);
-									await saveUser();
-								}}
-							/>
+							<Button
+								variant="outlined"
+								component="label"
+								elevation={0}
+								size="small"
+							>
+								Upload image
+								<input
+									type="file"
+									hidden
+									onChange={async (e) => {
+										const f = e.target.files[0];
+										const file = new Provider.File(
+											f.name,
+											f
+										);
+										const r = await file.saveIPFS();
+										profile.image = r.ipfs();
+										const newProfile = { ...profile };
+										setProfile(newProfile);
+										user.set("profile", newProfile);
+										await saveUser();
+									}}
+								/>
+							</Button>
 						</Grid>
 						<Grid item>
-							<Button
-								color="error"
-								size="small"
-								sx={{ mt: -1 }}
-								onClick={async () => {
-									delete profile.image;
-									const newProfile = { ...profile };
-									setProfile(newProfile);
-									user.set("profile", newProfile);
-									await saveUser();
-								}}
-							>
-								Delete
-							</Button>
+							{profile.image && (
+								<Button
+									color="error"
+									size="small"
+									sx={{ mt: -1 }}
+									onClick={async () => {
+										delete profile.image;
+										const newProfile = { ...profile };
+										setProfile(newProfile);
+										user.set("profile", newProfile);
+										await saveUser();
+									}}
+								>
+									Remove
+								</Button>
+							)}
 						</Grid>
 					</Grid>
 				</Grid>
 				<Grid item xs={12} sm={8}>
-					<Grid container direction="column" spacing={1}>
+					<Grid container direction="column" spacing={2}>
 						<Grid item>
 							<TextField
 								fullWidth
-								disabled
-								value={`dappify.com/${user.get("username")}`}
+								autoFocus
+								defaultValue={`${user.get("username")}`}
+								label="Your Dappify username 🎉"
+								onChange={async (e) => {
+									setUsernameError();
+									const targetUsername = e.target.value;
+									if (isUsernameValid(targetUsername)) {
+										user.set("username", targetUsername);
+										user.set("nickname", targetUsername);
+										await saveUser(setUsernameError);
+									} else {
+										setUsernameError(
+											"Invalid username format"
+										);
+									}
+								}}
 								InputProps={{
 									startAdornment: (
 										<InputAdornment position="start">
-											Your handle 🎉
+											https://dappify.com/
+										</InputAdornment>
+									),
+									endAdornment: usernameError ? (
+										<InputAdornment position="end">
+											<Alert
+												severity="error"
+												variant="filled"
+												sx={{
+													lineHeight: "1em",
+													borderRadius: "8px",
+													padding: "0px 16px"
+												}}
+											>
+												{usernameError}
+											</Alert>
+										</InputAdornment>
+									) : user.get("nickname") ? (
+										<InputAdornment position="end">
+											<CheckIcon color="success" />
+										</InputAdornment>
+									) : (
+										<InputAdornment position="end">
+											<Alert
+												severity="warning"
+												variant="filled"
+												sx={{
+													lineHeight: "1em",
+													borderRadius: "8px",
+													padding: "0px 16px"
+												}}
+											>
+												Customize your username
+											</Alert>
+										</InputAdornment>
+									)
+								}}
+							/>
+						</Grid>
+						<Grid item>
+							<TextField
+								fullWidth
+								defaultValue={`${user.get("email")}`}
+								label="Your email address 📧"
+								onChange={async (e) => {
+									setEmailError();
+									const targetEmail = e.target.value;
+									if (isEmailValid(targetEmail)) {
+										user.set("email", targetEmail);
+										await saveUser(setEmailError);
+									} else {
+										setEmailError("Invalid email format");
+									}
+								}}
+								InputProps={{
+									endAdornment: emailError ? (
+										<InputAdornment position="end">
+											<Alert
+												severity="error"
+												variant="filled"
+												sx={{
+													lineHeight: "1em",
+													borderRadius: "8px",
+													padding: "0px 16px"
+												}}
+											>
+												{emailError}
+											</Alert>
+										</InputAdornment>
+									) : user.get("email") ? (
+										<InputAdornment position="end">
+											<CheckIcon color="success" />
+										</InputAdornment>
+									) : (
+										<InputAdornment position="end">
+											<Alert
+												severity="warning"
+												variant="filled"
+												sx={{
+													lineHeight: "1em",
+													borderRadius: "8px",
+													padding: "0px 16px"
+												}}
+											>
+												Please add your email
+											</Alert>
 										</InputAdornment>
 									)
 								}}
@@ -372,13 +529,7 @@ const Projects = () => {
 								fullWidth
 								disabled
 								value={user.get("ethAddress")}
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position="start">
-											Your wallet 👛
-										</InputAdornment>
-									)
-								}}
+								label="Your beneficiary wallet 🏦"
 							/>
 						</Grid>
 						<Grid item xs={12}>
@@ -391,13 +542,11 @@ const Projects = () => {
 									id="demo-simple-select"
 									label="Showcase your NFTs from network"
 									onChange={async (e) => {
-										console.log(profile);
 										profile.chainId = e.target.value;
 										const newProfile = { ...profile };
 										setProfile(newProfile);
 										user.set("profile", newProfile);
 										await saveUser();
-										console.log(newProfile);
 									}}
 								>
 									{renderMenuItems()}
@@ -441,7 +590,7 @@ const Projects = () => {
 
 	const [colors, toggleColors] = useState(false);
 	const styleControls = (
-		<Paper elevation={4} sx={{ borderRadius: 3, p: 1 }}>
+		<Paper className="main-card">
 			<Grid container direction="row" spacing={1} sx={{ pt: 1 }}>
 				<Grid item xs={12}>
 					<Button fullWidth onClick={() => toggleColors(!colors)}>
@@ -532,7 +681,6 @@ const Projects = () => {
 											sx={{ mt: 2 }}
 											color={profile?.backgroundColor}
 											onChangeComplete={async (e) => {
-												console.log(e.hex);
 												profile.backgroundColor = e.hex;
 												const newProfile = {
 													...profile
@@ -550,7 +698,6 @@ const Projects = () => {
 										<TwitterPicker
 											color={profile?.textColor}
 											onChangeComplete={async (e) => {
-												console.log(e.hex);
 												profile.textColor = e.hex;
 												const newProfile = {
 													...profile
@@ -570,7 +717,6 @@ const Projects = () => {
 										<TwitterPicker
 											color={profile?.buttonColor}
 											onChangeComplete={async (e) => {
-												console.log(e.hex);
 												profile.buttonColor = e.hex;
 												const newProfile = {
 													...profile
@@ -590,7 +736,6 @@ const Projects = () => {
 										<TwitterPicker
 											color={profile?.buttonColorHover}
 											onChangeComplete={async (e) => {
-												console.log(e.hex);
 												profile.buttonColorHover =
 													e.hex;
 												const newProfile = {
@@ -613,7 +758,7 @@ const Projects = () => {
 
 	const [linkPanel, toggleLinks] = useState(false);
 	const linkControls = (
-		<Paper elevation={4} sx={{ borderRadius: 3, p: 1 }}>
+		<Paper className="main-card">
 			<Grid container direction="row" spacing={1} sx={{ pt: 1 }}>
 				<Grid item xs={12}>
 					<Button fullWidth onClick={() => toggleLinks(!linkPanel)}>
@@ -632,7 +777,6 @@ const Projects = () => {
 								<Button
 									variant="contained"
 									onClick={async () => {
-										console.log(profile);
 										const orgProfile = { ...profile };
 										orgProfile.links = orgProfile.links
 											? orgProfile.links
@@ -671,15 +815,9 @@ const Projects = () => {
 				justifyContent="center"
 				alignItems="center"
 				sx={{
-					margin: "0 auto",
-					maxWidth: 800
+					margin: "0 auto"
 				}}
 			>
-				<Grid item xs={12}>
-					<Typography variant="h2">
-						Edit and share your Web3 profile! 😎
-					</Typography>
-				</Grid>
 				<Grid item xs={12}>
 					{avatarControls}
 				</Grid>
@@ -689,13 +827,13 @@ const Projects = () => {
 				<Grid item xs={12}>
 					{linkControls}
 				</Grid>
-				<Grid item xs={12}>
+				{/*<Grid item xs={12}>
 					<Typography variant="h2">
 						Launch a new Web3 project! 🚀
 					</Typography>
 				</Grid>
-				{listApps()}
-				{projects.length === 0 && welcome}
+			{listApps()} 
+				{projects.length === 0 && welcome} */}
 			</Grid>
 			{/*<ProfileDialog context={context} /> */}
 		</Container>

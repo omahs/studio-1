@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useParams } from "react-router-dom";
 
@@ -14,14 +14,10 @@ import {
 } from "@mui/material";
 
 // project imports
-import Breadcrumbs from "ui-component/extended/Breadcrumbs";
-import Header from "layout/MainLayout/Header";
-import Sidebar from "layout/MainLayout/Sidebar";
-import SidePanel from "layout/SidePanel";
-import navigation from "menu-items";
 import { drawerWidth } from "store/constant";
+import Sidebar from "layout/ProfileLayout/Sidebar";
 import { SET_MENU, UPDATE_APP } from "store/actions";
-
+import { DappifyContext, supportedWallets } from "react-dappify";
 import { useMoralis } from "react-moralis";
 
 import AccountBalanceWalletTwoToneIcon from "@mui/icons-material/AccountBalanceWalletTwoTone";
@@ -64,6 +60,8 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 				duration: theme.transitions.duration.enteringScreen
 			}),
 			marginLeft: 0,
+			borderRadius: "8px",
+			border: "1px solid rgba(144, 202, 249, 0.16)",
 			borderBottomLeftRadius: 0,
 			borderBottomRightRadius: 0,
 			width: `calc(100% - ${drawerWidth}px)`,
@@ -83,7 +81,7 @@ const ProfileAdmin = () => {
 	const { appId } = useParams();
 
 	const theme = useTheme();
-	const { Moralis, user, logout } = useMoralis();
+	const { Provider, logout, user } = useContext(DappifyContext);
 	const matchDownMd = useMediaQuery(theme.breakpoints.down("lg"));
 
 	// Handle left drawer
@@ -114,7 +112,7 @@ const ProfileAdmin = () => {
 				enableColorOnDark
 				position="fixed"
 				color="inherit"
-				elevation={4}
+				elevation={0}
 				sx={{
 					bgcolor: theme.palette.background.default,
 					transition: leftDrawerOpened
@@ -136,18 +134,20 @@ const ProfileAdmin = () => {
 						startIcon={<AccountBalanceWalletTwoToneIcon />}
 						endIcon={<LogoutIcon />}
 					>
-						{renderAddress()}
+						{user && renderAddress()}
 					</Button>
 				</Toolbar>
 			</AppBar>
 
-			{/* drawer 
-            <Sidebar drawerOpen={leftDrawerOpened} drawerToggle={handleLeftDrawerToggle} /> */}
+			<Sidebar
+				drawerOpen={leftDrawerOpened}
+				drawerToggle={handleLeftDrawerToggle}
+			/>
 
 			{/* main content */}
 			<Main theme={theme} open={leftDrawerOpened}>
 				{/* breadcrumb */}
-				<Outlet />
+				{user && <Outlet />}
 			</Main>
 			{/* <SidePanel /> */}
 		</Box>

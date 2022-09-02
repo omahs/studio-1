@@ -15,7 +15,7 @@ import Snackbar from "ui-component/extended/Snackbar";
 
 // provider
 import { DappifyProvider } from "react-dappify";
-
+import { ProgressProvider } from "contexts/ProgressContext";
 import mixpanel from "mixpanel-browser";
 
 // ==============================|| APP ||============================== //
@@ -30,13 +30,15 @@ const App = () => {
 		<DappifyProvider>
 			<StyledEngineProvider injectFirst>
 				<ThemeProvider theme={themes(customization)}>
-					<CssBaseline />
-					<Locales>
-						<>
-							<Routes />
-							<Snackbar />
-						</>
-					</Locales>
+					<ProgressProvider>
+						<CssBaseline />
+						<Locales>
+							<>
+								<Routes />
+								<Snackbar />
+							</>
+						</Locales>
+					</ProgressProvider>
 				</ThemeProvider>
 			</StyledEngineProvider>
 		</DappifyProvider>

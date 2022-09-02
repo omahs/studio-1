@@ -13,14 +13,10 @@ import {
 } from "@mui/material";
 
 // project imports
-import Breadcrumbs from "ui-component/extended/Breadcrumbs";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import SidePanel from "layout/SidePanel";
-import navigation from "menu-items";
 import { drawerWidth } from "store/constant";
 import { SET_MENU, UPDATE_APP } from "store/actions";
-
 import { useMoralis } from "react-moralis";
 
 // assets
@@ -136,14 +132,14 @@ const MainLayout = () => {
 
 			{/* main content */}
 			<Main theme={theme} open={leftDrawerOpened}>
-				{/* breadcrumb */}
+				{/* breadcrumb 
 				<Breadcrumbs
 					separator={IconChevronRight}
 					navigation={navigation}
 					icon
 					title
 					rightAlign
-				/>
+				/>*/}
 				<Outlet />
 			</Main>
 			{/* <SidePanel /> */}

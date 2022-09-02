@@ -22,7 +22,6 @@ const PublicProfile = () => {
 	const [nfts, setNfts] = useState([]);
 	const { Provider } = useContext(DappifyContext);
 	const [profile, setProfile] = useState({});
-	console.log(id);
 
 	useEffect(() => {
 		const urlAddress = id.startsWith("0x") ? id : null;
@@ -37,19 +36,14 @@ const PublicProfile = () => {
 	}, [profile]);
 
 	const loadProfile = async () => {
-		console.log(Provider);
-
 		const userProfile = await Provider.Cloud.run("getProfileByHandle", {
 			handle: id
 		});
 		setProfile(userProfile);
-		console.log(userProfile);
 	};
 
 	const loadNfts = async (targetAddress) => {
-		console.log("loading nfts for " + targetAddress);
 		let items = [];
-		console.log(profile);
 		const chainId = profile?.profile?.chainId || "0x1";
 		try {
 			items = await axios.get(
@@ -76,10 +70,8 @@ const PublicProfile = () => {
 	const listNfts = () => {
 		const items = [];
 		nfts.forEach((nft, index) => {
-			console.log(nft);
 			const m = JSON.parse(nft.metadata);
 			if (m) {
-				console.log(m);
 				items.push(
 					<Grid item xs={6} sm={4} md={3} justifyContent="center">
 						<Paper
@@ -195,7 +187,6 @@ const PublicProfile = () => {
 	];
 
 	const getBg = () => {
-		console.log(profile);
 		if (profile) {
 			if (profile?.profile?.background) {
 				return `url(${profile?.profile?.background})`;

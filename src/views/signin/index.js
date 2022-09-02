@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Box, Grid, Typography, Button, Tooltip } from "@mui/material";
 import Logo from "common/Logo";
 import { DappifyContext, supportedWallets } from "react-dappify";
@@ -7,7 +7,7 @@ import FormDialog from "views/signin/FormDialog";
 import mixpanel from "mixpanel-browser";
 import constants from "constant";
 
-const { AUTH, ERROR, PROVIDER } = constants;
+const { AUTH, PROVIDER } = constants;
 
 const destination = "/profile/admin";
 
@@ -22,14 +22,8 @@ const Signin = () => {
 	}, [isAuthenticated, navigate]);
 
 	const signIn = async (wallet, walletProvider) => {
-		console.log(wallet);
 		try {
 			const signupUser = await Provider.authenticate(wallet);
-			// signupUser.set('email', email);
-			// signupUser.set('contact', email);
-			// signupUser.set('username', handle);
-			// signupUser.set('username', handle);
-
 			// Is a new user?
 			const signedEmail = signupUser.get("email");
 			mixpanel.track(signedEmail ? AUTH.SIGN_IN : AUTH.SIGN_UP, {
@@ -115,7 +109,6 @@ const Signin = () => {
 	const onSubmitEmailForm = async (emailAddress) => {
 		setOpenEmailForm(false);
 		// Magic Link Invoke
-		console.log(emailAddress);
 		await signIn(
 			{
 				signingMessage: "Dappify wants to connect!",

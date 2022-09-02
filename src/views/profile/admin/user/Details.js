@@ -25,24 +25,27 @@ import CheckIcon from "@mui/icons-material/Check";
 import ProfileAvatar from "views/profile/admin/user/ProfileAvatar";
 
 import { constants } from "react-dappify";
+import { ProgressContext } from "contexts/ProgressContext";
 const { NETWORKS, LOGO } = constants;
 
 // ==============================|| PROFILE 3 - PROFILE ||============================== //
 
 const Details = () => {
 	const { user } = useContext(DappifyContext);
-
+	const { setProgress } = useContext(ProgressContext);
 	const [profile, setProfile] = useState({});
 	const [usernameError, setUsernameError] = useState();
 	const [emailError, setEmailError] = useState();
 
-	console.log("WTF");
-	console.log(user);
+	useEffect(() => {
+		verifyProgress();
+	}, []);
 
 	useEffect(() => {
 		const existingProfile = user?.get("profile");
 		const initProfile = !isEmpty(existingProfile) ? existingProfile : {};
 		setProfile(initProfile);
+		verifyProgress();
 	}, [user]);
 
 	const isEmailValid = (email) => {
@@ -51,6 +54,22 @@ const Details = () => {
 
 	const isUsernameValid = (username) => {
 		return /^[a-zA-Z0-9-_]+$/.test(username);
+	};
+
+	const verifyProgress = () => {
+		const bio = user.get("bio");
+		const email = user.get("email");
+		const username = user.get("username");
+		const address = user.get("ethAddress");
+		const calculateProgress = () => {
+			let currentProgress = 0;
+			if (!isEmpty(address)) currentProgress += 25;
+			if (!isEmpty(username)) currentProgress += 25;
+			if (!isEmpty(email)) currentProgress += 25;
+			if (!isEmpty(bio)) currentProgress += 25;
+			setProgress(currentProgress);
+		};
+		calculateProgress();
 	};
 
 	const renderMenuItems = () => {
@@ -117,6 +136,7 @@ const Details = () => {
 					setProfile(newProfile);
 					user.set("profile", newProfile);
 					await saveUser(user);
+					verifyProgress();
 				}}
 			>
 				{renderMenuItems()}
@@ -133,7 +153,6 @@ const Details = () => {
 				label="Username"
 				onChange={async (e) => {
 					setUsernameError();
-					console.log(profile);
 					const targetUsername = e.target.value;
 					if (isUsernameValid(targetUsername)) {
 						user.set("username", targetUsername);
@@ -142,6 +161,7 @@ const Details = () => {
 					} else {
 						setUsernameError("Invalid username format");
 					}
+					verifyProgress();
 				}}
 				InputProps={{
 					startAdornment: (
@@ -194,7 +214,6 @@ const Details = () => {
 			label="Email Address"
 			onChange={async (e) => {
 				setEmailError();
-				console.log(profile);
 				const targetEmail = e.target.value;
 				if (isEmailValid(targetEmail)) {
 					user.set("email", targetEmail);
@@ -202,6 +221,7 @@ const Details = () => {
 				} else {
 					setEmailError("Invalid email format");
 				}
+				verifyProgress();
 			}}
 			InputProps={{
 				endAdornment: emailError ? (
@@ -252,6 +272,7 @@ const Details = () => {
 				const bio = e.target.value;
 				user.set("bio", bio);
 				await saveUser(user);
+				verifyProgress();
 			}}
 		/>
 	);

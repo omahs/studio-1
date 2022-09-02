@@ -1,13 +1,13 @@
 import { useContext, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Box, Grid, Typography, Button, Tooltip } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Box, Grid, Typography, Button, Tooltip, Paper } from "@mui/material";
 import Logo from "common/Logo";
 import { DappifyContext, supportedWallets } from "react-dappify";
 import FormDialog from "views/signin/FormDialog";
 import mixpanel from "mixpanel-browser";
 import constants from "constant";
 
-const { AUTH, ERROR, PROVIDER } = constants;
+const { AUTH, PROVIDER } = constants;
 
 const destination = "/profile/admin";
 
@@ -22,14 +22,8 @@ const Signin = () => {
 	}, [isAuthenticated, navigate]);
 
 	const signIn = async (wallet, walletProvider) => {
-		console.log(wallet);
 		try {
 			const signupUser = await Provider.authenticate(wallet);
-			// signupUser.set('email', email);
-			// signupUser.set('contact', email);
-			// signupUser.set('username', handle);
-			// signupUser.set('username', handle);
-
 			// Is a new user?
 			const signedEmail = signupUser.get("email");
 			mixpanel.track(signedEmail ? AUTH.SIGN_IN : AUTH.SIGN_UP, {
@@ -48,14 +42,14 @@ const Signin = () => {
 
 	const renderSupportedWallets = () => {
 		const list = [
-			<Grid item xs={6} key={"magic"}>
+			<Grid item xs={6} md={3} key={"magic"}>
 				<Tooltip title={PROVIDER.MAGIC_LINK}>
 					<Button
 						id="login-magic-btn"
 						elevation={15}
-						sx={{ p: 3 }}
+						sx={{ p: 3, borderRadius: 4 }}
 						variant="contained"
-						color="primary"
+						color="secondary"
 						fullWidth
 						onClick={onOpenEmailForm}
 					>
@@ -67,7 +61,7 @@ const Signin = () => {
 									height={64}
 								/>
 							</Grid>
-							<Grid item>Magic Link</Grid>
+							<Grid item>Email Magic Link</Grid>
 						</Grid>
 					</Button>
 				</Tooltip>
@@ -75,14 +69,14 @@ const Signin = () => {
 		];
 		supportedWallets.forEach((wallet) => {
 			list.push(
-				<Grid item xs={6} key={wallet.name}>
+				<Grid item xs={6} md={3} key={wallet.name}>
 					<Tooltip title={wallet.description}>
 						<Button
 							id={`login-${wallet.id}-btn`}
 							elevation={15}
-							sx={{ p: 3 }}
+							sx={{ p: 3, borderRadius: 4 }}
 							variant="contained"
-							color="primary"
+							color="secondary"
 							fullWidth
 							onClick={async () =>
 								await signIn(wallet.payload, wallet.id)
@@ -115,7 +109,6 @@ const Signin = () => {
 	const onSubmitEmailForm = async (emailAddress) => {
 		setOpenEmailForm(false);
 		// Magic Link Invoke
-		console.log(emailAddress);
 		await signIn(
 			{
 				signingMessage: "Dappify wants to connect!",
@@ -138,33 +131,48 @@ const Signin = () => {
 			direction="column"
 			justifyContent="center"
 			textAlign="center"
+			sx={{
+				background: " #4C27A5",
+				height: "100vh"
+			}}
 		>
-			<Grid
-				container
-				spacing={2}
-				sx={{ maxWidth: 600, margin: "0 auto", padding: 5 }}
+			<Paper
+				elevation={15}
+				sx={{
+					maxWidth: 800,
+					margin: "0 auto",
+					padding: 5,
+					borderRadius: 4
+				}}
 			>
-				<FormDialog
-					isOpen={isOpenEmailForm}
-					onSubmit={onSubmitEmailForm}
-					onClose={onCloseEmailForm}
-				/>
-				<Grid item xs={12} sx={{ justifyContent: "center" }}>
-					<Box sx={{ justifyContent: "center" }}>
-						<Logo />
-					</Box>
-				</Grid>
-				<Grid item xs={12}>
-					<Typography variant="h1" fontWeight="bolder">
-						Let's get started! first, connect your wallet
-					</Typography>
-				</Grid>
-				<Grid item>
-					<Grid container spacing={2}>
-						{renderSupportedWallets()}
+				<Grid container spacing={2}>
+					<FormDialog
+						isOpen={isOpenEmailForm}
+						onSubmit={onSubmitEmailForm}
+						onClose={onCloseEmailForm}
+					/>
+					<Grid item xs={12} sx={{ justifyContent: "center" }}>
+						<Box sx={{ justifyContent: "center" }}>
+							<Logo />
+						</Box>
+					</Grid>
+					<Grid item xs={12}>
+						<Typography variant="h1" fontWeight="light">
+							Let's get started! first, connect your wallet
+						</Typography>
+					</Grid>
+					<Grid item xs={12}>
+						<Grid
+							container
+							spacing={2}
+							justifyContent="center"
+							alignItems="center"
+						>
+							{renderSupportedWallets()}
+						</Grid>
 					</Grid>
 				</Grid>
-			</Grid>
+			</Paper>
 		</Grid>
 	);
 };

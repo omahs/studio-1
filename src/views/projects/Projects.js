@@ -419,7 +419,6 @@ const Projects = () => {
 								label="Your Dappify username 🎉"
 								onChange={async (e) => {
 									setUsernameError();
-									console.log(profile);
 									const targetUsername = e.target.value;
 									if (isUsernameValid(targetUsername)) {
 										user.set("username", targetUsername);
@@ -480,7 +479,6 @@ const Projects = () => {
 								label="Your email address 📧"
 								onChange={async (e) => {
 									setEmailError();
-									console.log(profile);
 									const targetEmail = e.target.value;
 									if (isEmailValid(targetEmail)) {
 										user.set("email", targetEmail);
@@ -544,13 +542,11 @@ const Projects = () => {
 									id="demo-simple-select"
 									label="Showcase your NFTs from network"
 									onChange={async (e) => {
-										console.log(profile);
 										profile.chainId = e.target.value;
 										const newProfile = { ...profile };
 										setProfile(newProfile);
 										user.set("profile", newProfile);
 										await saveUser();
-										console.log(newProfile);
 									}}
 								>
 									{renderMenuItems()}
@@ -685,7 +681,6 @@ const Projects = () => {
 											sx={{ mt: 2 }}
 											color={profile?.backgroundColor}
 											onChangeComplete={async (e) => {
-												console.log(e.hex);
 												profile.backgroundColor = e.hex;
 												const newProfile = {
 													...profile
@@ -703,7 +698,6 @@ const Projects = () => {
 										<TwitterPicker
 											color={profile?.textColor}
 											onChangeComplete={async (e) => {
-												console.log(e.hex);
 												profile.textColor = e.hex;
 												const newProfile = {
 													...profile
@@ -723,7 +717,6 @@ const Projects = () => {
 										<TwitterPicker
 											color={profile?.buttonColor}
 											onChangeComplete={async (e) => {
-												console.log(e.hex);
 												profile.buttonColor = e.hex;
 												const newProfile = {
 													...profile
@@ -743,7 +736,6 @@ const Projects = () => {
 										<TwitterPicker
 											color={profile?.buttonColorHover}
 											onChangeComplete={async (e) => {
-												console.log(e.hex);
 												profile.buttonColorHover =
 													e.hex;
 												const newProfile = {
@@ -785,7 +777,6 @@ const Projects = () => {
 								<Button
 									variant="contained"
 									onClick={async () => {
-										console.log(profile);
 										const orgProfile = { ...profile };
 										orgProfile.links = orgProfile.links
 											? orgProfile.links

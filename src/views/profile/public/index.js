@@ -12,7 +12,6 @@ import {
 import { useParams } from "react-router-dom";
 import Identicon from "react-identicons";
 import axios from "axios";
-import * as icons from "tabler-icons-react";
 import { DappifyContext } from "react-dappify";
 
 // =============================|| LANDING MAIN ||============================= //
@@ -73,10 +72,16 @@ const PublicProfile = () => {
 			const m = JSON.parse(nft.metadata);
 			if (m) {
 				items.push(
-					<Grid item xs={6} sm={4} md={3} justifyContent="center">
+					<Grid
+						item
+						xs={6}
+						sm={4}
+						md={3}
+						justifyContent="center"
+						key={index}
+					>
 						<Paper
 							elevation={10}
-							variant="outlined"
 							sx={{
 								position: "relative",
 								height: 200,
@@ -128,9 +133,9 @@ const PublicProfile = () => {
 
 	const listLinks = () => {
 		const items = [];
-		profile?.profile?.links?.forEach((prop) => {
+		profile?.profile?.links?.forEach((prop, index) => {
 			items.push(
-				<Grid item xs={12}>
+				<Grid item xs={12} key={index}>
 					<Button
 						fullWidth
 						variant="contained"
@@ -177,7 +182,7 @@ const PublicProfile = () => {
 	};
 
 	const profileImage = profile?.profile?.image ? (
-		<img src={profile?.profile?.image} alt="" width="96" height="auto" />
+		<img src={profile?.profile?.image} alt="" width="125" height="auto" />
 	) : (
 		<Identicon string={profile?.ethAddress} size={96} />
 	);
@@ -210,9 +215,9 @@ const PublicProfile = () => {
 				backgroundSize: "cover",
 				position: "absolute",
 				width: "100%",
-				height: "100vh",
 				maxWidth: "100% !important",
-				pb: 200
+				minHeight: "100vh",
+				pb: 5
 			}}
 		>
 			<Grid
@@ -242,13 +247,15 @@ const PublicProfile = () => {
 				<Grid item xs={12}>
 					<Typography
 						variant="h2"
+						fontSize={24}
 						sx={{ color: profile?.profile?.textColor }}
 					>
 						{profile?.username || id}
 					</Typography>
 					<Typography
-						variant="h4"
+						variant="body"
 						fontWeight="light"
+						fontSize={14}
 						sx={{ color: profile?.profile?.textColor }}
 					>
 						{profile?.ethAddress}
@@ -256,8 +263,9 @@ const PublicProfile = () => {
 				</Grid>
 				<Grid item xs={12}>
 					<Typography
-						variant="h5"
-						sx={{ color: profile?.profile?.textColor }}
+						variant="body"
+						fontSize={18}
+						sx={{ color: profile?.profile?.textColor, my: 1 }}
 					>
 						{profile?.bio}
 					</Typography>

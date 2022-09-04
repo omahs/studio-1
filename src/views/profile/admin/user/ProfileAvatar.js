@@ -19,7 +19,7 @@ import constants from "constant";
 const { IMAGE_PLACEHOLDER } = constants;
 
 const ProfileAvatar = ({
-	description = "Upload/Change Your Profile Image",
+	description = "Upload/Change Your Profile Image, Recommended 400x400",
 	buttonLabel = "Upload Avatar",
 	isUser = true,
 	imageSrc = {},

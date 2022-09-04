@@ -64,7 +64,7 @@ const Links = () => {
 										sx={{ p: 2 }}
 									>
 										<ProfileAvatar
-											description="Upload/Change Link Image"
+											description="Upload/Change Link Image, Recommended 400x400"
 											buttonLabel="Upload Image"
 											isUser={false}
 											imageSrc={profile?.links}

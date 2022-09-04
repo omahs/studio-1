@@ -27,7 +27,7 @@ const Style = () => {
 					contentSX={{ textAlign: "center" }}
 				>
 					<ProfileAvatar
-						description="Upload/Change Your Profile Background"
+						description="Upload/Change Your Profile Background, Recommended 1200x800"
 						buttonLabel="Upload Background"
 						isUser={false}
 						imageSrc={profile}

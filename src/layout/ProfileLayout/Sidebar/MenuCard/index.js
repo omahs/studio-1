@@ -138,10 +138,10 @@ const MenuCard = () => {
 
 				<TwitterShareButton
 					title={
-						"Check out my new Web3 builder profile at @DappifyWeb3 🤩"
+						"Check out my new Web3 builder profile at @DappifyWeb3 🤩. Create yours now, it is free!"
 					}
 					url={`${getUrl()}/${user.get("username")}`}
-					hashtags={["crypto", "blockchain"]}
+					hashtags={["Web3", "Web3Community"]}
 				>
 					<Grid
 						container

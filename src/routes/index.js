@@ -21,6 +21,7 @@ const ProjectsView = Loadable(
 	lazy(() => import("views/profile/admin/projects"))
 );
 const ProfileView = Loadable(lazy(() => import("views/profile/admin/user")));
+const EditorView = Loadable(lazy(() => import("views/builder")));
 
 // ==============================|| ROUTING RENDER ||============================== //
 
@@ -34,6 +35,7 @@ export default function ThemeRoutes() {
 		{ path: "/projects", element: <ProjectsPage /> },
 		{ path: "/signin", element: <Signin /> },
 		{ path: "/new", element: <NewProject /> },
+		{ path: "/builder", element: <EditorView /> },
 		{ path: "/:id", element: <PublicProfile /> },
 		{
 			path: "/profile",

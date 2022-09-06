@@ -45,15 +45,26 @@ PhysicalWeb3 uses a number of technologies and networks:
 Require setting up .env with
 
 ```
-REACT_APP_MORALIS_APP_ID=<Your Moralis Server AppId>
-REACT_APP_MORALIS_SERVER_URL=<Your Moralis Server full URL>
+SKIP_PREFLIGHT_CHECK=true
+REACT_APP_MORALIS_APP_ID=<ID>
+REACT_APP_MORALIS_SERVER_URL=<URL>
+REACT_APP_ROADMAP_URL=<URL>
+REACT_APP_MICROPAPER_URL=<URL>
+REACT_APP_CHANGELOG_URL=<URL>
+REACT_APP_API_BASE_URL=<CLOUD_FUNCTIONS_BASE_URL>
+REACT_APP_HOST_ENV=local
+REACT_APP_BLOG_URL=https://medium.com/@dappify
+REACT_APP_MAGIC=<ID>
+REACT_APP_MORALIS_API_KEY=<KEY>
+REACT_APP_MIXPANEL_ID=<ID>
+
 ```
 
 Then, run the development server:
 
 ```bash
-yarn install
-yarn start
+npm install
+npm run start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

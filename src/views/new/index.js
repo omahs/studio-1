@@ -10,7 +10,6 @@ import {
 	Slide
 } from "@mui/material";
 import NameField from "views/new/NameField";
-import UseCase from "views/new/UseCase";
 import Blockchain from "views/new/Blockchain";
 import TermsAndConditions from "views/new/TermsAndConditions";
 import Loader from "views/new/Loader";
@@ -20,7 +19,7 @@ import { UPDATE_APP } from "store/actions";
 import { DappifyContext, defaultConfiguration, Project } from "react-dappify";
 
 const NewPage = () => {
-	const { user } = useContext(DappifyContext);
+	const { user, Provider } = useContext(DappifyContext);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const appState = useSelector((state) => state.app);
@@ -55,12 +54,26 @@ const NewPage = () => {
 	const loader = appState.step === 3 && <Loader onChange={handleStepFour} />;
 	const [cantContinue, setCantContinue] = useState(true);
 
+	const createProject = async (appConfiguration, userPointer) => {
+		const Project = Provider.Object.extend("Project");
+		const project = new Project();
+		project.set("config", appConfiguration);
+		project.set("owner", userPointer);
+		project.set("subdomain", appConfiguration.subdomain);
+		const createdProject = await project.save();
+		appConfiguration.appId = createdProject.id;
+		createdProject.set("config", appConfiguration);
+		const savedProject = await createdProject.save();
+		return savedProject;
+	};
+
 	const handleNextStep = async () => {
 		appState.step = appState.step ? appState.step + 1 : 1;
 		setCantContinue(true);
 		dispatch({ type: UPDATE_APP, configuration: appState });
 		if (appState.step === 4) {
-			const savedProject = await Project.create(appState, user);
+			console.log(user);
+			const savedProject = await createProject(appState, user);
 			dispatch({
 				type: UPDATE_APP,
 				configuration: savedProject.get("config")

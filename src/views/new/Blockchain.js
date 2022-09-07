@@ -79,20 +79,22 @@ const Blockchain = ({ onChange }) => {
 				</Typography>
 			</Grid>
 			<Grid container spacing={1}>
-				<FormControl fullWidth>
-					<InputLabel id="network-select-label">
-						Select your ecosystem
-					</InputLabel>
-					<Select
-						labelId="network-select-label"
-						id="network-select"
-						label="Select your ecosystem"
-						value={selectedChain}
-						onChange={handleChange}
-					>
-						{renderMenuItems()}
-					</Select>
-				</FormControl>
+				<Grid item xs={12}>
+					<FormControl fullWidth>
+						<InputLabel id="network-select-label">
+							Select your ecosystem
+						</InputLabel>
+						<Select
+							labelId="network-select-label"
+							id="network-select"
+							label="Select your ecosystem"
+							value={selectedChain}
+							onChange={handleChange}
+						>
+							{renderMenuItems()}
+						</Select>
+					</FormControl>
+				</Grid>
 			</Grid>
 		</Grid>
 	);

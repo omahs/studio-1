@@ -91,6 +91,7 @@ const NameField = ({ onChange }) => {
 					placeholder="Enter your project name"
 					variant="standard"
 					defaultValue={appName}
+					fullWidth
 					onChange={(e) => generateSubdomain(e.target.value)}
 					autoFocus
 					sx={{

@@ -22,6 +22,10 @@ const constants = {
 		MAGIC_LINK:
 			"Magic is the #1 user authentication and private key management solution for Web3 and Web2. Secure, seamless, scalable, and future-proof."
 	},
+	EDITOR: {
+		BUILDER: "builder",
+		STUDIO: "studio"
+	},
 	IMAGE_PLACEHOLDER:
 		"https://media.istockphoto.com/vectors/image-preview-icon-picture-placeholder-for-website-or-uiux-design-vector-id1222357475?k=20&m=1222357475&s=170667a&w=0&h=YGycIDbBRAWkZaSvdyUFvotdGfnKhkutJhMOZtIoUKY="
 };

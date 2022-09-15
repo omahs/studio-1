@@ -35,18 +35,28 @@ const DetailsApp = ({ project = {} }) => {
 			return (
 				<Chip
 					label="Drag & Drop Editor"
-					variant="outlined"
-					color="secondary"
+					variant="contained"
+					color="primary"
 					size="small"
+					sx={{
+						position: "absolute",
+						top: "35px",
+						right: "25px"
+					}}
 				/>
 			);
 		} else {
 			return (
 				<Chip
 					label="Legacy Editor"
-					variant="outlined"
+					variant="contained"
 					color="secondary"
 					size="small"
+					sx={{
+						position: "absolute",
+						top: "35px",
+						right: "25px"
+					}}
 				/>
 			);
 		}
@@ -64,7 +74,8 @@ const DetailsApp = ({ project = {} }) => {
 				color: fontColor,
 				backgroundRepeat: "no-repeat",
 				backgroundSize: "cover",
-				cursor: "pointer"
+				cursor: "pointer",
+				height: "210px"
 			}}
 			onClick={() => selectProject(project.config)}
 			onMouseOver={() => setSelected(project.config.subdomain)}
@@ -72,7 +83,7 @@ const DetailsApp = ({ project = {} }) => {
 			elevation={selected === project.config.subdomain ? 5 : 0}
 		>
 			<Grid container spacing={0.3}>
-				<Grid item xs={12} sx={{ height: 44 }}>
+				<Grid item xs={12} sx={{ height: 44, mb: 1 }}>
 					{/* <QRCode size="128" value={getAppUrl(app.id)} /> */}
 					<img
 						src={getImage(project.config.logo)}
@@ -96,6 +107,19 @@ const DetailsApp = ({ project = {} }) => {
 							{getUrl(project.config.subdomain)}
 						</Button>
 					</Typography>
+					{project.hash && (
+						<Typography variant="h6">
+							<Button
+								sx={{
+									textTransform: "none",
+									fontSize: "0.8em"
+								}}
+								href={`https://dappify.mypinata.cloud/ipfs/${project.hash}`}
+							>
+								{`ipfs/${project.hash}`}
+							</Button>
+						</Typography>
+					)}
 				</Grid>
 				<Grid item xs={12} sx={{ mb: 1 }}>
 					{getEditor()}

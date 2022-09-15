@@ -103,6 +103,7 @@ const AppBar = ({ ...others }) => {
 			disableElevation
 			variant="contained"
 			color="primary"
+			component="span"
 			size="large"
 			id="disconnect-wallet-btn"
 			onClick={logout}
@@ -116,6 +117,7 @@ const AppBar = ({ ...others }) => {
 			disableElevation
 			variant="contained"
 			color="primary"
+			component="span"
 			size="large"
 			id="connect-wallet-btn"
 			onClick={() => setShowWalletDialog(true)}

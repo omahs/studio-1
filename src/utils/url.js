@@ -21,7 +21,7 @@ export const getEditorUrl = (appState) => {
 			templates.length > 0 &&
 			appState.template[templates[0]].editor === EDITOR.BUILDER
 		)
-			url = "/builder";
+			url = `/builder/${appState?.appId}`;
 	} catch (e) {
 		console.log("Cant resolve editor, defaulting to studio");
 	}

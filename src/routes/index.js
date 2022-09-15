@@ -35,7 +35,7 @@ export default function ThemeRoutes() {
 		{ path: "/projects", element: <ProjectsPage /> },
 		{ path: "/signin", element: <Signin /> },
 		{ path: "/new", element: <NewProject /> },
-		{ path: "/builder", element: <EditorView /> },
+		{ path: "/builder/:projectId", element: <EditorView /> },
 		{ path: "/:id", element: <PublicProfile /> },
 		{
 			path: "/profile",

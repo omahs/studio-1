@@ -24,9 +24,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-react-studio-dappify-
       - name: Install dependencies
-        run: yarn install
+        run: npm i --force
       - name: Build
         env: 
+          SKIP_PREFLIGHT_CHECK: true
           REACT_APP_MORALIS_APP_ID: ${{ secrets.MORALIS_APP_ID_DEV }}
           REACT_APP_MORALIS_SERVER_URL: ${{ secrets.MORALIS_SERVER_URL_DEV }}
           REACT_APP_MORALIS_API_KEY: ${{ secrets.MORALIS_API_KEY }}
@@ -38,7 +39,7 @@ jobs:
           REACT_APP_HOST_ENV: dev
           CI: false
           NODE_OPTIONS: "--max-old-space-size=8192"
-        run: yarn build:cli
+        run: npm run build:cli
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

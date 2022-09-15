@@ -126,7 +126,7 @@
     },
     "devDependencies": {
         "cross-env": "^7.0.3",
-        "dappify-builder": "^0.1.12",
+        "dappify-builder": "^0.1.13",
         "env-cmd": "^10.1.0",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.6",

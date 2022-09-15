@@ -1,20 +1,15 @@
-// import { useContext } from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Editor } from "dappify-builder/dist";
-// import { useEffect } from "react";
-// import { DappifyContext } from 'react-dappify';
 
 const EditorView = () => {
 	const { projectId } = useParams();
-	// const { Provider } = useContext(DappifyContext);
+	const navigate = useNavigate();
 
-	// const verifyProject = () => {
+	const onClickHome = () => {
+		navigate("/profile/admin", { replace: true });
+	};
 
-	// };
-
-	// useEffect(() => verifyProject(), []);
-
-	return <Editor projectId={projectId} />;
+	return <Editor projectId={projectId} onClickHome={onClickHome} />;
 };
 
 export default EditorView;

@@ -1,53 +1,150 @@
 /* eslint-disable react/no-unescaped-entities */
-import { UPDATE_APP } from 'store/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { Grid, Typography, Tooltip, Button, Paper, Box } from "@mui/material";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import { Template } from "react-dappify";
+import debounce from "lodash/debounce";
+import constants from "constant";
 
-const Template = () => {
-    const dispatch = useDispatch();
-    const appState = useSelector((state) => state.app);
+const { EDITOR } = constants;
 
-    const handleSelectTemplate = (template) => {
-        appState.step += 1;
-        appState.theme = template.id;
-        appState.title = 'Create, sell or collect digital items.';
-        appState.subtitle =
-            'Unit of data stored on a digital ledger, called a blockchain, that certifies a digital asset to be unique and therefore not interchangeable';
-        appState.logoUrl = 'https://dappify.com/static/media/dappify_full_transparent_background_text.20b4986f.svg';
-        appState.color = '#8364E2';
-        appState.colorSecondary = '#403F83';
-        appState.colorMenu = '#8364E2';
-        appState.textColor = template.id.includes('DARK') ? '#ffffff' : '#666666';
-        appState.exploreSideMenu = true;
-        appState.feature = {
-            create: false,
-            stats: false,
-            news: false,
-            auction: false,
-            bids: false,
-            comments: false,
-            social: false
-        };
-        appState.categories = [
-            { name: 'Art', fontAwesomeIcon: 'fa-image', resource: 'art' },
-            { name: 'Music', fontAwesomeIcon: 'fa-music', resource: 'music' },
-            { name: 'Domain Names', fontAwesomeIcon: 'fa-search', resource: 'domains' },
-            { name: 'Virtual Worls', fontAwesomeIcon: 'fa-globe', resource: 'worls' },
-            { name: 'Trading Cards', fontAwesomeIcon: 'fa-vcard', resource: 'cards' },
-            { name: 'Collectibles', fontAwesomeIcon: 'fa-th', resource: 'collectibles' }
-        ];
-        appState.images = template.images;
-        appState.social = {
-            facebook: null,
-            twitter: null,
-            instagram: null,
-            pinterest: null,
-            email: null,
-            telegram: null
-        };
-        dispatch({ type: UPDATE_APP, configuration: appState });
-    };
+const TemplateView = ({ onTemplateSelect }) => {
+	const [templates, setTemplates] = useState([]);
+	const [selectedTemplate, setSelectedTemplate] = useState({});
 
-    return <div></div>;
+	const projectInfo = `
+    Start from ready made templates using our no code tools. From ready made template projects to custom made drag and drop editor, select the tool that fits your needs.
+    `;
+
+	useEffect(() => {
+		const loadTemplates = debounce(async () => {
+			const results = await Template.listTemplates({});
+			setTemplates(results);
+		}, 500);
+		loadTemplates();
+	}, []);
+
+	useEffect(() => {
+		if (selectedTemplate) {
+			onTemplateSelect(selectedTemplate);
+		}
+	}, [selectedTemplate]);
+
+	const blankTemplate = {
+		id: EDITOR.BUILDER,
+		editor: EDITOR.BUILDER
+	};
+
+	const renderTemplates = () => {
+		const list = [
+			<Grid item xs={12} sm={6} md={4} key={"custom"}>
+				<Paper
+					elevation={10}
+					sx={{
+						p: 2,
+						background: `url(https://i.ibb.co/B3MKBxj/Screenshot-2022-09-07-at-09-55-27.png)`,
+						backgroundSize: "cover",
+						backgroundRepeat: "no-repeat",
+						height: "175px",
+						position: "relative"
+					}}
+				>
+					<Grid
+						container
+						spacing={1}
+						sx={{ position: "absolute", bottom: "10px" }}
+					>
+						<Grid item xs={12} sx={{ px: 4 }}>
+							<Button
+								variant="contained"
+								color={
+									selectedTemplate?.id === blankTemplate.id
+										? "secondary"
+										: "primary"
+								}
+								fullWidth
+								onClick={() =>
+									setSelectedTemplate(blankTemplate)
+								}
+							>
+								Blank Project
+							</Button>
+						</Grid>
+					</Grid>
+				</Paper>
+			</Grid>
+		];
+
+		templates.forEach((template) => {
+			list.push(
+				<Grid item xs={12} sm={6} md={4} key={template?.schema?.id}>
+					<Paper
+						elevation={10}
+						sx={{
+							p: 2,
+							background: `url(${template?.schema?.image})`,
+							backgroundSize: "cover",
+							backgroundRepeat: "no-repeat",
+							height: "175px",
+							position: "relative"
+						}}
+					>
+						<Grid
+							container
+							spacing={1}
+							sx={{ position: "absolute", bottom: "10px" }}
+						>
+							<Grid item xs={12} sx={{ px: 4 }}>
+								<Button
+									variant="contained"
+									color={
+										selectedTemplate?.id ===
+										template.schema.id
+											? "secondary"
+											: "primary"
+									}
+									fullWidth
+									data-cy={`${template?.schema?.name} Install Button`}
+									onClick={() =>
+										setSelectedTemplate(template.schema)
+									}
+								>
+									{template?.schema?.name}
+								</Button>
+							</Grid>
+						</Grid>
+					</Paper>
+				</Grid>
+			);
+		});
+
+		return list;
+	};
+
+	return (
+		<Grid
+			container
+			direction="row"
+			justifyContent="left"
+			alignItems="left"
+			spacing={2}
+		>
+			<Grid item xs={12}>
+				<Typography variant="h1" fontWeight="regular" sx={{ mb: 5 }}>
+					Pick your
+					<Tooltip title={projectInfo}>
+						<span className="project-keyword">
+							template
+							<HelpOutlineIcon />
+						</span>
+					</Tooltip>
+				</Typography>
+			</Grid>
+			<Grid container spacing={1}>
+				{renderTemplates()}
+			</Grid>
+		</Grid>
+	);
 };
 
-export default Template;
+export default TemplateView;

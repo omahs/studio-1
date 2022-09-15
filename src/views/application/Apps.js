@@ -522,7 +522,6 @@ export default function Examples() {
 		selectedApp.set("owner", user.get("ethAddress"));
 		selectedApp.save().then(
 			(updatedApp) => {
-				console.log(updatedApp);
 				setSelectedApp({ id: "" });
 				setSelectedApp(updatedApp);
 				dispatch({

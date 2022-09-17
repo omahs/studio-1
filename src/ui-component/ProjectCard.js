@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Paper, Grid, Typography, Button } from "@mui/material";
+import { Paper, Grid, Typography, Button, Chip } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { UPDATE_APP } from "store/actions";
 import moment from "moment";
 import { utils } from "react-dappify";
-import { getUrl } from "utils/url";
+import { getUrl, getEditorUrl, isEditorBuilder } from "utils/url";
 
 const { getImage } = utils.image;
+const chipPosition = { position: "absolute", right: 20, top: 20 };
 
 const ProjectCard = ({ project = {} }) => {
 	const navigate = useNavigate();
@@ -16,13 +17,29 @@ const ProjectCard = ({ project = {} }) => {
 
 	const selectProject = (appConfig) => {
 		dispatch({ type: UPDATE_APP, configuration: appConfig });
-		navigate(`/studio/overview`);
+		navigate(getEditorUrl(appConfig));
 	};
 
 	const fontColor =
 		project.config.theme?.palette?.mode !== "dark" ? "#000" : "#fff";
 	const backgroundColor =
 		project.config.theme?.palette?.mode === "dark" ? "#222" : "#fff";
+
+	const editorLabel = isEditorBuilder(project.config) ? (
+		<Chip
+			label="Drag & Drop Editor"
+			size="small"
+			color="primary"
+			sx={chipPosition}
+		/>
+	) : (
+		<Chip
+			label="Legacy Editor"
+			size="small"
+			color="secondary"
+			sx={chipPosition}
+		/>
+	);
 
 	return (
 		<Paper
@@ -45,7 +62,7 @@ const ProjectCard = ({ project = {} }) => {
 		>
 			<Grid container spacing={0.3}>
 				<Grid item xs={12} sx={{ height: 54 }}>
-					{/* <QRCode size="128" value={getAppUrl(app.id)} /> */}
+					{editorLabel}
 					<img
 						src={getImage(project.config.logo)}
 						alt="banner"

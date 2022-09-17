@@ -40,7 +40,6 @@ const NewPage = () => {
 	};
 
 	const handleStepThree = (template) => {
-		console.log(template);
 		setCantContinue(!template.id);
 		if (template?.id) appState.template[template.id] = template;
 	};

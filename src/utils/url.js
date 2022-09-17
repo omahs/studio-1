@@ -16,14 +16,19 @@ export const getEditorUrl = (appState) => {
 	let url = "/studio/templates";
 	try {
 		// Has templates
-		const templates = Object.keys(appState.template);
-		if (
-			templates.length > 0 &&
-			appState.template[templates[0]].editor === EDITOR.BUILDER
-		)
+		if (isEditorBuilder(appState)) {
 			url = `/builder/${appState?.appId}`;
+		}
 	} catch (e) {
 		console.log("Cant resolve editor, defaulting to studio");
 	}
 	return url;
+};
+
+export const isEditorBuilder = (appState) => {
+	const templates = Object.keys(appState.template);
+	return (
+		templates.length > 0 &&
+		appState.template[templates[0]].editor === EDITOR.BUILDER
+	);
 };

@@ -8,23 +8,13 @@ import {
 	Tab,
 	Paper,
 	Grid,
-	Typography,
-	FormGroup,
-	FormControlLabel,
-	Checkbox,
-	Switch,
-	FormControl,
-	InputLabel,
-	Select,
-	MenuItem
+	Typography
 } from "@mui/material";
 import MainCard from "ui-component/cards/MainCard";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_APP, SNACKBAR_OPEN } from "store/actions";
-import { Template, Project, DappifyContext } from "react-dappify";
-
+import { Template, DappifyContext } from "react-dappify";
 import SearchIcon from "@mui/icons-material/Search";
-
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import TokenIcon from "@mui/icons-material/Token";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
@@ -35,16 +25,14 @@ import isEmpty from "lodash/isEmpty";
 import AddDialog from "views/marketplace/AddDialog";
 import PaidIcon from "@mui/icons-material/Paid";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
+import { saveProject } from "utils/project";
 
 const Options = ({ id, readOnly = false }) => {
-	const { user } = useContext(DappifyContext);
+	const { user, Provider } = useContext(DappifyContext);
 	const dispatch = useDispatch();
 	const appState = useSelector((state) => state.app);
-	const [page, setPage] = useState(0);
-	const [limit, setLimit] = useState(10);
 	const [search, setSearch] = useState();
 	const [templates, setTemplates] = useState([]);
-	const [total, setTotal] = useState(0);
 	const [showAddDialog, setShowAddDialog] = useState(false);
 	const [lastTemplate, setLastTemplate] = useState({});
 
@@ -84,7 +72,6 @@ const Options = ({ id, readOnly = false }) => {
 		const filters = prepareFilters();
 		let results = await Template.listTemplates({ filters });
 		setTemplates(results);
-		setTotal(results.length);
 	}, 500);
 
 	useEffect(() => {
@@ -98,15 +85,18 @@ const Options = ({ id, readOnly = false }) => {
 				usedList = myTemplates;
 			}
 			setTemplates(usedList);
-			setTotal(usedList.length);
 		} else {
 			loadTemplates();
 		}
-	}, [appState.template, page, limit, search, value]);
+	}, [appState.template, search, value]);
 
 	const publishChanges = async (newState) => {
 		try {
-			await Project.publishChanges(newState, user);
+			await saveProject({
+				project: newState,
+				provider: Provider,
+				user: user
+			});
 			dispatch({
 				type: SNACKBAR_OPEN,
 				open: true,

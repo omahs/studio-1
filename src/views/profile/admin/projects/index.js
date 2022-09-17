@@ -1,12 +1,10 @@
 import { useEffect, useContext, useState } from "react";
 import { Typography, Grid, Container, Box, Paper } from "@mui/material";
-import DetailsApp from "views/application/DetailsApp";
+import ProjectCard from "ui-component/ProjectCard";
 import { useTheme } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import { DappifyContext, Project } from "react-dappify";
-import debounce from "lodash/debounce";
-import isEmpty from "lodash/isEmpty";
 
 const Projects = () => {
 	const context = useContext(DappifyContext);
@@ -33,25 +31,9 @@ const Projects = () => {
 		}
 	};
 
-	const saveUser = debounce(async (setterFn) => {
-		try {
-			await user.save();
-		} catch (e) {
-			// console.log(e.message);
-			setterFn(e.message);
-		}
-	}, 300);
-
 	useEffect(() => {
 		loadApps();
 	}, [isAuthenticated]);
-
-	const [profile, setProfile] = useState({});
-	useEffect(() => {
-		const existingProfile = user?.get("profile");
-		const initProfile = !isEmpty(existingProfile) ? existingProfile : {};
-		setProfile(initProfile);
-	}, [user]);
 
 	const createNew = isAuthenticated && (
 		<Grid item xs={12} sm={6} md={4} key={0}>
@@ -99,7 +81,7 @@ const Projects = () => {
 			list.push(
 				<Grid item xs={12} sm={6} md={4} key={app.id}>
 					<Box>
-						<DetailsApp project={app} />
+						<ProjectCard project={app} />
 					</Box>
 				</Grid>
 			);

@@ -1,15 +1,12 @@
-import { useEffect, useState, useContext } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import {
-	Paper,
 	Grid,
 	Typography,
-	Input,
 	FormGroup,
 	FormControlLabel,
 	Switch,
-	Checkbox,
 	TextField,
 	Button,
 	Alert,
@@ -20,15 +17,10 @@ import {
 import MainCard from "ui-component/cards/MainCard";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_APP } from "store/actions";
-import { SNACKBAR_OPEN } from "store/actions";
 import isEmpty from "lodash/isEmpty";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
-import { DappifyContext, constants, Property, utils } from "react-dappify";
 import { getUrl } from "utils/url";
-
-const { debounce } = utils.timer;
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -152,18 +144,6 @@ const TemplatesItemPage = () => {
 		});
 		return list;
 	};
-
-	const getSmartContract = () => {
-		return appState.template[id].contract[appState.chainId];
-	};
-
-	const getSmartContractExplorerUrl = () => {
-		return `${
-			constants.NETWORKS[appState.chainId].blockExplorerUrls[0]
-		}/address/${getSmartContract()}`;
-	};
-
-	const isSupported = () => !isEmpty(getSmartContract());
 
 	const renderLocales = () => {
 		const list = [];

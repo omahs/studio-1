@@ -1,10 +1,8 @@
 // material-ui
-import { Paper, Container, Grid, Typography, Box } from "@mui/material";
+import { Paper, Container, Grid, Typography } from "@mui/material";
 // project imports
 import { gridSpacing } from "store/constant";
 // assets
-import background from "assets/images/landing/bg.svg";
-
 import template1 from "assets/images/template1.png";
 import landingVideo from "assets/videos/Build.mp4";
 

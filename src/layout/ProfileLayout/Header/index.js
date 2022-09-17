@@ -1,26 +1,27 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, useContext } from "react-redux";
 
 // material-ui
 import { useTheme } from "@mui/material/styles";
 import { Box, Button, Tooltip } from "@mui/material";
 import AppSection from "common/Logo";
-import { useMoralis } from "react-moralis";
 import { SNACKBAR_OPEN, CLEAR_APP } from "store/actions";
 // assets
 import AccountBalanceWalletTwoToneIcon from "@mui/icons-material/AccountBalanceWalletTwoTone";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Project } from "react-dappify";
+import { DappifyContext } from "react-dappify";
 import { getUrl } from "utils/url";
 import isEmpty from "lodash/isEmpty";
+import { saveProject } from "utils/project";
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
 const Header = ({ handleLeftDrawerToggle }) => {
 	const theme = useTheme();
 	const appConfiguration = useSelector((state) => state.app);
-	const { user, isAuthenticated, logout, authenticate } = useMoralis();
+	const { user, isAuthenticated, logout, authenticate, Provider } =
+		useContext(DappifyContext);
 	const [hasChanges, setHasChanges] = useState(false);
 	const dispatch = useDispatch();
 
@@ -30,7 +31,11 @@ const Header = ({ handleLeftDrawerToggle }) => {
 
 	const publishChanges = async () => {
 		try {
-			await Project.publishChanges(appConfiguration, user);
+			await saveProject({
+				project: appConfiguration,
+				provider: Provider,
+				user: user
+			});
 			dispatch({
 				type: SNACKBAR_OPEN,
 				open: true,

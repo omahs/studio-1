@@ -53,7 +53,8 @@ const ProjectCard = ({ project = {} }) => {
 				color: fontColor,
 				backgroundRepeat: "no-repeat",
 				backgroundSize: "cover",
-				cursor: "pointer"
+				cursor: "pointer",
+				height: 210
 			}}
 			onClick={() => selectProject(project.config)}
 			onMouseOver={() => setSelected(project.config.subdomain)}
@@ -73,7 +74,7 @@ const ProjectCard = ({ project = {} }) => {
 						}}
 					/>
 				</Grid>
-				<Grid item sx={{ mb: 3 }} xs={12}>
+				<Grid item sx={{ mb: 0 }} xs={12}>
 					<Typography variant="h3" sx={{ color: fontColor }}>
 						{project.config.name}
 					</Typography>
@@ -85,6 +86,21 @@ const ProjectCard = ({ project = {} }) => {
 							{getUrl(project.config.subdomain)}
 						</Button>
 					</Typography>
+					<Grid item sx={{ height: 20, mb: 2 }} xs={12}>
+						{project?.hash && (
+							<Typography variant="h6" fontSize="0.7em">
+								<Button
+									sx={{
+										textTransform: "none",
+										fontSize: "1em"
+									}}
+									href={project?.url}
+								>
+									{`ipfs/${project?.hash}`}
+								</Button>
+							</Typography>
+						)}
+					</Grid>
 				</Grid>
 				<Typography fontSize="1em">
 					Last updated {moment(project.updatedAt).format("lll")}

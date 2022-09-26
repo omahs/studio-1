@@ -75,21 +75,6 @@ const AppBar = ({ ...others }) => {
 		setDrawerToggle(open);
 	};
 
-	const myDappsButton = (location.pathname === "/" ||
-		location.pathname === "/templates") && (
-		<Button
-			id="go-to-projects"
-			disableElevation
-			component={RouterLink}
-			variant="contained"
-			to="/profile/admin"
-			size="small"
-			color="secondary"
-		>
-			Sign in to the Console
-		</Button>
-	);
-
 	const renderAddress = () => {
 		const address = user.get("ethAddress");
 		return `${address.substring(0, 4)}...${address.substring(
@@ -103,6 +88,7 @@ const AppBar = ({ ...others }) => {
 			disableElevation
 			variant="contained"
 			color="primary"
+			component="span"
 			size="large"
 			id="disconnect-wallet-btn"
 			onClick={logout}
@@ -116,6 +102,7 @@ const AppBar = ({ ...others }) => {
 			disableElevation
 			variant="contained"
 			color="primary"
+			component="span"
 			size="large"
 			id="connect-wallet-btn"
 			onClick={() => setShowWalletDialog(true)}

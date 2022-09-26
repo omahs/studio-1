@@ -1,39 +1,10 @@
 import { useEffect, useContext, useState } from "react";
-import {
-	TextField,
-	Typography,
-	Grid,
-	Container,
-	Box,
-	Paper,
-	Avatar,
-	Button,
-	InputAdornment,
-	FormControl,
-	Collapse,
-	InputLabel,
-	Select,
-	MenuItem,
-	Alert
-} from "@mui/material";
-import { gridSpacing } from "store/constant";
-import DetailsApp from "views/application/DetailsApp";
+import { Typography, Grid, Container, Box, Paper } from "@mui/material";
+import ProjectCard from "ui-component/ProjectCard";
 import { useTheme } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import { DappifyContext, Project } from "react-dappify";
-import emptyList from "assets/images/emptylist.png";
-import ProfileDialog from "common/ProfileDialog";
-import debounce from "lodash/debounce";
-import Identicon from "react-identicons";
-import { TwitterPicker } from "react-color";
-import isEmpty from "lodash/isEmpty";
-import { TwitterIcon, TwitterShareButton } from "react-share";
-import { getUrl } from "utils/url";
-import CheckIcon from "@mui/icons-material/Check";
-import { constants } from "react-dappify";
-
-const { NETWORKS, LOGO, MAINNETS, CONTRACTS } = constants;
 
 const Projects = () => {
 	const context = useContext(DappifyContext);
@@ -43,34 +14,26 @@ const Projects = () => {
 	const [projects, setProjects] = useState([]);
 	const [selected, setSelected] = useState();
 
+	const listAll = async () => {
+		const query = new Provider.Query("Project");
+		query.equalTo("owner", user);
+		query.descending("updatedAt");
+		const result = await query.find();
+		const list = result.map((project) => new Project(project));
+		setProjects(list);
+	};
+
 	const loadApps = async () => {
 		if (isAuthenticated) {
-			const list = await Project.listAll(user);
-			setProjects(list);
+			listAll();
 		} else {
 			setProjects([]);
 		}
 	};
 
-	const saveUser = debounce(async (setterFn) => {
-		try {
-			await user.save();
-		} catch (e) {
-			// console.log(e.message);
-			setterFn(e.message);
-		}
-	}, 300);
-
 	useEffect(() => {
 		loadApps();
 	}, [isAuthenticated]);
-
-	const [profile, setProfile] = useState({});
-	useEffect(() => {
-		const existingProfile = user?.get("profile");
-		const initProfile = !isEmpty(existingProfile) ? existingProfile : {};
-		setProfile(initProfile);
-	}, [user]);
 
 	const createNew = isAuthenticated && (
 		<Grid item xs={12} sm={6} md={4} key={0}>
@@ -118,7 +81,7 @@ const Projects = () => {
 			list.push(
 				<Grid item xs={12} sm={6} md={4} key={app.id}>
 					<Box>
-						<DetailsApp project={app} />
+						<ProjectCard project={app} />
 					</Box>
 				</Grid>
 			);

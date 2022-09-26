@@ -1,6 +1,6 @@
 // material-ui
 import { useTheme } from "@mui/material/styles";
-import { Container, Grid, Typography, Box } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 
 // project imports
 import FadeInWhenVisible from "./Animation";
@@ -9,17 +9,8 @@ import Avatar from "ui-component/extended/Avatar";
 import { gridSpacing } from "store/constant";
 
 // assets
-import PaletteTwoToneIcon from "@mui/icons-material/PaletteTwoTone";
-import ReorderTwoToneIcon from "@mui/icons-material/ReorderTwoTone";
-import SpeedTwoToneIcon from "@mui/icons-material/SpeedTwoTone";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import BuildIcon from "@mui/icons-material/Build";
-import LaunchIcon from "@mui/icons-material/Launch";
-import TapAndPlayIcon from "@mui/icons-material/TapAndPlay";
-import MobileFriendlyIcon from "@mui/icons-material/MobileFriendly";
 import PublishIcon from "@mui/icons-material/Publish";
 import SettingsIcon from "@mui/icons-material/Settings";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import AddIcon from "@mui/icons-material/Add";
 
 // =============================|| LANDING - FEATURE PAGE ||============================= //

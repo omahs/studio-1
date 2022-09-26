@@ -1,7 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { TextField, Grid, Button, Typography } from "@mui/material";
-
-import AnimateButton from "ui-component/extended/AnimateButton";
+import { TextField, Grid, Button } from "@mui/material";
 import { saveUser } from "utils/user";
 import { DappifyContext } from "react-dappify";
 import SubCard from "ui-component/cards/SubCard";

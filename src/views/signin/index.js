@@ -8,12 +8,11 @@ import mixpanel from "mixpanel-browser";
 import constants from "constant";
 
 const { AUTH, PROVIDER } = constants;
-
 const destination = "/profile/admin";
 
 const Signin = () => {
 	const navigate = useNavigate();
-	const { Provider, isAuthenticated } = useContext(DappifyContext);
+	const { isAuthenticated, authenticate } = useContext(DappifyContext);
 
 	useEffect(() => {
 		if (isAuthenticated) {
@@ -23,12 +22,12 @@ const Signin = () => {
 
 	const signIn = async (wallet, walletProvider) => {
 		try {
-			const signupUser = await Provider.authenticate(wallet);
+			console.log(wallet);
+			const signupUser = await authenticate(wallet);
 			// Is a new user?
 			const signedEmail = signupUser.get("email");
-			mixpanel.track(signedEmail ? AUTH.SIGN_IN : AUTH.SIGN_UP, {
-				provider: walletProvider
-			});
+			const targetEvent = signedEmail ? AUTH.SIGN_IN : AUTH.SIGN_UP;
+			mixpanel.track(targetEvent, { provider: walletProvider });
 			// Update provider
 			signupUser.set("provider", walletProvider);
 			await signupUser.save();

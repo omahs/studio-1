@@ -10,17 +10,19 @@ import {
 	Slide
 } from "@mui/material";
 import NameField from "views/new/NameField";
-import UseCase from "views/new/UseCase";
 import Blockchain from "views/new/Blockchain";
 import TermsAndConditions from "views/new/TermsAndConditions";
 import Loader from "views/new/Loader";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { UPDATE_APP } from "store/actions";
-import { DappifyContext, defaultConfiguration, Project } from "react-dappify";
+import { DappifyContext, defaultConfiguration } from "react-dappify";
+import Template from "views/new/Template";
+import constants from "constant";
+import { getEditorUrl } from "utils/url";
 
 const NewPage = () => {
-	const { user } = useContext(DappifyContext);
+	const { user, Provider } = useContext(DappifyContext);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const appState = useSelector((state) => state.app);
@@ -37,35 +39,56 @@ const NewPage = () => {
 		appState.chainId = chainId;
 	};
 
-	const handleStepThree = (checked) => {
+	const handleStepThree = (template) => {
+		setCantContinue(!template.id);
+		if (template?.id) appState.template[template.id] = template;
+	};
+
+	const handleStepFour = (checked) => {
 		setCantContinue(!checked);
 	};
 
-	const handleStepFour = (isReady) => {
+	const handleStepFive = (isReady) => {
 		setCantContinue(!isReady);
 	};
 
 	const stepOne = !appState.step && <NameField onChange={handleStepOne} />;
 	const stepTwo = appState.step === 1 && (
 		<Blockchain onChange={handleStepTwo} />
-	); //<UseCase onChange={handleStepTwo}/>;
-	const stepThree = appState.step === 2 && (
-		<TermsAndConditions onChange={handleStepThree} />
 	);
-	const loader = appState.step === 3 && <Loader onChange={handleStepFour} />;
+	const stepThree = appState.step === 2 && (
+		<Template onTemplateSelect={handleStepThree} />
+	);
+	const stepFour = appState.step === 3 && (
+		<TermsAndConditions onChange={handleStepFour} />
+	);
+	const loader = appState.step === 4 && <Loader onChange={handleStepFive} />;
 	const [cantContinue, setCantContinue] = useState(true);
+
+	const createProject = async (appConfiguration, userPointer) => {
+		const Project = Provider.Object.extend("Project");
+		const project = new Project();
+		project.set("config", appConfiguration);
+		project.set("owner", userPointer);
+		project.set("subdomain", appConfiguration.subdomain);
+		const createdProject = await project.save();
+		appConfiguration.appId = createdProject.id;
+		createdProject.set("config", appConfiguration);
+		const savedProject = await createdProject.save();
+		return savedProject;
+	};
 
 	const handleNextStep = async () => {
 		appState.step = appState.step ? appState.step + 1 : 1;
 		setCantContinue(true);
 		dispatch({ type: UPDATE_APP, configuration: appState });
 		if (appState.step === 4) {
-			const savedProject = await Project.create(appState, user);
+			const savedProject = await createProject(appState, user);
 			dispatch({
 				type: UPDATE_APP,
 				configuration: savedProject.get("config")
 			});
-			navigate(`/studio/templates`);
+			navigate(getEditorUrl(appState));
 		}
 	};
 
@@ -80,7 +103,7 @@ const NewPage = () => {
 			className="new-project-container"
 		>
 			<Grid container>
-				<Grid item xs={12} sm={6}>
+				<Grid item xs={12} sm={8}>
 					<Box
 						sx={{ px: 16, py: 8 }}
 						component={Stack}
@@ -117,7 +140,7 @@ const NewPage = () => {
 									>
 										Create a project (Step{" "}
 										{appState.step ? appState.step + 1 : 1}{" "}
-										of 3)
+										of 4)
 									</Typography>
 								</Grid>
 							</Grid>
@@ -126,9 +149,10 @@ const NewPage = () => {
 							{stepOne}
 							{stepTwo}
 							{stepThree}
+							{stepFour}
 							{loader}
 						</Box>
-						<Grid container sx={{ mt: 8 }} justifyContent="center">
+						<Grid container sx={{ mt: 8 }} justifyContent="right">
 							{appState.step > 0 && appState.step < 3 && (
 								<Button
 									color="primary"
@@ -156,7 +180,7 @@ const NewPage = () => {
 								disabled={cantContinue}
 								onClick={handleNextStep}
 							>
-								{appState.step === 2
+								{appState.step === 3
 									? "Create project"
 									: "Continue"}
 							</Button>

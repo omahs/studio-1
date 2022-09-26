@@ -48,7 +48,7 @@ const TermsAndConditions = ({ onChange }) => {
 					</Grid>
 					<Grid item xs={12} sx={{ mt: 2 }}>
 						<Grid container direction="row">
-							<Grid item xs={{ width: 20 }}>
+							<Grid item sx={{ width: 20 }}>
 								<SchoolOutlinedIcon />
 							</Grid>
 							<Grid item sx={{ flex: 1 }}>
@@ -60,7 +60,7 @@ const TermsAndConditions = ({ onChange }) => {
 					</Grid>
 					<Grid item xs={12}>
 						<Grid container direction="row">
-							<Grid item xs={{ width: 20 }}>
+							<Grid item sx={{ width: 20 }}>
 								<GroupsOutlinedIcon />
 							</Grid>
 							<Grid item sx={{ flex: 1 }}>
@@ -73,7 +73,7 @@ const TermsAndConditions = ({ onChange }) => {
 					</Grid>
 					<Grid item xs={12}>
 						<Grid container direction="row">
-							<Grid item xs={{ width: 20 }}>
+							<Grid item sx={{ width: 20 }}>
 								<CampaignOutlinedIcon />
 							</Grid>
 							<Grid item sx={{ flex: 1 }}>

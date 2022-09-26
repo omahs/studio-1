@@ -16,16 +16,11 @@ import {
 // project imports
 import { drawerWidth } from "store/constant";
 import Sidebar from "layout/ProfileLayout/Sidebar";
-import { SET_MENU, UPDATE_APP } from "store/actions";
-import { DappifyContext, supportedWallets } from "react-dappify";
-import { useMoralis } from "react-moralis";
-
+import { SET_MENU } from "store/actions";
+import { DappifyContext } from "react-dappify";
 import AccountBalanceWalletTwoToneIcon from "@mui/icons-material/AccountBalanceWalletTwoTone";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Logo from "common/Logo";
-
-// assets
-import { IconChevronRight } from "@tabler/icons";
 
 // styles
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(

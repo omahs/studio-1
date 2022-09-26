@@ -1,72 +1,19 @@
-import { useEffect, useState } from "react";
 // material-ui
 import { Typography } from "@mui/material";
-import { useSelector } from "react-redux";
 
 // project imports
 import NavGroup from "./NavGroup";
-import menuItem from "menu-items";
-import { isEmpty } from "lodash";
-import {
-	IconBrandCodesandbox,
-	IconBrandGoogleAnalytics,
-	IconFolders,
-	IconBuildingStore,
-	IconUserCircle,
-	IconMilitaryAward
-} from "@tabler/icons";
-
-// // assets
-// import {
-//     IconDashboard,
-//     IconDeviceAnalytics,
-//     IconCurrencyBitcoin,
-//     IconShoppingCart,
-//     IconAd,
-//     IconNotes,
-//     IconSquarePlus,
-//     IconList,
-//     IconMessage2,
-//     IconRecycle,
-//     IconUserCheck,
-//     IconBellRinging,
-//     IconSend,
-//     IconClock,
-//     IconHistory,
-//     IconBrandGoogleAnalytics,
-//     IconChartPie,
-//     IconChartBubble,
-//     IconPalette,
-//     IconPaint,
-//     IconLayout,
-//     IconEditCircle,
-//     IconQrcode,
-//     IconUpload,
-//     IconEye
-// } from '@tabler/icons';
+import { IconFolders, IconUserCircle } from "@tabler/icons";
 
 // ==============================|| SIDEBAR MENU LIST ||============================== //
 
 const MenuList = () => {
-	const appState = useSelector((state) => state.app);
-	// const [items,] = useState(menuItem.items);
-	const [dynamicItems, setDynamicItems] = useState([]);
-	// const [templateList] = useState(Object.keys(appState.template));
-
 	const items = [
 		{
 			id: "projects",
 			title: "Projects",
 			type: "group",
 			children: [
-				// {
-				//     id: 'overview',
-				//     title: "Overview",
-				//     type: 'item',
-				//     url: 'overview',
-				//     icon: IconBrandGoogleAnalytics,
-				//     breadcrumbs: false
-				// },
 				{
 					id: "dapps",
 					title: "My dapps",
@@ -75,14 +22,6 @@ const MenuList = () => {
 					icon: IconFolders,
 					breadcrumbs: false
 				}
-				// {
-				//     id: 'default',
-				//     title: "Template Marketplace",
-				//     type: 'item',
-				//     url: 'overview',
-				//     icon: IconBuildingStore,
-				//     breadcrumbs: false
-				// }
 			]
 		},
 		{
@@ -98,14 +37,6 @@ const MenuList = () => {
 					icon: IconUserCircle,
 					breadcrumbs: false
 				}
-				// {
-				//     id: 'achievements',
-				//     title: "Achievements",
-				//     type: 'item',
-				//     url: 'achievements',
-				//     icon: IconMilitaryAward,
-				//     breadcrumbs: false
-				// }
 			]
 		}
 	];

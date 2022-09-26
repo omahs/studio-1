@@ -21,7 +21,7 @@ import mixpanel from "mixpanel-browser";
 // ==============================|| APP ||============================== //
 const App = () => {
 	useEffect(() => {
-		mixpanel.init("237ebb3e3f5930e0618b6138c96bfac6", { debug: true });
+		mixpanel.init(process.env.REACT_APP_MIXPANEL_ID, { debug: true });
 	}, []);
 
 	const customization = useSelector((state) => state.customization);

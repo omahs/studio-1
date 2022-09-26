@@ -33,12 +33,6 @@ const Signin = () => {
 			// Update provider
 			signupUser.set("provider", walletProvider);
 			await signupUser.save();
-			// Redirect (need to fix reloading issue since auth state does not change unless refresh)
-			setTimeout(() => {
-				console.log("Reloading");
-				window.location.reload(true);
-				setLoading(false);
-			}, 2000);
 		} catch (e) {
 			console.log(e);
 			setLoading(false);

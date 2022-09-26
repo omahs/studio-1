@@ -13,6 +13,7 @@ const destination = "/profile/admin";
 const Signin = () => {
 	const navigate = useNavigate();
 	const { isAuthenticated, authenticate } = useContext(DappifyContext);
+	const [isLoading, setLoading] = useState(false);
 
 	useEffect(() => {
 		if (isAuthenticated) {
@@ -22,6 +23,7 @@ const Signin = () => {
 
 	const signIn = async (wallet, walletProvider) => {
 		try {
+			setLoading(true);
 			console.log(wallet);
 			const signupUser = await authenticate(wallet);
 			// Is a new user?
@@ -31,10 +33,9 @@ const Signin = () => {
 			// Update provider
 			signupUser.set("provider", walletProvider);
 			await signupUser.save();
-			// Redirect (need to fix reloading issue since auth state does not change unless refresh)
-			window.location.reload(true);
 		} catch (e) {
 			console.log(e);
+			setLoading(false);
 		} finally {
 		}
 	};
@@ -45,6 +46,7 @@ const Signin = () => {
 				<Tooltip title={PROVIDER.MAGIC_LINK}>
 					<Button
 						id="login-magic-btn"
+						disabled={isLoading}
 						elevation={15}
 						sx={{ p: 3, borderRadius: 4 }}
 						variant="contained"

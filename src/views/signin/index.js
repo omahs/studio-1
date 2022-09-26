@@ -32,7 +32,7 @@ const Signin = () => {
 			signupUser.set("provider", walletProvider);
 			await signupUser.save();
 			// Redirect (need to fix reloading issue since auth state does not change unless refresh)
-			window.location.reload(true);
+			window.location.replace("/profile/admin");
 		} catch (e) {
 			console.log(e);
 		} finally {

@@ -24,7 +24,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-react-studio-dappify-
       - name: Install dependencies
-        run: npm i --force
+        run: npm i --legacy-peer-deps
       - name: Build
         env: 
           SKIP_PREFLIGHT_CHECK: true

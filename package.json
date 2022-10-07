@@ -101,12 +101,44 @@
         "web3modal": "^1.9.5",
         "yup": "^0.32.9"
     },
+    "jest": {
+        "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js",
+        "moduleDirectories": ["node_modules", "src"],
+        "coverageReporters": [
+            "json",
+            "text",
+            "html",
+            "lcov"
+        ],
+        "collectCoverageFrom": [
+            "src/**/*.{js,jsx,ts,tsx}",
+            "!src/**/*/*.d.ts",
+            "!src/**/*/Loadable.{js,jsx,ts,tsx}",
+            "!src/**/*/types.ts",
+            "!src/**/store.ts",
+            "!src/index.tsx",
+            "!src/serviceWorker.ts",
+            "!<rootDir>/node_modules/",
+            "!**/templates/**",
+            "!**/template/**",
+            "!src/__tests__/**"
+        ],
+        "coverageThreshold": {
+            "global": {
+                "branches": 0.1,
+                "functions": 0.1,
+                "lines": 0.1,
+                "statements": 0.1
+            }
+        }
+    },
     "scripts": {
         "start": "export HTTPS=true&&SSL_CRT_FILE=cert.pem&&SSL_KEY_FILE=key.pem env-cmd -f .env react-scripts start",
         "build": "env-cmd -f .env react-scripts build",
         "start:cli": "react-scripts start",
         "build:cli": "react-scripts build",
-        "test": "cross-env CI=true react-scripts test --collect-coverage",
+        "test": "jest --collectCoverage=true",
+        "coverage": "jest --coverage",
         "eject": "react-scripts eject",
         "prepare": "husky install"
     },
@@ -136,6 +168,7 @@
         "eslint-config-react-app": "^7.0.1",
         "husky": "^8.0.1",
         "lint-staged": ">=10",
+        "nyc": "^15.1.0",
         "prettier": "^2.7.1"
     },
     "lint-staged": {

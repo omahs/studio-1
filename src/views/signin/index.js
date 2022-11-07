@@ -3,17 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { Box, Grid, Typography, Button, Tooltip, Paper } from "@mui/material";
 import Logo from "common/Logo";
 import { DappifyContext, supportedWallets } from "react-dappify";
-import FormDialog from "views/signin/FormDialog";
 import mixpanel from "mixpanel-browser";
 import constants from "constant";
 
-const { AUTH, PROVIDER } = constants;
+const { AUTH } = constants;
 const destination = "/profile/admin";
 
 const Signin = () => {
 	const navigate = useNavigate();
 	const { isAuthenticated, authenticate } = useContext(DappifyContext);
-	const [isLoading, setLoading] = useState(false);
 
 	useEffect(() => {
 		if (isAuthenticated) {
@@ -23,7 +21,6 @@ const Signin = () => {
 
 	const signIn = async (wallet, walletProvider) => {
 		try {
-			setLoading(true);
 			console.log(wallet);
 			const signupUser = await authenticate(wallet);
 			// Is a new user?
@@ -35,39 +32,12 @@ const Signin = () => {
 			await signupUser.save();
 		} catch (e) {
 			console.log(e);
-			setLoading(false);
 		} finally {
 		}
 	};
 
 	const renderSupportedWallets = () => {
-		const list = [
-			<Grid item xs={6} md={3} key={"magic"}>
-				<Tooltip title={PROVIDER.MAGIC_LINK}>
-					<Button
-						id="login-magic-btn"
-						disabled={isLoading}
-						elevation={15}
-						sx={{ p: 3, borderRadius: 4 }}
-						variant="contained"
-						color="secondary"
-						fullWidth
-						onClick={onOpenEmailForm}
-					>
-						<Grid container direction="column" alignItems="left">
-							<Grid item>
-								<img
-									src="https://remotive.com/company/97407/logo-large"
-									alt="Sign in with Magic"
-									height={64}
-								/>
-							</Grid>
-							<Grid item>Email Magic Link</Grid>
-						</Grid>
-					</Button>
-				</Tooltip>
-			</Grid>
-		];
+		const list = [];
 		supportedWallets.forEach((wallet) => {
 			list.push(
 				<Grid item xs={6} md={3} key={wallet.name}>
@@ -105,27 +75,6 @@ const Signin = () => {
 		return list;
 	};
 
-	const [isOpenEmailForm, setOpenEmailForm] = useState(false);
-
-	const onSubmitEmailForm = async (emailAddress) => {
-		setOpenEmailForm(false);
-		// Magic Link Invoke
-		await signIn(
-			{
-				signingMessage: "Dappify wants to connect!",
-				provider: AUTH.MAGIC_LINK,
-				email: emailAddress,
-				apiKey: process.env.REACT_APP_MAGIC,
-				network: "ropsten"
-			},
-			AUTH.MAGIC_LINK
-		);
-	};
-
-	const onCloseEmailForm = () => setOpenEmailForm(false);
-
-	const onOpenEmailForm = () => setOpenEmailForm(true);
-
 	return (
 		<Grid
 			container
@@ -147,11 +96,6 @@ const Signin = () => {
 				}}
 			>
 				<Grid container spacing={2}>
-					<FormDialog
-						isOpen={isOpenEmailForm}
-						onSubmit={onSubmitEmailForm}
-						onClose={onCloseEmailForm}
-					/>
 					<Grid item xs={12} sx={{ justifyContent: "center" }}>
 						<Box sx={{ justifyContent: "center" }}>
 							<Logo />

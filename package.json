@@ -62,7 +62,7 @@
         "react-compound-timer": "^1.2.0",
         "react-copy-to-clipboard": "^5.0.3",
         "react-currency-format": "^1.0.0",
-        "react-dappify": "^1.0.31",
+        "react-dappify": "^1.0.41",
         "react-device-detect": "^1.17.0",
         "react-dom": "^18.2.0",
         "react-draft-wysiwyg": "^1.14.6",
@@ -101,12 +101,48 @@
         "web3modal": "^1.9.5",
         "yup": "^0.32.9"
     },
+    "jest": {
+        "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js",
+        "moduleDirectories": [
+            "node_modules",
+            "src"
+        ],
+        "coverageReporters": [
+            "json",
+            "text",
+            "html",
+            "lcov"
+        ],
+        "collectCoverageFrom": [
+            "src/**/*.{js,jsx,ts,tsx}",
+            "!src/**/*/*.d.ts",
+            "!src/**/*/Loadable.{js,jsx,ts,tsx}",
+            "!src/**/*/types.ts",
+            "!src/**/store.ts",
+            "!src/index.tsx",
+            "!src/serviceWorker.ts",
+            "!<rootDir>/node_modules/",
+            "!**/templates/**",
+            "!**/template/**",
+            "!src/__tests__/**",
+            "!src/lib/assets/**"
+        ],
+        "coverageThreshold": {
+            "global": {
+                "branches": 0.1,
+                "functions": 0.1,
+                "lines": 0.1,
+                "statements": 0.1
+            }
+        }
+    },
     "scripts": {
         "start": "export HTTPS=true&&SSL_CRT_FILE=cert.pem&&SSL_KEY_FILE=key.pem env-cmd -f .env react-scripts start",
         "build": "env-cmd -f .env react-scripts build",
         "start:cli": "react-scripts start",
         "build:cli": "react-scripts build",
-        "test": "cross-env CI=true react-scripts test --collect-coverage",
+        "test": "jest --collectCoverage=true",
+        "coverage": "jest --coverage",
         "eject": "react-scripts eject",
         "prepare": "husky install"
     },
@@ -127,7 +163,7 @@
     },
     "devDependencies": {
         "cross-env": "^7.0.3",
-        "dappify-builder": "^0.1.25",
+        "dappify-builder": "^0.1.26",
         "env-cmd": "^10.1.0",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.6",
@@ -136,6 +172,7 @@
         "eslint-config-react-app": "^7.0.1",
         "husky": "^8.0.1",
         "lint-staged": ">=10",
+        "nyc": "^15.1.0",
         "prettier": "^2.7.1"
     },
     "lint-staged": {

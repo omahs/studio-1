@@ -68,7 +68,6 @@ const NewPage = () => {
 	const createProject = async (appConfiguration, userPointer) => {
 		const Project = Provider.Object.extend("Project");
 		const project = new Project();
-		project.set("config", appConfiguration);
 		project.set("owner", userPointer);
 		project.set("subdomain", appConfiguration.subdomain);
 		const createdProject = await project.save();

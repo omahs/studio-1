@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 // project imports
 import { useContext, useEffect } from "react";
-import { DappifyContext } from "react-dappify";
+import { useMoralis } from "react-moralis";
 
 // ==============================|| AUTH GUARD ||============================== //
 
@@ -13,7 +13,7 @@ import { DappifyContext } from "react-dappify";
  * @param {PropTypes.node} children children element/node
  */
 const AuthGuard = ({ children }) => {
-	const { isAuthenticated } = useContext(DappifyContext);
+	const { isAuthenticated } = useMoralis();
 	const appState = useSelector((state) => state.app);
 	// const { user, isAuthenticated } = useMoralis();
 	// const { isLoggedIn } = useAuth();

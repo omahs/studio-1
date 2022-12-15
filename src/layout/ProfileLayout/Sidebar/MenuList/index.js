@@ -24,21 +24,21 @@ const MenuList = () => {
 				}
 			]
 		},
-		{
-			id: "account",
-			title: "Account",
-			type: "group",
-			children: [
-				{
-					id: "profile",
-					title: "Profile",
-					type: "item",
-					url: "admin",
-					icon: IconUserCircle,
-					breadcrumbs: false
-				}
-			]
-		}
+		// {
+		// 	id: "account",
+		// 	title: "Account",
+		// 	type: "group",
+		// 	children: [
+		// 		{
+		// 			id: "profile",
+		// 			title: "Profile",
+		// 			type: "item",
+		// 			url: "admin",
+		// 			icon: IconUserCircle,
+		// 			breadcrumbs: false
+		// 		}
+		// 	]
+		// }
 	];
 
 	const renderItems = () =>

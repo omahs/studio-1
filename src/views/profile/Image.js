@@ -1,12 +1,12 @@
-import { useEffect, useState, useContext } from "react";
-import { DappifyContext } from "react-dappify";
+import { useEffect, useState } from "react";
+import { useMoralis } from "react-moralis";
 
 // assets
 import Identicon from "react-identicons";
 import isEmpty from "lodash/isEmpty";
 
 const Image = ({ width = 100 }) => {
-	const { user } = useContext(DappifyContext);
+	const { user } = useMoralis();
 	const [profile, setProfile] = useState({});
 
 	useEffect(() => {

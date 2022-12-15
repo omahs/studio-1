@@ -19,6 +19,7 @@ import { Project } from "react-dappify";
 import EditIcon from "@mui/icons-material/Edit";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { getUrl } from "utils/url";
+import { useMoralis } from "react-moralis";
 
 const NameField = ({ onChange }) => {
 	const theme = useTheme();
@@ -27,6 +28,7 @@ const NameField = ({ onChange }) => {
 	const [appSubdomain, setAppSubdomain] = useState(appState.subdomain);
 	const [error, setError] = useState();
 	const [showEditor, setShowEditor] = useState(false);
+	const { Moralis } = useMoralis();
 
 	const generateSubdomain = async (name) => {
 		setError();
@@ -46,7 +48,9 @@ const NameField = ({ onChange }) => {
 			return;
 		}
 		const prefix = name.replace(/\s/g, "").toLowerCase();
-		const found = await Project.exists(prefix);
+		const query = new Moralis.Query('Project')
+		query.equalTo('subdomain', prefix.toLocaleLowerCase())
+		const found = await query.first()
 		setError(
 			found
 				? "Project subdomain taken, please select a different subdomain"

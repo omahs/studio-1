@@ -10,7 +10,7 @@ import { SNACKBAR_OPEN, CLEAR_APP } from "store/actions";
 // assets
 import AccountBalanceWalletTwoToneIcon from "@mui/icons-material/AccountBalanceWalletTwoTone";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { DappifyContext } from "react-dappify";
+import { useMoralis } from "react-moralis";
 import { getUrl } from "utils/url";
 import isEmpty from "lodash/isEmpty";
 import { saveProject } from "utils/project";
@@ -20,8 +20,8 @@ import { saveProject } from "utils/project";
 const Header = ({ handleLeftDrawerToggle }) => {
 	const theme = useTheme();
 	const appConfiguration = useSelector((state) => state.app);
-	const { user, isAuthenticated, logout, authenticate, Provider } =
-		useContext(DappifyContext);
+	const { user, isAuthenticated, logout, authenticate, Moralis } =
+		useMoralis();
 	const [hasChanges, setHasChanges] = useState(false);
 	const dispatch = useDispatch();
 
@@ -33,7 +33,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
 		try {
 			await saveProject({
 				project: appConfiguration,
-				provider: Provider,
+				provider: Moralis,
 				user: user
 			});
 			dispatch({

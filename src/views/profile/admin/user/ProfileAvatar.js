@@ -12,7 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AnimateButton from "ui-component/extended/AnimateButton";
 import Identicon from "react-identicons";
 import isEmpty from "lodash/isEmpty";
-import { DappifyContext } from "react-dappify";
+import { useMoralis } from "react-moralis";
 import { saveUser } from "utils/user";
 import { SNACKBAR_OPEN } from "store/actions";
 import constants from "constant";
@@ -27,7 +27,7 @@ const ProfileAvatar = ({
 	isLink,
 	index
 }) => {
-	const { Provider, user } = useContext(DappifyContext);
+	const { Moralis, user } = useMoralis();
 	const dispatch = useDispatch();
 	const [isLoading, setLoading] = useState(false);
 	const [profile, setProfile] = useState({});
@@ -57,7 +57,7 @@ const ProfileAvatar = ({
 		setLoading(true);
 		try {
 			const selectedFile = e.target.files[0];
-			const providerFile = new Provider.File(
+			const providerFile = new Moralis.File(
 				selectedFile.name,
 				selectedFile
 			);

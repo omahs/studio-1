@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 
 // assets
-import { DappifyContext } from "react-dappify";
+import { useMoralis } from "react-moralis";
 import { TwitterIcon, TwitterShareButton } from "react-share";
 import { getUrl } from "utils/url";
 import { ProgressContext } from "contexts/ProgressContext";
@@ -112,9 +112,8 @@ LinearProgressWithLabel.propTypes = {
 // ==============================|| SIDEBAR MENU Card ||============================== //
 
 const MenuCard = () => {
-	const context = useContext(DappifyContext);
 	const { progress } = useContext(ProgressContext);
-	const { user } = context;
+	const { user } = useMoralis();
 
 	return (
 		<CardStyle>

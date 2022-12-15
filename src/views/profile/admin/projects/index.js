@@ -1,21 +1,21 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useState } from "react";
 import { Typography, Grid, Container, Box, Paper } from "@mui/material";
 import ProjectCard from "ui-component/ProjectCard";
 import { useTheme } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
-import { DappifyContext, Project } from "react-dappify";
+import { Project } from "react-dappify";
+import { useMoralis } from "react-moralis";
 
 const Projects = () => {
-	const context = useContext(DappifyContext);
-	const { isAuthenticated, user, Provider } = context;
+	const { isAuthenticated, user, Moralis } = useMoralis();
 	const navigate = useNavigate();
 	const theme = useTheme();
 	const [projects, setProjects] = useState([]);
 	const [selected, setSelected] = useState();
 
 	const listAll = async () => {
-		const query = new Provider.Query("Project");
+		const query = new Moralis.Query("Project");
 		query.equalTo("owner", user);
 		query.descending("updatedAt");
 		const result = await query.find();

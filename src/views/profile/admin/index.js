@@ -17,7 +17,7 @@ import {
 import { drawerWidth } from "store/constant";
 import Sidebar from "layout/ProfileLayout/Sidebar";
 import { SET_MENU } from "store/actions";
-import { DappifyContext } from "react-dappify";
+import { useMoralis } from "react-moralis";
 import AccountBalanceWalletTwoToneIcon from "@mui/icons-material/AccountBalanceWalletTwoTone";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Logo from "common/Logo";
@@ -76,7 +76,7 @@ const ProfileAdmin = () => {
 	const { appId } = useParams();
 
 	const theme = useTheme();
-	const { Provider, logout, user } = useContext(DappifyContext);
+	const { logout, user } = useMoralis();
 	const matchDownMd = useMediaQuery(theme.breakpoints.down("lg"));
 
 	// Handle left drawer

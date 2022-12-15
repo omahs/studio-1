@@ -1,38 +1,69 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Grid, Typography, Button, Tooltip, Paper } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { Box, Grid, Typography, Button, Tooltip, Paper, Avatar, CircularProgress } from "@mui/material";
 import Logo from "common/Logo";
-import { DappifyContext, supportedWallets } from "react-dappify";
-import mixpanel from "mixpanel-browser";
-import constants from "constant";
-
-const { AUTH } = constants;
-const destination = "/profile/admin";
+import { supportedWallets } from "react-dappify";
+import { SNACKBAR_OPEN } from "store/actions";
+import { useMoralis } from 'react-moralis';
+const destination = "/profile/projects";
 
 const Signin = () => {
 	const navigate = useNavigate();
-	const { isAuthenticated, authenticate } = useContext(DappifyContext);
+	const { isAuthenticated, authenticate, logout } = useMoralis();
+	const [originUser, setOriginUser] = useState({});
+	const dispatch = useDispatch();
 
-	useEffect(() => {
+	/**
+	 * Only users redirected from main website are allowed, providing (uid, name, email and photo)
+	 */
+	const validateOriginParams = () => {
 		if (isAuthenticated) {
 			navigate(destination);
 		}
-	}, [isAuthenticated, navigate]);
+		const params = new URLSearchParams(document.location.search);
+		const usr = {
+			uid: params.get('uid'),
+			name: params.get('name'),
+			email: params.get('email'),
+			photo: params.get('photo')
+		}
+		setOriginUser(usr);
+		if (!isAuthenticated && (!usr.uid || !usr.email)) {
+			// Need to authenticate from website
+			window.location.href = 'https://dappify.com';
+		}
+	}
+
+	useEffect(() => {
+		validateOriginParams();
+	}, []);
+
 
 	const signIn = async (wallet, walletProvider) => {
 		try {
-			console.log(wallet);
 			const signupUser = await authenticate(wallet);
-			// Is a new user?
-			const signedEmail = signupUser.get("email");
-			const targetEvent = signedEmail ? AUTH.SIGN_IN : AUTH.SIGN_UP;
-			mixpanel.track(targetEvent, { provider: walletProvider });
-			// Update provider
+			const existingProfile = signupUser.get("profile") || {};
+			existingProfile.image = originUser.photo;
 			signupUser.set("provider", walletProvider);
+			signupUser.set("email", originUser.email);
+			signupUser.set("username", originUser.uid);
+			signupUser.set("nickname", originUser.name);
+			signupUser.set("profile", existingProfile);
 			await signupUser.save();
+			navigate(destination);
 		} catch (e) {
-			console.log(e);
+			dispatch({
+				type: SNACKBAR_OPEN,
+				open: true,
+				message: e.message,
+				variant: "alert",
+				anchorOrigin: { vertical: "bottom", horizontal: "right" },
+				alertSeverity: "error"
+			});
+			logout();
 		} finally {
+
 		}
 	};
 
@@ -48,6 +79,7 @@ const Signin = () => {
 							sx={{ p: 3, borderRadius: 4 }}
 							variant="contained"
 							color="secondary"
+							disabled={isAuthenticated || !originUser.uid}
 							fullWidth
 							onClick={async () =>
 								await signIn(wallet.payload, wallet.id)
@@ -81,10 +113,7 @@ const Signin = () => {
 			direction="column"
 			justifyContent="center"
 			textAlign="center"
-			sx={{
-				background: " #4C27A5",
-				height: "100vh"
-			}}
+			className="signin-container"
 		>
 			<Paper
 				elevation={15}
@@ -94,6 +123,7 @@ const Signin = () => {
 					padding: 5,
 					borderRadius: 4
 				}}
+				className="glass-container"
 			>
 				<Grid container spacing={2}>
 					<Grid item xs={12} sx={{ justifyContent: "center" }}>
@@ -101,8 +131,28 @@ const Signin = () => {
 							<Logo />
 						</Box>
 					</Grid>
+					<Grid item xs={12} sx={{ justifyContent: "center" }}>
+						<Box sx={{ justifyContent: "center", width: '250px', margin: '0 auto' }}>
+							{originUser.uid && (
+								<Grid container>
+									<Grid item>
+										<Avatar alt={originUser?.name} src={originUser?.photo} ></Avatar>
+									</Grid>
+									<Grid item sx={{ textAlign: 'left', ml: 1 }}>
+										Welcome back,
+										<Typography variant="h3" sx={{ width: '200px', overflow:'visible'}}>{originUser?.name}</Typography>
+									</Grid>
+								</Grid>)
+							}
+							{!originUser.uid && (
+								<Grid container>
+									<CircularProgress sx={{ margin:'0 auto'}} />
+								</Grid>
+							)}
+						</Box>
+					</Grid>
 					<Grid item xs={12}>
-						<Typography variant="h1" fontWeight="light">
+						<Typography variant="body" fontWeight="bold">
 							Let's get started! first, connect your wallet
 						</Typography>
 					</Grid>

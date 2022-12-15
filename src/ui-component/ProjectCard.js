@@ -5,10 +5,9 @@ import { useDispatch } from "react-redux";
 import { UPDATE_APP } from "store/actions";
 import moment from "moment";
 import { utils } from "react-dappify";
-import { getUrl, getEditorUrl, isEditorBuilder } from "utils/url";
+import { getUrl } from "utils/url";
 
 const { getImage } = utils.image;
-const chipPosition = { position: "absolute", right: 20, top: 20 };
 
 const ProjectCard = ({ project = {} }) => {
 	const navigate = useNavigate();
@@ -17,29 +16,8 @@ const ProjectCard = ({ project = {} }) => {
 
 	const selectProject = (appConfig) => {
 		dispatch({ type: UPDATE_APP, configuration: appConfig });
-		navigate(getEditorUrl(appConfig));
+		navigate(`/builder/${appConfig?.appId}`);
 	};
-
-	const fontColor =
-		project.config.theme?.palette?.mode !== "dark" ? "#000" : "#fff";
-	const backgroundColor =
-		project.config.theme?.palette?.mode === "dark" ? "#222" : "#fff";
-
-	const editorLabel = isEditorBuilder(project.config) ? (
-		<Chip
-			label="Drag & Drop Editor"
-			size="small"
-			color="primary"
-			sx={chipPosition}
-		/>
-	) : (
-		<Chip
-			label="Legacy Editor"
-			size="small"
-			color="secondary"
-			sx={chipPosition}
-		/>
-	);
 
 	return (
 		<Paper
@@ -49,8 +27,8 @@ const ProjectCard = ({ project = {} }) => {
 				borderRadius: 2,
 				p: 3,
 				position: "relative",
-				background: backgroundColor,
-				color: fontColor,
+				background: "#fff",
+				color: "#222",
 				backgroundRepeat: "no-repeat",
 				backgroundSize: "cover",
 				cursor: "pointer",
@@ -63,7 +41,6 @@ const ProjectCard = ({ project = {} }) => {
 		>
 			<Grid container spacing={0.3}>
 				<Grid item xs={12} sx={{ height: 54 }}>
-					{editorLabel}
 					<img
 						src={getImage(project.config.logo)}
 						alt="banner"
@@ -75,7 +52,7 @@ const ProjectCard = ({ project = {} }) => {
 					/>
 				</Grid>
 				<Grid item sx={{ mb: 0 }} xs={12}>
-					<Typography variant="h3" sx={{ color: fontColor }}>
+					<Typography variant="h3" sx={{ color: "#222" }}>
 						{project.config.name}
 					</Typography>
 					<Typography variant="h6" fontSize="1em">

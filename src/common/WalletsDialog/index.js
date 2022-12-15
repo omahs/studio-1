@@ -1,13 +1,14 @@
-import { forwardRef, useContext } from 'react';
+import { forwardRef } from 'react';
 import { Grid, Dialog, DialogContent,Slide, Button, Typography } from '@mui/material';
-import { DappifyContext, supportedWallets } from 'react-dappify';
+import { supportedWallets } from 'react-dappify';
+import { useMoralis } from "react-moralis";
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
 const WalletsDialog = ({ isOpen=false, onClose, isBid, nft, t }) => {
-    const { authenticate } = useContext(DappifyContext);
+    const { authenticate } = useMoralis();
 
     const renderSupportedWallets = () => {
         const list = [];

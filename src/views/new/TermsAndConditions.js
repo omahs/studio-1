@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import { Grid, Typography, Checkbox, Tooltip } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import DiscordButton from "views/landing/Discord";
+// import DiscordButton from "views/landing/Discord";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
@@ -41,48 +41,24 @@ const TermsAndConditions = ({ onChange }) => {
 			<Grid item xs={12}>
 				<Grid container spacing={1}>
 					<Grid item xs={12}>
-						But don't worry, you are not alone...
+						<Typography sx={{ lineHeight: 1.75, ml: 1, fontSize: 16 }}>
+							💕 But don't worry, you are not alone. Join our <a href="https://discord.gg/CYYX8yUVgc" target="__blank">discord</a> or <a href="https://calendly.com/dappify" target="__blank">book a call</a>
+						</Typography>
 					</Grid>
 					<Grid item xs={12}>
-						<DiscordButton />{" "}
-					</Grid>
-					<Grid item xs={12} sx={{ mt: 2 }}>
-						<Grid container direction="row">
-							<Grid item sx={{ width: 20 }}>
-								<SchoolOutlinedIcon />
-							</Grid>
-							<Grid item sx={{ flex: 1 }}>
-								<Typography sx={{ lineHeight: 1.75, ml: 1 }}>
-									Access learning resources and online support
-								</Typography>
-							</Grid>
-						</Grid>
+						<Typography sx={{ lineHeight: 1.75, ml: 1, fontSize: 16 }}>
+							🎓 Access learning <a href="https://www.youtube.com/@DappifyWeb3" target="__blank">resources</a> and <a href="https://medium.com/@dappify" target="__blank">articles</a>
+						</Typography>
 					</Grid>
 					<Grid item xs={12}>
-						<Grid container direction="row">
-							<Grid item sx={{ width: 20 }}>
-								<GroupsOutlinedIcon />
-							</Grid>
-							<Grid item sx={{ flex: 1 }}>
-								<Typography sx={{ lineHeight: 1.75, ml: 1 }}>
-									Engage with other builders, find
-									collaborators, tell us what you need
-								</Typography>
-							</Grid>
-						</Grid>
+						<Typography sx={{ lineHeight: 1.75, ml: 1, fontSize: 16 }}>
+							🤝 Engage with other builders, find collaborators, tell us what you need
+						</Typography>
 					</Grid>
 					<Grid item xs={12}>
-						<Grid container direction="row">
-							<Grid item sx={{ width: 20 }}>
-								<CampaignOutlinedIcon />
-							</Grid>
-							<Grid item sx={{ flex: 1 }}>
-								<Typography sx={{ lineHeight: 1.75, ml: 1 }}>
-									Stay up to date and participate in giveaway
-									events and ideathons
-								</Typography>
-							</Grid>
-						</Grid>
+						<Typography sx={{ lineHeight: 1.75, ml: 1, fontSize: 16 }}>
+							🔈 We post all our updates on twitter. <a href="https://twitter.com/DappifyWeb3" target="__blank">Follow us</a> to stay in touch!
+						</Typography>
 					</Grid>
 					<Grid item xs={12} sx={{ mt: 5 }}>
 						<Checkbox

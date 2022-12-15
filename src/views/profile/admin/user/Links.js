@@ -1,12 +1,12 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { TextField, Grid, Button } from "@mui/material";
 import { saveUser } from "utils/user";
-import { DappifyContext } from "react-dappify";
+import { useMoralis } from "react-moralis";
 import SubCard from "ui-component/cards/SubCard";
 import ProfileAvatar from "views/profile/admin/user/ProfileAvatar";
 
 const Links = () => {
-	const { user } = useContext(DappifyContext);
+	const { user } = useMoralis();
 	const [profile, setProfile] = useState(user.get("profile"));
 
 	useEffect(() => {

@@ -268,14 +268,6 @@ const pages = {
             ]
         },
         {
-            id: 'landing',
-            title: <FormattedMessage id="landing" />,
-            type: 'item',
-            icon: icons.IconBellRinging,
-            url: '/pages/landing',
-            target: true
-        },
-        {
             id: 'contact-us',
             title: <FormattedMessage id="contact-us" />,
             type: 'item',

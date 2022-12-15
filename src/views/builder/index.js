@@ -1,12 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Editor } from "dappify-builder/dist";
+import { Editor } from "builder";
 
 const EditorView = () => {
 	const { projectId } = useParams();
 	const navigate = useNavigate();
 
 	const onClickHome = () => {
-		navigate("/profile/admin", { replace: true });
+		navigate("/profile/projects", { replace: true });
 	};
 
 	return <Editor projectId={projectId} onClickHome={onClickHome} />;

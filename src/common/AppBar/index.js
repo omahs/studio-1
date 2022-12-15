@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 
 // project imports
-import { DappifyContext } from "react-dappify";
+import { useMoralis } from "react-moralis";
 
 // assets
 import MenuIcon from "@mui/icons-material/Menu";
@@ -60,7 +60,7 @@ function ElevationScroll({ children, window }) {
 const AppBar = ({ ...others }) => {
 	const location = useLocation();
 	const [drawerToggle, setDrawerToggle] = useState(false);
-	const { isAuthenticated, user, logout } = useContext(DappifyContext);
+	const { isAuthenticated, user, logout } = useMoralis();
 
 	const [showWalletDialog, setShowWalletDialog] = useState();
 

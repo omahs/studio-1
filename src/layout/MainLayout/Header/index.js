@@ -13,7 +13,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { saveProject } from "utils/project";
 import { getUrl } from "utils/url";
 import isEmpty from "lodash/isEmpty";
-import { DappifyContext } from "react-dappify";
+import { useMoralis } from "react-moralis";
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
@@ -22,7 +22,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
 	const appConfiguration = useSelector((state) => state.app);
 	// const { user, isAuthenticated, logout, authenticate } = useMoralis();
 	const { Provider, user, authenticate, isAuthenticated, logout } =
-		useContext(DappifyContext);
+		useMoralis();
 	const [hasChanges, setHasChanges] = useState(false);
 	const dispatch = useDispatch();
 

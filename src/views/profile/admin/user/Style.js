@@ -2,14 +2,14 @@ import { useEffect, useContext, useState } from "react";
 import { Typography, Grid } from "@mui/material";
 import SubCard from "ui-component/cards/SubCard";
 import { gridSpacing } from "store/constant";
-import { DappifyContext } from "react-dappify";
+import { useMoralis } from "react-moralis";
 import { saveUser } from "utils/user";
 import isEmpty from "lodash/isEmpty";
 import Color from "views/profile/admin/user/Color";
 import ProfileAvatar from "views/profile/admin/user/ProfileAvatar";
 
 const Style = () => {
-	const context = useContext(DappifyContext);
+	const context = useMoralis();
 	const { user } = context;
 
 	const [profile, setProfile] = useState({});

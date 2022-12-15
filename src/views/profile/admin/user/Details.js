@@ -11,7 +11,7 @@ import {
 	MenuItem,
 	Alert
 } from "@mui/material";
-import { DappifyContext } from "react-dappify";
+import { useMoralis } from "react-moralis";
 import { saveUser } from "utils/user";
 
 // project imports
@@ -31,7 +31,7 @@ const { NETWORKS, LOGO } = constants;
 // ==============================|| PROFILE 3 - PROFILE ||============================== //
 
 const Details = () => {
-	const { user } = useContext(DappifyContext);
+	const { user } = useMoralis();
 	const { setProgress } = useContext(ProgressContext);
 	const [profile, setProfile] = useState({});
 	const [usernameError, setUsernameError] = useState();

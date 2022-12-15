@@ -1,5 +1,5 @@
 // material-ui
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import {
 	Container,
 	Avatar,
@@ -12,14 +12,14 @@ import {
 import { useParams } from "react-router-dom";
 import Identicon from "react-identicons";
 import axios from "axios";
-import { DappifyContext } from "react-dappify";
+import { useMoralis } from "react-moralis";
 
 // =============================|| LANDING MAIN ||============================= //
 
 const PublicProfile = () => {
 	const { id } = useParams();
 	const [nfts, setNfts] = useState([]);
-	const { Provider } = useContext(DappifyContext);
+	const { Moralis } = useMoralis();
 	const [profile, setProfile] = useState({});
 
 	useEffect(() => {
@@ -35,7 +35,7 @@ const PublicProfile = () => {
 	}, [profile]);
 
 	const loadProfile = async () => {
-		const userProfile = await Provider.Cloud.run("getProfileByHandle", {
+		const userProfile = await Moralis.Cloud.run("getProfileByHandle", {
 			handle: id
 		});
 		setProfile(userProfile);

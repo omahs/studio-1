@@ -14,20 +14,16 @@ import Locales from "ui-component/Locales";
 import Snackbar from "ui-component/extended/Snackbar";
 
 // provider
-import { DappifyProvider } from "react-dappify";
+import { MoralisProvider } from "react-moralis";
 import { ProgressProvider } from "contexts/ProgressContext";
-import mixpanel from "mixpanel-browser";
 
 // ==============================|| APP ||============================== //
 const App = () => {
-	useEffect(() => {
-		mixpanel.init(process.env.REACT_APP_MIXPANEL_ID, { debug: true });
-	}, []);
 
 	const customization = useSelector((state) => state.customization);
 
 	return (
-		<DappifyProvider>
+		<MoralisProvider appId={process.env.REACT_APP_MORALIS_APP_ID} serverUrl={process.env.REACT_APP_MORALIS_SERVER_URL}>
 			<StyledEngineProvider injectFirst>
 				<ThemeProvider theme={themes(customization)}>
 					<ProgressProvider>
@@ -41,7 +37,7 @@ const App = () => {
 					</ProgressProvider>
 				</ThemeProvider>
 			</StyledEngineProvider>
-		</DappifyProvider>
+		</MoralisProvider>
 	);
 };
 

@@ -56,12 +56,12 @@ const Plugin = (editor) => {
 
 
     const evalCondition = () => {
+      hide();
       if (!window.walletProvider) return false;
       let numericBalance = 0;
 
       // Retrieve account
       try {
-        hide();
         const provider = new ethers.providers.Web3Provider(window.walletProvider);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(props.contract, abi, signer);

@@ -21,10 +21,11 @@ const Plugin = (editor) => {
     `,
   };
 
-  async function script (props) {
+  const script = function (props) {
     const componentId = "action-button";
+    console.log(`Running script ${componentId}`);
     let payload;
-    const evalCondition = async (evt, data) => {
+    const evalCondition = (evt, data) => {
 
       const nft = evt.detail;
       const meta = JSON.parse(nft.metadata);
@@ -75,7 +76,7 @@ const Plugin = (editor) => {
 
     document.addEventListener("onNFTSelect", evalCondition);
 
-    $(`#${componentId}`).click(async (el) => {
+    $(`#${componentId}`).click((el) => {
       console.log("Triggering event call");
       const options = {
         method: "POST",
@@ -84,7 +85,7 @@ const Plugin = (editor) => {
           "Content-Type": "application/json",
         },
       };
-      await fetch(props.value, options)
+      fetch(props.value, options)
         .then((response) => response.json())
         .then((response) => {
           // Do something with response.
@@ -99,6 +100,8 @@ const Plugin = (editor) => {
     model: {
       defaults: {
         script,
+        value: "",
+        integration: "Discord",
         traits: [
           {
             changeProp: 1,

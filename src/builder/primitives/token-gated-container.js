@@ -27,8 +27,9 @@ const Plugin = (editor) => {
     `,
   };
 
-  async function script (props) {
+  const script = function (props) {
     const componentId = "token-gated-container";
+    console.log(`Running script ${componentId}`);
     if (!props.contract) return;
 
     const abi = [
@@ -53,30 +54,27 @@ const Plugin = (editor) => {
       return provider.selectedAddress;
     };
 
-    const hasPositiveBalance = async () => {
+
+    const evalCondition = () => {
       if (!window.walletProvider) return false;
       let numericBalance = 0;
 
       // Retrieve account
       try {
+        hide();
         const provider = new ethers.providers.Web3Provider(window.walletProvider);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(props.contract, abi, signer);
         const account = getAccount();
-        const balance = await contract.balanceOf(account);
-        numericBalance = balance.toNumber();
+        contract.balanceOf(account).then((balance) => {
+          numericBalance = balance.toNumber();
+          if (numericBalance > 0) {
+            show();
+          }
+        });
+        
       } catch (e) {
         console.log(e);
-      }
-      return numericBalance > 0;
-    };
-
-    const evalCondition = async () => {
-      const isBalanceValid = await hasPositiveBalance();
-      if (isBalanceValid) {
-        show();
-      } else {
-        hide();
       }
     };
 
@@ -104,6 +102,8 @@ const Plugin = (editor) => {
     model: {
       defaults: {
         script,
+        contract: "",
+        isEdit: false,
         traits: [
           {
             changeProp: 1,

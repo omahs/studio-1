@@ -20,9 +20,9 @@ const Plugin = (editor) => {
     `,
   };
 
-  async function script (props) {
+  const script = function (props) {
     const componentId = "wallet-connect-button";
-    console.log(`Running ${componentId}`);
+    console.log(`Running script ${componentId}`);
 
     const cachedProviderName = "WEB3_CONNECT_CACHED_PROVIDER";
     const Web3Modal = window.Web3Modal.default;
@@ -65,11 +65,12 @@ const Plugin = (editor) => {
       }
     }
   
-    async function fetchAccountData() {
+    function fetchAccountData() {
       const wallet = new ethers.providers.Web3Provider(walletProvider);
       const signer = wallet.getSigner();
-      const selectedAccount = await signer.getAddress();
-      $(`#${componentId} span`).text(selectedAccount);
+      signer.getAddress().then((selectedAccount) => {
+        $(`#${componentId} span`).text(selectedAccount);
+      });
     }
   
     function connect() {
@@ -126,13 +127,14 @@ const Plugin = (editor) => {
       $(`#${componentId}`).click(handleToggleConnect);
     }
   };
-
+  
   const properties = {
     isComponent: (el) => el.id === componentId,
     model: {
       defaults: {
         script,
         isEdit: false,
+        infuraKey: "",
         traits: [
           {
             type: "text",

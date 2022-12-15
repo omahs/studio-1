@@ -39,11 +39,12 @@ const Plugin = (editor) => {
       </style>`,
   };
 
-  async function script (props) {
+  const script = function (props) {
     const componentId = "nft-card";
+    console.log(`Running script ${componentId}`);
     if (!props.contract) return;
 
-    const evalCondition = async () => {
+    const evalCondition = () => {
       const account = getAccount();
 
       $(".nft-card").click((el) => {
@@ -52,7 +53,7 @@ const Plugin = (editor) => {
         console.log(`Event dispatched with content ${nft}`);
       });
 
-      const results = await fetch(
+      fetch(
         `https://deep-index.moralis.io/api/v2/${account}/nft?chain=eth&format=decimal&limit=1&token_addresses=${props.contract}`,
         {
           method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -61,22 +62,23 @@ const Plugin = (editor) => {
             // 'Content-Type': 'application/x-www-form-urlencoded',
           },
         }
-      );
+      )
+      .then((result) => result.json())
+      .then((data) => {
+        const list = data.result;
 
-      const data = await results.json();
-      const list = data.result;
-
-      $(".nft-card").css("display", "block");
-
-      list.forEach((item, index) => {
-        const meta = JSON.parse(item.metadata);
-        $(`#nft-container-${index + 1}`).attr(
-          "data-metadata",
-          JSON.stringify(item)
-        );
-        $(`#nft-image-${index + 1}`).attr("src", meta.image);
-        $(`#nft-title-${index + 1}`).text(`${item.symbol} #${item.token_id}`);
-        $(`#nft-description-${index + 1}`).text(item.name);
+        $(".nft-card").css("display", "block");
+  
+        list.forEach((item, index) => {
+          const meta = JSON.parse(item.metadata);
+          $(`#nft-container-${index + 1}`).attr(
+            "data-metadata",
+            JSON.stringify(item)
+          );
+          $(`#nft-image-${index + 1}`).attr("src", meta.image);
+          $(`#nft-title-${index + 1}`).text(`${item.symbol} #${item.token_id}`);
+          $(`#nft-description-${index + 1}`).text(item.name);
+        });
       });
     };
 
@@ -108,6 +110,7 @@ const Plugin = (editor) => {
     model: {
       defaults: {
         script,
+        contract: "",
         traits: [
           {
             changeProp: 1,

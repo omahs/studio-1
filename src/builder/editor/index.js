@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import grapesjs from "grapesjs";
 
 import PrimitiveWalletConnect from "../primitives/wallet-connect-button";
+import PluginTokenGate from "../primitives/token-gated-container";
+import PluginNFT from "../primitives/nft-card";
+import PluginActionButton from "../primitives/action-button";
+
 // import PluginTailwind from "dappify-tailwind-module";
 // import PluginSmartContract from "dappify-smart-contract-ui-module";
-// import PluginNFT from "dappify-nft-module";
-// import PluginTokenGate from "dappify-token-gate-module";
-// import PluginActionButton from "dappify-action-button-module";
+
 
 import PluginEditorPanelButtons from "./Panel/Buttons";
 import * as LandingPage from "../templates/LandingPage";
@@ -122,9 +124,9 @@ const Editor = ({ projectId, onClickHome }) => {
         PluginEditorPanelButtons,
         PrimitiveWalletConnect,
         // PluginSmartContract,
-        // PluginTokenGate,
-        // PluginNFT,
-        // PluginActionButton,
+        PluginTokenGate,
+        PluginNFT,
+        PluginActionButton,
       ],
       pluginsOpts: {},
       canvas: {

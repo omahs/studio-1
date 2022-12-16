@@ -1,13 +1,10 @@
-import LoginModal from "../../../views/modal/Login";
 import PublishModal from "../../../views/modal/Publish";
 
-const cmdImport = "gjs-open-import-webpage";
 const cmdPublish = "publish";
 const cmdDeviceDesktop = "set-device-desktop";
 const cmdDeviceTablet = "set-device-tablet";
 const cmdDeviceMobile = "set-device-mobile";
 const cmdClear = "canvas-clear";
-const publish = "publish-ipfs";
 
 const clearCanvasButton = {
   id: cmdClear,
@@ -59,17 +56,13 @@ const publishFn = (editor) => {
 const Plugin = (editor, config) => {
   const pn = editor.Panels;
   const eConfig = editor.getConfig();
-  const crc = "create-comp";
-  const mvc = "move-comp";
   const swv = "sw-visibility";
   const expt = "export-template";
   const osm = "open-sm";
   const otm = "open-tm";
   const ola = "open-layers";
   const obl = "open-blocks";
-  const ful = "fullscreen";
   const prv = "preview";
-  const backProfile = "back-profile";
 
   eConfig.showDevices = 0;
 
@@ -340,7 +333,6 @@ const Plugin = (editor, config) => {
     // });
 
     // if(confirm('Are you sure to clean the canvas?')) {
-    var comps = editor.DomComponents.clear();
     setTimeout(function () {
       localStorage.clear();
     }, 0);

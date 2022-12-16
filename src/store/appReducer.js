@@ -1,6 +1,6 @@
 // action - state management
 import { UPDATE_APP, CLEAR_APP } from './actions';
-import { defaultConfiguration } from 'react-dappify';
+import { defaultConfiguration } from 'utils/config';
 
 const initialState = defaultConfiguration;
 

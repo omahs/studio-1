@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import grapesjs from "grapesjs";
 
 import PrimitiveWalletConnect from "../primitives/wallet-connect-button";
@@ -20,7 +21,6 @@ const Editor = ({ projectId, onClickHome }) => {
   const [editor, setEditor] = useState({});
   const [project, setProject] = useState({});
   const { Moralis, user } = useMoralis();
-  const [isLoaded, setLoaded] = useState(false);
 
   const getUrl = (subdomain) => {
     const environmentPrefix =

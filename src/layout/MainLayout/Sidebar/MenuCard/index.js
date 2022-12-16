@@ -23,11 +23,9 @@ import {
 // assets
 import { useSelector } from "react-redux";
 import isEmpty from "lodash/isEmpty";
-import { constants } from "react-dappify";
 import { getUrl } from "utils/url";
 import axios from "axios";
 
-const { NETWORKS, LOGO } = constants;
 
 // styles
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({

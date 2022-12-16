@@ -1,13 +1,9 @@
-import PropTypes from "prop-types";
 /* eslint-disable react/no-unescaped-entities */
 import { useTheme } from "@mui/material/styles";
 import { Grid, Typography, Checkbox, Tooltip } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 // import DiscordButton from "views/landing/Discord";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
-import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
-import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
 
 const TermsAndConditions = ({ onChange }) => {
 	const theme = useTheme();

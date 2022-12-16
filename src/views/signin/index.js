@@ -42,6 +42,7 @@ const Signin = () => {
 
 	useEffect(() => {
 		runAuth();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	
 	const signIn = async (refUser) => {

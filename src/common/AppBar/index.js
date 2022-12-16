@@ -31,7 +31,6 @@ import AccountBalanceWalletTwoToneIcon from "@mui/icons-material/AccountBalanceW
 import LogoutIcon from "@mui/icons-material/Logout";
 import DirectionsIcon from "@mui/icons-material/Directions";
 import Logo from "common/Logo";
-import WalletsDialog from "common/WalletsDialog";
 
 function ElevationScroll({ children, window }) {
 	const theme = useTheme();
@@ -122,10 +121,6 @@ const AppBar = ({ ...others }) => {
 			<MuiAppBar>
 				<Container>
 					<Toolbar>
-						<WalletsDialog
-							isOpen={showWalletDialog}
-							onClose={() => setShowWalletDialog(false)}
-						/>
 						<Typography
 							component="div"
 							sx={{ flexGrow: 1, textAlign: "left" }}

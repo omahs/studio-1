@@ -33,6 +33,7 @@ jobs:
           REACT_APP_MORALIS_API_KEY: ${{ secrets.MORALIS_API_KEY_DEV }}
           REACT_APP_INFURA_KEY: ${{ secrets.INFURA_API_KEY }}
           REACT_APP_MAGIC_API_KEY: ${{ secrets.MAGIC }}
+          REACT_APP_HOST_ENV: dev
           REACT_APP_DAPPIFY_API_KEY: ${{ secrets.DAPPIFY_API_KEY_DEV }}
           REACT_APP_DAPPIFY_API_URL: "https://api.dev.dappify.com"
           CI: false

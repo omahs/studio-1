@@ -15,7 +15,6 @@ import {
 	Dialog,
 	DialogContent
 } from "@mui/material";
-import { Project } from "react-dappify";
 import EditIcon from "@mui/icons-material/Edit";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { getUrl } from "utils/url";
@@ -62,6 +61,7 @@ const NameField = ({ onChange }) => {
 
 	useEffect(() => {
 		onChange(!error, appName, appSubdomain);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [error, appName, appSubdomain]);
 
 	const projectInfo = `

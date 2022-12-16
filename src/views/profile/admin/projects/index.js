@@ -4,7 +4,6 @@ import ProjectCard from "ui-component/ProjectCard";
 import { useTheme } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
-import { Project } from "react-dappify";
 import { useMoralis } from "react-moralis";
 
 const Projects = () => {
@@ -18,8 +17,7 @@ const Projects = () => {
 		const query = new Moralis.Query("Project");
 		query.equalTo("owner", user);
 		query.descending("updatedAt");
-		const result = await query.find();
-		const list = result.map((project) => new Project(project));
+		const list = await query.find();
 		setProjects(list);
 	};
 
@@ -33,6 +31,7 @@ const Projects = () => {
 
 	useEffect(() => {
 		loadApps();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isAuthenticated]);
 
 	const createNew = isAuthenticated && (

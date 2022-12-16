@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 
 // project imports
 import NavGroup from "./NavGroup";
-import { IconFolders, IconUserCircle } from "@tabler/icons";
+import { IconFolders } from "@tabler/icons";
 
 // ==============================|| SIDEBAR MENU LIST ||============================== //
 

@@ -1,6 +1,6 @@
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 // material-ui
 import { styled, useTheme } from "@mui/material/styles";
@@ -73,8 +73,6 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 // ==============================|| MAIN LAYOUT ||============================== //
 
 const ProfileAdmin = () => {
-	const { appId } = useParams();
-
 	const theme = useTheme();
 	const { logout, user } = useMoralis();
 	const matchDownMd = useMediaQuery(theme.breakpoints.down("lg"));

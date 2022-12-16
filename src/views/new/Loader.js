@@ -44,6 +44,7 @@ const Loader = ({ onChange }) => {
 			setReady(true);
 			onChange(true);
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [progress]);
 
 	useEffect(() => {

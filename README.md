@@ -1,70 +1,62 @@
-[![PhysicalWeb3](https://i.ibb.co/6BTsQkw/Screenshot-2022-01-27-at-18-48-53.png)](https://www.youtube.com/embed/MIKv-cEfQpU)
+[![Dappify](https://i.ibb.co/njcYZcb/landing.png)](https://youtu.be/pcbTbq_MDWQ)
 
-# PW3Builder Platform
+# [Dappify Studio](https://dappify.com)
 
----
-
-## _A Moralis & Avalanche Hackathon project 2022_
+welcome to a new era of no-code for creatives, innovators and visionaries building on the New Internet. What required a team of developers, can now be done by you, through a visual drag and drop editor and carefully curated components to help you build and launch full stack web3 applications in minutes and without code.
 
 ## What is it?
 
-[The Physical Web3](https://physicalweb3.com) is a permissionless platform that allows users to expose smart contract functionalities through a mobile web3 app prodiving a URL that can be embedded it into NFC tags or QR Codes. It offers a no code/low code dApp builder that is a user-friendly platform for creating blockchain based applications from templates, much like WIX or Squarespace allow you to create web ready experiences in web 2.0, PW3Builder lets you do it in web 3.0 this time leveraging the whole power of blockchain.
-
-## Scope of project
-
-#### "The simplest way to create dApps"
-
-The PW3Builder is a dApp capable of launching PW3Apps from templates. It achieves it by leveraging smart contract templates that compiles and deployes while allowing users to configure look and feel and functionalities around the dApp. It offers and advanced preview mechanism that allows accessing the PWApp generated from the browser.
+[Dappify](https://dappify.com) is the ultimate no-code development platform for the new Open Web. It lets you create interactive, multi-user dapps for desktop and mobile web browsers and includes all the tools you need to build a site like Opensea or Uniswap from powerful primitives. Launch Landing Pages, NFT Marketplaces, NFT Minters, Payments solutions, DAOs and more from ready made templates. Speed up your iterations without having to start from scratch. Through public blockchain based technologies handle your own deployments, hosting and data. There are no hard limits on the number of users, volume of traffic, or storage.
 
 ## How it works?
 
-[Creating a dApp with the PW3Builder](https://www.youtube.com/watch?v=xOX2avYFNWA)
-[End user experience mobile](https://www.youtube.com/watch?v=MIKv-cEfQpU)
-
-## Features
-
--   No code solution for creating and managing dApps capables of sending and receiving payments and data
--   Guided mobile experience with built in deeplinks and responsive
--   Built on top of Moralis and Smart Contracts powering the templates in Avalanche
-
-## Tech
-
-PhysicalWeb3 uses a number of technologies and networks:
-
--   [Moralis](https://moralis.io) - Web3 dapps backend as a service
--   [Avalanche](https://www.avax.network/) - Avalanche is an open, programmable smart contracts platform for decentralized applications.
--   [Chainlink](https://chain.link/) - Chainlink's decentralized oracle network provides reliable, tamper-proof inputs and outputs for complex smart contracts on any blockchain.
--   [Covalent](https://www.covalenthq.com/) - Covalent provides a unified API bringing visibility to billions of blockchain data points. We use it to display price in USD for transactions from the dApps
-
-## Smart Contracts
-
--   EVM contracts can be found in the public folder in `public/contracts`
+[Creating a dApp with the Dappify](https://youtu.be/M6xhkVmznxY)
 
 ## Getting Started
 
-Require setting up .env with
+If you are looking to build dApps without code, I recommend you use our cloud platform [Dappify](https://dappify.com). For developers contributing to the project here are the configuration steps.
+
+### 1. Prerrequisites
+
+- Join us on [discord](https://discord.gg/CYYX8yUVgc) to request your Dappify API key
+- Node 16
+- Create a [Moralis](https://moralis.com) App instance 
+
+### 2. Create a .env
 
 ```
 SKIP_PREFLIGHT_CHECK=true
-REACT_APP_MORALIS_APP_ID=<ID>
-REACT_APP_MORALIS_SERVER_URL=<URL>
-REACT_APP_ROADMAP_URL=<URL>
-REACT_APP_MICROPAPER_URL=<URL>
-REACT_APP_CHANGELOG_URL=<URL>
-REACT_APP_API_BASE_URL=<CLOUD_FUNCTIONS_BASE_URL>
-REACT_APP_HOST_ENV=local
-REACT_APP_BLOG_URL=https://medium.com/@dappify
-REACT_APP_MAGIC=<ID>
-REACT_APP_MORALIS_API_KEY=<KEY>
-REACT_APP_MIXPANEL_ID=<ID>
-
+REACT_APP_HOST_ENV=dev
+REACT_APP_MORALIS_APP_ID=<Create a Morali app and use the app id>
+REACT_APP_MORALIS_SERVER_URL=<Create a Morali app and use the server url>
+REACT_APP_MORALIS_API_KEY=<Create a Morali app and use the api key>
+REACT_APP_DAPPIFY_API_KEY=<Request us access through discord for this one>
+REACT_APP_DAPPIFY_API_URL=<Request us access through discord for this one>
+REACT_APP_INFURA_KEY=<Create an infura project and use the key>
+REACT_APP_MAGIC_API_KEY=<Create a magic link project and use the sk key>
 ```
+
+### 3. Install dependencies
 
 Then, run the development server:
 
 ```bash
-npm install
-npm run start
+npm i --legacy-peer-deps
 ```
 
+### 4. Run the project
+
+Then, run the development server:
+
+```bash
+npm run start
+```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### 5. Build the project
+
+Then, run the development server:
+
+```bash
+npm run build
+```

@@ -17,7 +17,6 @@ import {
 import NavItem from "../NavItem";
 
 // assets
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";

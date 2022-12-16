@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
 	Box,
@@ -10,16 +10,12 @@ import {
 	Slide
 } from "@mui/material";
 import NameField from "views/new/NameField";
-import Blockchain from "views/new/Blockchain";
 import TermsAndConditions from "views/new/TermsAndConditions";
 import Loader from "views/new/Loader";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { UPDATE_APP } from "store/actions";
-import { defaultConfiguration } from "react-dappify";
-import Template from "views/new/Template";
-import constants from "constant";
-import { getEditorUrl } from "utils/url";
+import { defaultConfiguration } from "utils/config";
 import { useMoralis } from "react-moralis";
 
 const NewPage = () => {

@@ -1,58 +1,68 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Box, Grid, Typography, Button, Tooltip, Paper, Avatar, CircularProgress } from "@mui/material";
+import { Box, Grid, Typography, Paper, Avatar, CircularProgress } from "@mui/material";
 import Logo from "common/Logo";
-import { supportedWallets } from "react-dappify";
 import { SNACKBAR_OPEN } from "store/actions";
 import { useMoralis } from 'react-moralis';
 const destination = "/profile/projects";
 
 const Signin = () => {
 	const navigate = useNavigate();
-	const { isAuthenticated, authenticate, logout } = useMoralis();
+	const { isAuthenticated, authenticate } = useMoralis();
 	const [originUser, setOriginUser] = useState({});
 	const dispatch = useDispatch();
 
 	/**
 	 * Only users redirected from main website are allowed, providing (uid, name, email and photo)
 	 */
-	const validateOriginParams = () => {
+	const runAuth = () => {
 		if (isAuthenticated) {
 			navigate(destination);
+			return;
 		}
+		// Did we receive ref data?	we need it for auto sign in	
 		const params = new URLSearchParams(document.location.search);
-		const usr = {
+		const refUser = {
 			uid: params.get('uid'),
 			name: params.get('name'),
 			email: params.get('email'),
 			photo: params.get('photo')
 		}
-		setOriginUser(usr);
-		if (!isAuthenticated && (!usr.uid || !usr.email)) {
-			// Need to authenticate from website
+		setOriginUser(refUser);
+		const isRefUserSet = refUser.uid && refUser.email;
+		if (isRefUserSet) {
+			// Not authed, ref provided, try auto login
+			signIn(refUser);
+		} else {
+			// Not authenticated not ref. Prolly opened this directly in browser
 			window.location.href = 'https://dappify.com';
 		}
 	}
 
 	useEffect(() => {
-		validateOriginParams();
+		runAuth();
 	}, []);
-
-
-	const signIn = async (wallet, walletProvider) => {
+	
+	const signIn = async (refUser) => {
 		try {
-			const signupUser = await authenticate(wallet);
-			const existingProfile = signupUser.get("profile") || {};
-			existingProfile.image = originUser.photo;
-			signupUser.set("provider", walletProvider);
-			signupUser.set("email", originUser.email);
-			signupUser.set("username", originUser.uid);
-			signupUser.set("nickname", originUser.name);
-			signupUser.set("profile", existingProfile);
+			const signupUser = await authenticate({
+				provider: "magicLink",
+				email: refUser.email,
+				apiKey: process.env.REACT_APP_MAGIC_API_KEY,
+				network: "mainnet"
+			});
+			if (!signupUser) return;
+			signupUser.set("profile", {
+				image: refUser.photo,
+				name: refUser.name,
+				email: refUser.email,
+				uid: refUser.uid
+			});
 			await signupUser.save();
 			navigate(destination);
 		} catch (e) {
+			console.log(e);
 			dispatch({
 				type: SNACKBAR_OPEN,
 				open: true,
@@ -61,50 +71,9 @@ const Signin = () => {
 				anchorOrigin: { vertical: "bottom", horizontal: "right" },
 				alertSeverity: "error"
 			});
-			logout();
 		} finally {
 
 		}
-	};
-
-	const renderSupportedWallets = () => {
-		const list = [];
-		supportedWallets.forEach((wallet) => {
-			list.push(
-				<Grid item xs={6} md={3} key={wallet.name}>
-					<Tooltip title={wallet.description}>
-						<Button
-							id={`login-${wallet.id}-btn`}
-							elevation={15}
-							sx={{ p: 3, borderRadius: 4 }}
-							variant="contained"
-							color="secondary"
-							disabled={isAuthenticated || !originUser.uid}
-							fullWidth
-							onClick={async () =>
-								await signIn(wallet.payload, wallet.id)
-							}
-						>
-							<Grid
-								container
-								direction="column"
-								alignItems="left"
-							>
-								<Grid item>
-									<img
-										src={wallet.image}
-										alt={`Sign in with ${wallet.name}`}
-										height={64}
-									/>
-								</Grid>
-								<Grid item>{wallet.name}</Grid>
-							</Grid>
-						</Button>
-					</Tooltip>
-				</Grid>
-			);
-		});
-		return list;
 	};
 
 	return (
@@ -144,11 +113,6 @@ const Signin = () => {
 									</Grid>
 								</Grid>)
 							}
-							{!originUser.uid && (
-								<Grid container>
-									<CircularProgress sx={{ margin:'0 auto'}} />
-								</Grid>
-							)}
 						</Box>
 					</Grid>
 					<Grid item xs={12}>
@@ -157,13 +121,8 @@ const Signin = () => {
 						</Typography>
 					</Grid>
 					<Grid item xs={12}>
-						<Grid
-							container
-							spacing={2}
-							justifyContent="center"
-							alignItems="center"
-						>
-							{renderSupportedWallets()}
+						<Grid container>
+							<CircularProgress sx={{ margin:'0 auto'}} />
 						</Grid>
 					</Grid>
 				</Grid>

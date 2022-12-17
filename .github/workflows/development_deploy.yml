@@ -37,7 +37,7 @@ jobs:
           REACT_APP_DAPPIFY_API_KEY: ${{ secrets.DAPPIFY_API_KEY_DEV }}
           REACT_APP_DAPPIFY_API_URL: "https://api.dev.dappify.com"
           CI: false
-        run: npm run build
+        run: npm run build:release
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

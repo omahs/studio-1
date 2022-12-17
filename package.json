@@ -1,18 +1,16 @@
 {
     "name": "dappify-studio",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "private": false,
     "dependencies": {
         "@auth0/auth0-spa-js": "^1.14.0",
         "@babel/preset-env": "^7.18.2",
         "@babel/preset-react": "^7.17.12",
-        "@emotion/cache": "^11.4.0",
-        "@emotion/react": "^11.4.0",
-        "@emotion/styled": "^11.3.0",
+        "@emotion/react": "^11.10.5",
+        "@emotion/styled": "^11.10.5",
         "@hookform/resolvers": "1.3.5",
         "@mui/icons-material": "^5.6.1",
-        "@mui/material": "^5.0.3",
-        "@mui/styles": "^5.0.1",
+        "@mui/material": "^5.11.0",
         "@mui/system": "^5.0.3",
         "@tabler/icons": "^1.39.1",
         "apexcharts": "^3.26.1",
@@ -27,16 +25,13 @@
         "jwt-decode": "^3.1.2",
         "magic-sdk": "^10.1.0",
         "material-icons": "^1.11.8",
-        "material-ui-popup-state": "^1.8.0",
         "moment": "^2.29.4",
         "moralis-v1": "^1.12.0",
         "prop-types": "^15.7.2",
         "react": "^18.2.0",
         "react-apexcharts": "^1.3.7",
-        "react-device-detect": "^1.17.0",
+        "react-device-detect": "^2.2.2",
         "react-dom": "^18.2.0",
-        "react-hook-form": "^6.15.5",
-        "react-identicons": "^1.2.5",
         "react-intl": "^5.14.0",
         "react-markdown": "^6.0.0",
         "react-moralis": "^1.4.2",
@@ -46,7 +41,6 @@
         "react-router-dom": "^6.0.0-beta.5",
         "react-scripts": "^5.0.1",
         "react-share": "^4.4.0",
-        "react-slick": "^0.28.1",
         "react-syntax-highlighter": "^15.4.3",
         "redux": "^4.0.5",
         "redux-persist": "^6.0.0",
@@ -57,8 +51,6 @@
     },
     "devDependencies": {
         "env-cmd": "^10.1.0",
-        "enzyme": "^3.11.0",
-        "enzyme-adapter-react-16": "^1.15.6",
         "eslint": "^8.23.0",
         "eslint-config-react-app": "^7.0.1",
         "husky": "^8.0.1",
@@ -66,7 +58,9 @@
         "sass": "^1.56.2"
     },
     "jest": {
-        "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js",
+        "setupFilesAfterEnv": [
+            "<rootDir>/src/setupTests.js"
+        ],
         "moduleDirectories": [
             "node_modules",
             "src"
@@ -101,11 +95,9 @@
         }
     },
     "scripts": {
-        "start": "export HTTPS=true&&SSL_CRT_FILE=cert.pem&&SSL_KEY_FILE=key.pem env-cmd -f .env react-scripts start",
-        "build": "env-cmd -f .env react-scripts build",
-        "build2": "rm -rf dist && NODE_ENV=production babel src --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__,node_modules",
-        "start:cli": "react-scripts start",
-        "build:cli": "react-scripts build",
+        "start": "export HTTPS=true&&SSL_CRT_FILE=cert.pem&&SSL_KEY_FILE=key.pem REACT_APP_VERSION=$npm_package_version env-cmd -f .env react-scripts start",
+        "build:release": "REACT_APP_VERSION=$npm_package_version react-scripts build",
+        "build": "env-cmd -f .env npm run build",
         "test": "jest --collectCoverage=true",
         "coverage": "jest --coverage",
         "eject": "react-scripts eject",

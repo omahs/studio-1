@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Editor } from "builder";
+import { Editor } from "editor";
 
 const EditorView = () => {
 	const { projectId } = useParams();

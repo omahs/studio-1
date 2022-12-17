@@ -6,12 +6,21 @@ const Plugin = (editor) => {
   const block = {
     id: `section-${componentId}`,
     label: `
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-right-square" width="64" height="64" viewBox="0 0 24 24" stroke-width="1" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-        <line x1="7" y1="12" x2="21" y2="12" />
-        <path d="M18 15l3 -3l-3 -3" />
-        <path d="M3 10h4v4h-4z" />
-      </svg>
+    <svg width="266" height="150" viewBox="0 0 266 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_3_65)">
+    <path d="M0 0H266V150H0V0Z" fill="white"/>
+    <path d="M178 63H88C85.2386 63 83 65.2386 83 68V83C83 85.7614 85.2386 88 88 88H178C180.761 88 183 85.7614 183 83V68C183 65.2386 180.761 63 178 63Z" fill="#6366F1"/>
+    <path d="M145.034 73.7463H118.966C118.432 73.7463 118 74.6417 118 75.7463C118 76.8508 118.432 77.7463 118.966 77.7463H145.034C145.568 77.7463 146 76.8508 146 75.7463C146 74.6417 145.568 73.7463 145.034 73.7463Z" fill="white"/>
+    <path d="M148.32 74.5459L138.837 67.0248C138.643 66.871 137.929 67.4478 137.243 68.3133C136.556 69.1787 136.157 70.005 136.351 70.1588L145.834 77.6798C146.028 77.8337 146.742 77.2568 147.428 76.3914C148.115 75.526 148.514 74.6997 148.32 74.5459Z" fill="white"/>
+    <path d="M145.586 73.0357L136.342 80.8492C136.153 81.009 136.578 81.8224 137.291 82.666C138.004 83.5096 138.736 84.0639 138.925 83.904L148.168 76.0905C148.357 75.9307 147.932 75.1173 147.219 74.2737C146.506 73.4301 145.775 72.8758 145.586 73.0357Z" fill="white"/>
+    </g>
+    <defs>
+    <clipPath id="clip0_3_65">
+    <rect width="266" height="150" fill="white"/>
+    </clipPath>
+    </defs>
+    </svg>
+    
     `,
     category: "Triggers",
     content: `

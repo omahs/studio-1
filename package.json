@@ -1,6 +1,6 @@
 {
     "name": "dappify-studio",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "private": false,
     "dependencies": {
         "@auth0/auth0-spa-js": "^1.14.0",
@@ -95,8 +95,8 @@
         }
     },
     "scripts": {
-        "start": "export HTTPS=true&&SSL_CRT_FILE=cert.pem&&SSL_KEY_FILE=key.pem env-cmd -f .env react-scripts start",
-        "build": "env-cmd -f .env react-scripts build",
+        "start": "export HTTPS=true&&SSL_CRT_FILE=cert.pem&&SSL_KEY_FILE=key.pem REACT_APP_VERSION=$npm_package_version env-cmd -f .env react-scripts start",
+        "build": "REACT_APP_VERSION=$npm_package_version env-cmd -f .env react-scripts build",
         "build2": "rm -rf dist && NODE_ENV=production babel src --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__,node_modules",
         "start:cli": "react-scripts start",
         "build:cli": "react-scripts build",

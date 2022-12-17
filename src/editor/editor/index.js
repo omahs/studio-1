@@ -7,9 +7,11 @@ import PluginTokenGate from "../primitives/token-gated-container";
 import PluginNFT from "../primitives/nft-card";
 import PluginActionButton from "../primitives/action-button";
 
-// import PluginTailwind from "dappify-tailwind-module";
-// import PluginSmartContract from "dappify-smart-contract-ui-module";
 
+// import PluginSmartContract from "dappify-smart-contract-ui-module";
+import 'grapesjs-project-manager/dist/grapesjs-project-manager.min.css';
+import PluginProjectManager from "grapesjs-project-manager";
+import PluginTailwind from "grapesjs-tailwind";
 
 import PluginEditorPanelButtons from "./Panel/Buttons";
 import * as LandingPage from "../templates/LandingPage";
@@ -117,9 +119,15 @@ const Editor = ({ projectId, onClickHome }) => {
       height: "100vh",
       width: "100%",
       fromElement: true,
-      storageManager: false,
       selectorManager: { escapeName },
+      pageManager: true, // This should be set to true
+      storageManager: false,
+      // storageManager:  {
+      //   type: 'indexeddb',
+      //   // ...
+      // },
       plugins: [
+        // PluginProjectManager,
         // PluginTailwind,
         PluginEditorPanelButtons,
         PrimitiveWalletConnect,
@@ -127,6 +135,7 @@ const Editor = ({ projectId, onClickHome }) => {
         PluginTokenGate,
         PluginNFT,
         PluginActionButton,
+        PluginTailwind,
       ],
       pluginsOpts: {},
       canvas: {
@@ -149,13 +158,13 @@ const Editor = ({ projectId, onClickHome }) => {
 
     editorUI.setComponents(LandingPage.html);
     editorUI.setStyle(LandingPage.style);
-
-    editorUI.Panels.addButton("options", [
+    const panels = editorUI.Panels;
+    panels.addButton("options", [
       {
         id: "home",
         command: onClickHome,
         label: `
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#c6c7c8" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                         <polyline points="5 12 3 12 12 3 21 12 19 12" />
                         <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
@@ -167,6 +176,23 @@ const Editor = ({ projectId, onClickHome }) => {
         },
       },
     ]);
+    // panels.addButton('options', {
+    //     id: 'open-templates',
+    //     className: 'fa fa-folder-o',
+    //     attributes: {
+    //         title: 'Open projects and templates'
+    //     },
+    //     command: 'open-templates', //Open modal 
+    // });
+    // panels.addButton('views', {
+    //     id: 'open-pages',
+    //     className: 'fa fa-file-o',
+    //     attributes: {
+    //         title: 'Take Screenshot'
+    //     },
+    //     command: 'open-pages',
+    //     togglable: false
+    // });
 
     setEditor(editorUI);
   };

@@ -78,12 +78,13 @@ body {
 .gjs-block-label svg {
   width: 100%;
   height: 110px;
+  fill: transparent;
 }
 
 .gjs-block {
   width: 100%;
-  margin: 5%;
-  border: 4px solid #3700e6;
+  margin: 3%;
+  border: 4px solid #6366F1;
   background: #fff;
   border-radius: 8px;
 }

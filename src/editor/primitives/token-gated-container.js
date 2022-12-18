@@ -114,7 +114,8 @@ const Plugin = (editor) => {
             contract.balanceOfBatch(accounts, tokens).then((balances) => {
               const numBalances = balances.map((balance) => balance.toNumber());
               const positiveBalances = numBalances.find((item) => item > 0);
-              if (positiveBalances?.length > 0) {
+              console.log(`Current balance ${positiveBalances} for tokens ${tokens}`);
+              if (positiveBalances) {
                 show();
               }    
             });

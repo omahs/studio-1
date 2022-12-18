@@ -1,6 +1,6 @@
 {
     "name": "dappify-studio",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "private": false,
     "dependencies": {
         "@auth0/auth0-spa-js": "^1.14.0",
@@ -99,7 +99,7 @@
     "scripts": {
         "start": "export HTTPS=true&&SSL_CRT_FILE=cert.pem&&SSL_KEY_FILE=key.pem REACT_APP_VERSION=$npm_package_version env-cmd -f .env react-scripts start",
         "build:release": "REACT_APP_VERSION=$npm_package_version react-scripts build",
-        "build": "env-cmd -f .env npm run build",
+        "build": "env-cmd -f .env npm run build:release",
         "test": "jest --collectCoverage=true",
         "coverage": "jest --coverage",
         "eject": "react-scripts eject",

@@ -66,14 +66,19 @@ const Plugin = (editor) => {
     console.log(`Running script ${componentId}`);
     if (!props.contract) return;
 
+    const dispatchNFTEvent = (nft) => {
+      document.dispatchEvent(new CustomEvent("onNFTSelect", { detail: nft }));
+      console.log(`Event dispatched with content ${nft}`);
+    };
+
     const evalCondition = () => {
       const account = getAccount();
 
       $(".nft-card").click((el) => {
         const nft = el.target.getAttribute("data-metadata");
-        document.dispatchEvent(new CustomEvent("onNFTSelect", { detail: JSON.parse(nft) }));
-        console.log(`Event dispatched with content ${nft}`);
+        dispatchNFTEvent(JSON.parse(nft));
       });
+
       console.log(`Fetching moralis with key ${process.env.REACT_APP_MORALIS}`);
       fetch(
         `https://deep-index.moralis.io/api/v2/${account}/nft?chain=eth&format=decimal&limit=1&token_addresses=${props.contract}`,
@@ -102,6 +107,7 @@ const Plugin = (editor) => {
           $(`#nft-image-${index + 1}`).attr("src", imageDisplay);
           $(`#nft-title-${index + 1}`).text(`${item.symbol} #${item.token_id}`);
           $(`#nft-description-${index + 1}`).text(item.name);
+          dispatchNFTEvent(item);
         });
       });
     };

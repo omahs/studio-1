@@ -74,13 +74,13 @@ const Plugin = (editor) => {
         document.dispatchEvent(new CustomEvent("onNFTSelect", { detail: JSON.parse(nft) }));
         console.log(`Event dispatched with content ${nft}`);
       });
-      console.log(`Fetching moralis with key ${props.moralisApiKey}`);
+      console.log(`Fetching moralis with key ${process.env.REACT_APP_MORALIS}`);
       fetch(
         `https://deep-index.moralis.io/api/v2/${account}/nft?chain=eth&format=decimal&limit=1&token_addresses=${props.contract}`,
         {
           method: "GET", // *GET, POST, PUT, DELETE, etc.
           headers: {
-            "X-API-Key": props.moralisApiKey,
+            "X-API-Key": process.env.REACT_APP_MORALIS_API_KEY,
             // 'Content-Type': 'application/x-www-form-urlencoded',
           },
         }
@@ -135,20 +135,14 @@ const Plugin = (editor) => {
       defaults: {
         script,
         contract: "0x93FF8c6E074a97d60328a6823633b6dE93Da8F55",
-        moralisApiKey: process.env.REACT_APP_MORALIS_API_KEY,
         traits: [
           {
             changeProp: 1,
             type: "text",
             name: "contract",
-          },
-          {
-            changeProp: 1,
-            type: "text",
-            name: "moralisApiKey",
-          },
+          }
         ],
-        "script-props": ["contract", "moralisApiKey"],
+        "script-props": ["contract"],
       },
     },
   };

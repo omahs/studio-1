@@ -51,6 +51,30 @@ const Plugin = (editor) => {
         stateMutability: "view",
         type: "function",
       },
+      {
+        "inputs": [
+          {
+            "internalType": "address[]",
+            "name": "accounts",
+            "type": "address[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "ids",
+            "type": "uint256[]"
+          }
+        ],
+        "name": "balanceOfBatch",
+        "outputs": [
+          {
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
     ];
 
     const getAccount = () => {
@@ -62,8 +86,7 @@ const Plugin = (editor) => {
       
       return provider.selectedAddress;
     };
-
-
+  
     const evalCondition = () => {
       hide();
       if (!window.walletProvider) return false;
@@ -75,13 +98,31 @@ const Plugin = (editor) => {
         const signer = provider.getSigner();
         const contract = new ethers.Contract(props.contract, abi, signer);
         const account = getAccount();
-        contract.balanceOf(account).then((balance) => {
-          numericBalance = balance.toNumber();
-          if (numericBalance > 0) {
-            show();
-          }
-        });
-        
+
+        switch(props.asset) {
+          case 'erc721':
+            contract.balanceOf(account).then((balance) => {
+              numericBalance = balance.toNumber();
+              if (numericBalance > 0) {
+                show();
+              }    
+            });
+            break
+          case 'erc1155':
+            const accounts = [account];
+            const tokens = props.tokenIds.split(",");
+            contract.balanceOfBatch(accounts, tokens).then((balances) => {
+              const numBalances = balances.map((balance) => balance.toNumber());
+              const positiveBalances = numBalances.find((item) => item > 0);
+              console.log(`Current balance ${positiveBalances} for tokens ${tokens}`);
+              if (positiveBalances) {
+                show();
+              }    
+            });
+            break;
+          default:
+            console.log('Not supported');
+        }
       } catch (e) {
         console.log(e);
       }
@@ -111,13 +152,27 @@ const Plugin = (editor) => {
     model: {
       defaults: {
         script,
-        contract: "",
-        isEdit: false,
+        contract: "0x93FF8c6E074a97d60328a6823633b6dE93Da8F55",
+        isEdit: true,
         traits: [
+          {
+            changeProp: 1,
+            type: "select",
+            name: "asset",
+            options: [
+              { id: "erc721", name: "ERC721" },
+              { id: "erc1155", name: "ERC1155" }
+            ],
+          },
           {
             changeProp: 1,
             type: "text",
             name: "contract",
+          },
+          {
+            changeProp: 1,
+            type: "text",
+            name: "tokenIds",
           },
           {
             type: "checkbox",
@@ -126,7 +181,7 @@ const Plugin = (editor) => {
             changeProp: 2,
           },
         ],
-        "script-props": ["contract", "isEdit"],
+        "script-props": ["asset","contract", "tokenIds", "isEdit"],
       },
     },
   };

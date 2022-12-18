@@ -67,9 +67,9 @@ const Plugin = (editor) => {
     let modal, walletProvider;
   
     function getInfuraId() {
-      if (props.infuraKey) return props.infuraKey;
-      console.log("Using default Dappify Infura key");
-      return process.env.REACT_APP_INFURA_KEY;
+      const key = process.env.REACT_APP_INFURA_KEY;
+      console.log(`Using default Dappify Infura key ${key}`);
+      return key;
     }
   
     function init() {
@@ -168,15 +168,8 @@ const Plugin = (editor) => {
     model: {
       defaults: {
         script,
-        isEdit: false,
-        infuraKey: "",
+        isEdit: true,
         traits: [
-          {
-            type: "text",
-            label: "Infura ID",
-            name: "infuraKey",
-            changeProp: 1,
-          },
           {
             type: "checkbox",
             label: "Edit Mode",
@@ -184,7 +177,7 @@ const Plugin = (editor) => {
             changeProp: 2,
           },
         ],
-        "script-props": ["infuraKey", "isEdit"],
+        "script-props": ["isEdit"],
       },
     },
   };

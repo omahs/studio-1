@@ -39,10 +39,24 @@ const Plugin = (editor) => {
         .nft-card {
           padding: 20px;
           height: auto;
-          background: black;
+          background: rgba(255,255,255,0.95);
+          color: #666;
+          border-radius: 12px;
+          border: 1px solid rgba(0,0,0,0.1);
         }
         .nft-card img {
           margin: 0 auto;
+          border-radius: 8px;
+          margin-bottom: 10px;
+        }
+        #${componentId} row {
+          padding: 2px;
+        }
+        #${componentId} col {
+          padding: 2px;
+        }
+        #${componentId} {
+          padding: 20px;
         }
       </style>`,
   };
@@ -74,16 +88,18 @@ const Plugin = (editor) => {
       .then((result) => result.json())
       .then((data) => {
         const list = data.result;
-
         $(".nft-card").css("display", "block");
   
         list.forEach((item, index) => {
           const meta = JSON.parse(item.metadata);
+          const imageDisplay = meta.image.startsWith('ipfs://') ? `https://dappify.mypinata.cloud/ipfs/${meta.image.split('ipfs://')[1]}` : meta.image;
+          console.log(list);
+          console.log(imageDisplay);
           $(`#nft-container-${index + 1}`).attr(
             "data-metadata",
             JSON.stringify(item)
           );
-          $(`#nft-image-${index + 1}`).attr("src", meta.image);
+          $(`#nft-image-${index + 1}`).attr("src", imageDisplay);
           $(`#nft-title-${index + 1}`).text(`${item.symbol} #${item.token_id}`);
           $(`#nft-description-${index + 1}`).text(item.name);
         });
@@ -118,7 +134,7 @@ const Plugin = (editor) => {
     model: {
       defaults: {
         script,
-        contract: "",
+        contract: "0x93FF8c6E074a97d60328a6823633b6dE93Da8F55",
         traits: [
           {
             changeProp: 1,

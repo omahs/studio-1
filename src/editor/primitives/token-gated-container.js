@@ -111,8 +111,8 @@ const Plugin = (editor) => {
     model: {
       defaults: {
         script,
-        contract: "",
-        isEdit: false,
+        contract: "0x93FF8c6E074a97d60328a6823633b6dE93Da8F55",
+        isEdit: true,
         traits: [
           {
             changeProp: 1,

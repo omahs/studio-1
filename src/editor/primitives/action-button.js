@@ -24,9 +24,16 @@ const Plugin = (editor) => {
     `,
     category: "Triggers",
     content: `
-      <button type="button" class="btn btn-primary" id="${componentId}">
+      <button type="button" class="btn" id="${componentId}">
         <span>Action</spa>
       </button>
+      <style>
+        #${componentId} {
+          width: 100%;
+          background: #333;
+          color: white;
+        }
+      </style>
     `,
   };
 
@@ -35,9 +42,13 @@ const Plugin = (editor) => {
     console.log(`Running script ${componentId}`);
     let payload;
     const evalCondition = (evt, data) => {
-
+      if (!evt || !evt.detail) return;
+      console.log(evt);
+      console.log(data);
       const nft = evt.detail;
       const meta = JSON.parse(nft.metadata);
+      console.log(meta);
+      const img = meta.image.startsWith('ipfs://') ? `https://dappify.mypinata.cloud/ipfs/${meta.image.split('ipfs://')[1]}` : meta.image;
       payload = {
         username: "Dappify Webhook",
         avatar_url: "https://i.ibb.co/ZHC5n6b/S3-SNU-jpg-2.png",
@@ -71,7 +82,7 @@ const Plugin = (editor) => {
               },
             ],
             image: {
-              url: meta.image,
+              url: img,
             },
             footer: {
               text: "Powered by Dappify",
@@ -109,8 +120,8 @@ const Plugin = (editor) => {
     model: {
       defaults: {
         script,
-        value: "",
-        integration: "Discord",
+        value: "https://discord.com/api/webhooks/1026427505659367505/3PJ43KrV7w-VxqntchVaZfeoZILSNA7PsjoYbXVjHI1fvVaIGRmQs4LdahiM4JDR8tm_",
+        integration: { id: "discord", name: "Discord" },
         traits: [
           {
             changeProp: 1,

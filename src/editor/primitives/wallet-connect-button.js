@@ -168,7 +168,7 @@ const Plugin = (editor) => {
     model: {
       defaults: {
         script,
-        isEdit: false,
+        isEdit: true,
         infuraKey: "",
         traits: [
           {

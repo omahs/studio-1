@@ -74,13 +74,13 @@ const Plugin = (editor) => {
         document.dispatchEvent(new CustomEvent("onNFTSelect", { detail: JSON.parse(nft) }));
         console.log(`Event dispatched with content ${nft}`);
       });
-      console.log(`Fetching moralis with key ${moralisApiKey}`);
+      console.log(`Fetching moralis with key ${props.moralisApiKey}`);
       fetch(
         `https://deep-index.moralis.io/api/v2/${account}/nft?chain=eth&format=decimal&limit=1&token_addresses=${props.contract}`,
         {
           method: "GET", // *GET, POST, PUT, DELETE, etc.
           headers: {
-            "X-API-Key": moralisApiKey,
+            "X-API-Key": props.moralisApiKey,
             // 'Content-Type': 'application/x-www-form-urlencoded',
           },
         }

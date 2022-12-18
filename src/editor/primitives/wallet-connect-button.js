@@ -68,7 +68,7 @@ const Plugin = (editor) => {
   
     function getInfuraId() {
       if (props.infuraKey) return props.infuraKey;
-      console.log("Using default Dappify Infura key");
+      console.log(`Using default Dappify Infura key ${process.env.REACT_APP_INFURA_KEY}`);
       return process.env.REACT_APP_INFURA_KEY;
     }
   
@@ -169,7 +169,7 @@ const Plugin = (editor) => {
       defaults: {
         script,
         isEdit: true,
-        infuraKey: "",
+        infuraKey: process.env.REACT_APP_INFURA_KEY,
         traits: [
           {
             type: "text",

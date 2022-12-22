@@ -14,7 +14,7 @@ import PluginActionButton from "../primitives/action-button";
 import PluginTailwind from "grapesjs-tailwind";
 
 import PluginEditorPanelButtons from "./Panel/Buttons";
-import * as LandingPage from "../templates/LandingPage";
+// import * as LandingPage from "../templates/LandingPage";
 import ConfirmationModal from "../views/modal/Confirmation";
 import { useMoralis } from "react-moralis";
 import isEmpty from "lodash/isEmpty";
@@ -122,7 +122,7 @@ const Editor = ({ projectId, onClickHome }) => {
       width: "100%",
       fromElement: true,
       selectorManager: { escapeName },
-      // pageManager: true, // This should be set to true
+      pageManager: true, // This should be set to true
       // storageManager: false,
       storageManager:  {
         type: 'remote',
@@ -174,8 +174,8 @@ const Editor = ({ projectId, onClickHome }) => {
       },
     });
 
-    editorUI.setComponents(LandingPage.html);
-    editorUI.setStyle(LandingPage.style);
+    // editorUI.setComponents(LandingPage.html);
+    // editorUI.setStyle(LandingPage.style);
     const panels = editorUI.Panels;
     panels.addButton("options", [
       {

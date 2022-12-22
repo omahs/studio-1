@@ -1,6 +1,6 @@
 {
     "name": "dappify-studio",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "private": false,
     "dependencies": {
         "@auth0/auth0-spa-js": "^1.14.0",
@@ -18,6 +18,7 @@
         "axios-mock-adapter": "^1.19.0",
         "chance": "^1.1.7",
         "date-fns": "^2.21.1",
+        "firebase": "^8.10.1",
         "framer-motion": "^4.1.13",
         "grapesjs": "^0.19.5",
         "grapesjs-project-manager": "^2.0.5",

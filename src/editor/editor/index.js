@@ -9,8 +9,8 @@ import PluginActionButton from "../primitives/action-button";
 
 
 // import PluginSmartContract from "dappify-smart-contract-ui-module";
-import 'grapesjs-project-manager/dist/grapesjs-project-manager.min.css';
-import PluginProjectManager from "grapesjs-project-manager";
+// import 'grapesjs-project-manager/dist/grapesjs-project-manager.min.css';
+// import PluginProjectManager from "grapesjs-project-manager";
 import PluginTailwind from "grapesjs-tailwind";
 
 import PluginEditorPanelButtons from "./Panel/Buttons";
@@ -107,6 +107,8 @@ const Editor = ({ projectId, onClickHome }) => {
     // }, 1500);
   };
 
+  const projectEndpoint = `${process.env.REACT_APP_DAPPIFY_API_URL}/project/${projectId}`;
+
   const loadEditor = () => {
     if (!isEmpty(editor)) return;
 
@@ -120,12 +122,28 @@ const Editor = ({ projectId, onClickHome }) => {
       width: "100%",
       fromElement: true,
       selectorManager: { escapeName },
-      pageManager: true, // This should be set to true
-      storageManager: false,
-      // storageManager:  {
-      //   type: 'indexeddb',
-      //   // ...
-      // },
+      // pageManager: true, // This should be set to true
+      // storageManager: false,
+      storageManager:  {
+        type: 'remote',
+        autosave: true, // Store data automatically
+        autoload: true, // Autoload stored data on init
+        stepsBeforeSave: 1, 
+        options: {
+          remote: {
+            urlLoad: projectEndpoint,
+            urlStore: projectEndpoint,
+            // The `remote` storage uses the POST method when stores data but
+            // the json-server API requires PATCH.
+            // fetchOptions: opts => (opts.method === 'POST' ?  { method: 'PATCH' } : {}),
+            // As the API stores projects in this format `{id: 1, data: projectData }`,
+            // we have to properly update the body before the store and extract the
+            // project data from the response result.
+            onStore: data => ({ id: projectId, data }),
+            onLoad: result => result.data,
+          }
+        }
+      },
       plugins: [
         // PluginProjectManager,
         // PluginTailwind,
@@ -151,7 +169,7 @@ const Editor = ({ projectId, onClickHome }) => {
         ],
         // The same would be for external styles
         styles: [
-          "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css",
+          "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         ],
       },
     });
@@ -176,23 +194,6 @@ const Editor = ({ projectId, onClickHome }) => {
         },
       },
     ]);
-    // panels.addButton('options', {
-    //     id: 'open-templates',
-    //     className: 'fa fa-folder-o',
-    //     attributes: {
-    //         title: 'Open projects and templates'
-    //     },
-    //     command: 'open-templates', //Open modal 
-    // });
-    // panels.addButton('views', {
-    //     id: 'open-pages',
-    //     className: 'fa fa-file-o',
-    //     attributes: {
-    //         title: 'Take Screenshot'
-    //     },
-    //     command: 'open-pages',
-    //     togglable: false
-    // });
 
     setEditor(editorUI);
   };

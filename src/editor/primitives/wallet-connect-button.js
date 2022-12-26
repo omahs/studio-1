@@ -58,7 +58,7 @@ const Plugin = (editor) => {
   const script = function (props) {
     const componentId = "wallet-connect-button";
     console.log(`Running script ${componentId}`);
-
+ 
     const cachedProviderName = "WEB3_CONNECT_CACHED_PROVIDER";
     const Web3Modal = window.Web3Modal.default;
     const WalletConnectProvider = window.WalletConnectProvider.default;
@@ -86,13 +86,32 @@ const Plugin = (editor) => {
             },
           },
         },
+        // "custom-uauth": {
+        //   display: UAuthWeb3Modal.display,
+        //   connector: UAuthWeb3Modal.connector,
+        //   package: UAuthSPA,
+        //   options: {
+        //     clientID: 'e1adb083-3b1b-4944-936a-fd8bfe290c0e',
+        //     scope: 'openid wallet',
+        //     redirectUri: 'http://localhost:3000'
+        //   },
+        // }
       };
   
       modal = new Web3Modal({
         cacheProvider: true,
         providerOptions,
         disableInjectedProvider: false,
+        theme: {
+          background: "rgb(39, 49, 56)",
+          main: "rgb(199, 199, 199)",
+          secondary: "rgb(136, 136, 136)",
+          border: "rgba(195, 195, 195, 0.14)",
+          hover: "rgb(16, 26, 32)"
+        }
       });
+
+      // UAuthWeb3Modal.registerWeb3Modal(modal);
   
       const cachedProvider = localStorage.getItem(cachedProviderName);
       if (cachedProvider) {
@@ -112,6 +131,7 @@ const Plugin = (editor) => {
       console.log("Connecting wallet", modal);
       try {
         modal.connect().then((provider) => {
+          console.log(provider);
           walletProvider = provider;
           window.walletProvider = provider;
           document.dispatchEvent(new Event("Connected", provider));
@@ -168,7 +188,7 @@ const Plugin = (editor) => {
     model: {
       defaults: {
         script,
-        isEdit: true,
+        isEdit: false,
         traits: [
           {
             type: "checkbox",

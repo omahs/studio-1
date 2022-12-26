@@ -11,7 +11,7 @@ const ProjectCard = ({ project = {} }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [selected, setSelected] = useState();
-
+	console.log(project);
 	const projectConfig = project?.get('config');
 	const selectProject = (appConfig) => {
 		dispatch({ type: UPDATE_APP, configuration: appConfig });
@@ -63,14 +63,14 @@ const ProjectCard = ({ project = {} }) => {
 						</Button>
 					</Typography>
 					<Grid item sx={{ height: 20, mb: 2 }} xs={12}>
-						{project?.hash && (
+						{project?.get('hash') && (
 							<Typography variant="h6" fontSize="0.7em">
 								<Button
 									sx={{
 										textTransform: "none",
-										fontSize: "1em"
+										fontSize: "0.8em"
 									}}
-									href={project?.url}
+									href={project?.get('url')}
 								>
 									{`ipfs/${project.get('hash')}`}
 								</Button>

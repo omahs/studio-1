@@ -47,10 +47,6 @@ const publishFn = (editor) => {
     attributes: { class: "my-class" },
   });
 
-  // if(confirm('Are you sure to clean the canvas?')) {
-  // var comps = editor.DomComponents.clear();
-  // setTimeout(function(){ localStorage.clear()}, 0)
-  // }
 };
 
 const Plugin = (editor, config) => {
@@ -74,20 +70,6 @@ const Plugin = (editor, config) => {
     {
       id: "options",
       buttons: [
-        // {
-        //   id: 'launch',
-        //   command: publish,
-        //   attributes: { title: 'Publish'},
-        //   // className: 'fa fa-square-o',
-        //   label: `
-        //     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rocket" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        //         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-        //         <path d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3 -5a9 9 0 0 0 6 -8a3 3 0 0 0 -3 -3a9 9 0 0 0 -8 6a6 6 0 0 0 -5 3"></path>
-        //         <path d="M7 14a6 6 0 0 0 -3 6a6 6 0 0 0 6 -3"></path>
-        //         <circle cx="15" cy="9" r="1"></circle>
-        //     </svg>
-        //   `
-        // },
         {
           id: swv,
           command: swv,
@@ -132,12 +114,6 @@ const Plugin = (editor, config) => {
             </svg>
         `,
         },
-        //   {
-        //     id: ful,
-        //     command: ful,
-        //     context: ful,
-        //     className: 'fa fa-arrows-alt',
-        //   },
         {
           id: expt,
           // className: 'fa fa-code',
@@ -188,14 +164,6 @@ const Plugin = (editor, config) => {
         },
         clearCanvasButton,
         publishButton,
-        // {
-        //   id: 'open-templates',
-        //   className: 'fa fa-folder-o',
-        //   attributes: {
-        //       title: 'Open projects and templates'
-        //   },
-        //   command: 'open-templates', //Open modal 
-        // }
         {
           id: 'alert-button',
           attributes: { title: "Change template" },
@@ -274,15 +242,23 @@ const Plugin = (editor, config) => {
             </svg>
         `,
         },
-      //   {
-      //     id: 'open-pages',
-      //     className: 'fa fa-file-o',
-      //     attributes: {
-      //         title: 'Take Screenshot'
-      //     },
-      //     command: 'open-pages',
-      //     togglable: false
-      // }
+        {
+          id: 'open-pages',
+          attributes: {
+              title: 'Pages'
+          },
+          label: `
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+              <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+              <line x1="12" y1="11" x2="12" y2="17" />
+              <line x1="9" y1="14" x2="15" y2="14" />
+            </svg>
+          `,
+          command: 'open-pages',
+          togglable: false
+      }
       ],
     },
   ]);
@@ -359,13 +335,6 @@ const Plugin = (editor, config) => {
   cmdm.add(cmdPublish, () => publishFn(editor));
 
   cmdm.add("canvas-clear", () => {
-    // const modal = editor.Modal;
-    // modal.open({
-    //   title: 'My title',
-    //   content: LoginModal(),
-    //   attributes: { class: 'my-class' },
-    // });
-
     // if(confirm('Are you sure to clean the canvas?')) {
     setTimeout(function () {
       localStorage.clear();

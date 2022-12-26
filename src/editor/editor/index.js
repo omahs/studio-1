@@ -6,18 +6,16 @@ import PrimitiveWalletConnect from "../primitives/wallet-connect-button";
 import PluginTokenGate from "../primitives/token-gated-container";
 import PluginNFT from "../primitives/nft-card";
 import PluginActionButton from "../primitives/action-button";
-
-
-// import PluginSmartContract from "dappify-smart-contract-ui-module";
-// import 'grapesjs-project-manager/dist/grapesjs-project-manager.min.css';
-// import PluginProjectManager from "grapesjs-project-manager";
 import PluginTailwind from "grapesjs-tailwind";
 
+import PageManager from "./Plugins/PageManager";
+
 import PluginEditorPanelButtons from "./Panel/Buttons";
-// import * as LandingPage from "../templates/LandingPage";
 import ConfirmationModal from "../views/modal/Confirmation";
 import { useMoralis } from "react-moralis";
 import isEmpty from "lodash/isEmpty";
+
+import axios from 'axios';
 
 const Editor = ({ projectId, onClickHome }) => {
   const [editor, setEditor] = useState({});
@@ -41,70 +39,98 @@ const Editor = ({ projectId, onClickHome }) => {
       event.target.parentNode.querySelector("#wait-publish-btn").style.display =
         "block";
 
-      const html = editor.getHtml();
-      const css = editor.getCss();
+        const pageManager = editor.Pages;
 
-      // Generate final HTML
-      const content = `
-                <!doctype html>
-                <html lang="en">
-                  <head>
-                    <meta charset="UTF-8">
-                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-                    <script src="https://cdn.tailwindcss.com"></script>
-                    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
-                    <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script>
-                    <script src="https://unpkg.com/web3modal@1.9.0/dist/index.js"></script>
-                    <script src="https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js"></script>
-                    <script src="https://unpkg.com/@walletconnect/web3-provider@1.3.1/dist/umd/index.min.js"></script>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js"></script>
-                    <style tyle="text/css">${css}</style>
-                  </head>
-                  ${html}
-                </html>`;
+        const allPages = [
+          {
+            path: 'script.js',
+            content: btoa(editor.getJs())
+          }, 
+          {
+            path: 'style.css',
+            content: btoa(editor.getCss())
+          }];
 
-      var blob = new Blob([content], { type: "text/plain" });
-      const file = new Moralis.File("project", blob);
-      const deployed = await file.saveIPFS();
-      const hash = deployed.hash();
-      const url = `https://dappify.mypinata.cloud/ipfs/${hash}`;
-      const uri = getUrl(project.get("subdomain"));
+    
+        pageManager.getAll().forEach((page) => {
+          const pageName = page.attributes?.type === 'main' ? 'index' : page.attributes?.name;
+          const body = page.getMainComponent().toHTML();
+          const content = `
+            <!doctype html>
+            <html lang="en">
+              <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+                <link rel="stylesheet" type="text/css" href="./style.css"  />
+                <script src="https://cdn.tailwindcss.com"></script>
+                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+                <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script>
+                <script src="https://unpkg.com/web3modal@1.9.0/dist/index.js"></script>
+                <script src="https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js"></script>
+                <script src="https://unpkg.com/@walletconnect/web3-provider@1.3.1/dist/umd/index.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js"></script>
+                <script src="./script.js" defer></script>
+              </head>
+              ${body}
+            </html>`;
 
-      // Show confirmation modal
-      const modal = editor.Modal;
-      modal.open({
-        title: "Congratulations",
-        content: ConfirmationModal({ url, uri, hash }),
-        attributes: { class: "my-class" },
-      });
+            allPages.push({
+              path: `${pageName}.html`,
+              content:btoa(content)
+            });
+        });
+        
+        const upload = await axios.post('https://deep-index.moralis.io/api/v2/ipfs/uploadFolder',
+            allPages,
+            {
+              headers: {
+                "X-API-KEY": process.env.REACT_APP_MORALIS_API_KEY,
+                "Content-Tyoe": "application/json",
+                "accept": "application/json"
+              }
+            }
+        )
 
-      // Save as project
-      project.set("url", url);
-      project.set("hash", hash);
-      await project.save();
+        const indexPage = upload?.data?.find((item) => item.path.includes('/index.html'));
+        const cid = indexPage.path.split('/')[4];
+        const url = `https://ipfs.moralis.io:2053/ipfs/${cid}/index.html`;
+
+        // Save as project
+        project.set("url", url);
+        project.set("hash", cid);
+        await project.save();
+
+        const uri = getUrl(project.get("subdomain"));
+            console.log(uri);
+            console.log(cid);
+            console.log(url);
+        // Show confirmation modal
+        const modal = editor.Modal;
+        modal.open({
+          title: "Congratulations",
+          content: ConfirmationModal({ url, cid, uri }),
+          attributes: { class: "my-class" },
+        });
+      };
     };
-  };
 
-  const loadProject = async () => {
-    const Proj = Moralis.Object.extend("Project");
-    const query = new Moralis.Query(Proj);
-    console.log("SUPPPP");
-    console.log(user);
-    query.equalTo("owner", user);
-    query.equalTo("objectId", projectId);
-    const foundProject = await query.first();
-    setProject(foundProject);
+    const loadProject = async () => {
+      const Proj = Moralis.Object.extend("Project");
+      const query = new Moralis.Query(Proj);
+      query.equalTo("owner", user);
+      query.equalTo("objectId", projectId);
+      const foundProject = await query.first();
+      setProject(foundProject);
 
-    // Set context
-    window.dappify = {
-      project: foundProject,
-    };
+      // Set context
+      window.dappify = {
+        project: foundProject,
+      };
 
-    // setTimeout(() => {
       loadEditor();
-    // }, 1500);
   };
 
   const projectEndpoint = `${process.env.REACT_APP_DAPPIFY_API_URL}/project/${projectId}`;
@@ -154,10 +180,12 @@ const Editor = ({ projectId, onClickHome }) => {
         PluginNFT,
         PluginActionButton,
         PluginTailwind,
+        PageManager
       ],
       pluginsOpts: {},
       canvas: {
         scripts: [
+          "https://cdn.tailwindcss.com",
           "https://code.jquery.com/jquery-3.6.1.min.js",
           "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js",
           "https://cdn.ethers.io/lib/ethers-5.0.umd.min.js",

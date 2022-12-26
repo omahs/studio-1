@@ -21,7 +21,6 @@
         "firebase": "^8.10.1",
         "framer-motion": "^4.1.13",
         "grapesjs": "^0.19.5",
-        "grapesjs-project-manager": "^2.0.5",
         "grapesjs-tailwind": "^1.0.8",
         "jss": "^10.7.1",
         "jss-rtl": "^0.3.0",

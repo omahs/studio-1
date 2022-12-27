@@ -39,22 +39,25 @@ const Editor = ({ projectId, onClickHome }) => {
       event.target.parentNode.querySelector("#wait-publish-btn").style.display =
         "block";
 
+        
         const pageManager = editor.Pages;
+        const currentPageId = pageManager.getSelected().id;
 
-        const allPages = [
-          {
-            path: 'script.js',
-            content: btoa(editor.getJs())
-          }, 
-          {
-            path: 'style.css',
-            content: btoa(editor.getCss())
-          }];
+        const allPages = [];
+        pageManager.getAll().forEach(async (page) => {
 
-    
-        pageManager.getAll().forEach((page) => {
+          pageManager.select(page.id);
           const pageName = page.attributes?.type === 'main' ? 'index' : page.attributes?.name;
           const body = page.getMainComponent().toHTML();
+
+          const functionalBody = body.replace(
+            '</body', 
+            `<script>
+                ${editor.getJs()}
+              </script>
+            </body>`
+          );
+
           const content = `
             <!doctype html>
             <html lang="en">
@@ -62,7 +65,6 @@ const Editor = ({ projectId, onClickHome }) => {
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-                <link rel="stylesheet" type="text/css" href="./style.css"  />
                 <script src="https://cdn.tailwindcss.com"></script>
                 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
                 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -72,9 +74,11 @@ const Editor = ({ projectId, onClickHome }) => {
                 <script src="https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js"></script>
                 <script src="https://unpkg.com/@walletconnect/web3-provider@1.3.1/dist/umd/index.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js"></script>
-                <script src="./script.js" defer></script>
+                <style>
+                  ${editor.getCss()}
+                </style>
               </head>
-              ${body}
+              ${functionalBody}
             </html>`;
 
             allPages.push({
@@ -82,7 +86,10 @@ const Editor = ({ projectId, onClickHome }) => {
               content:btoa(content)
             });
         });
-        
+
+        // Return to original selected page
+        pageManager.select(currentPageId);
+
         const upload = await axios.post('https://deep-index.moralis.io/api/v2/ipfs/uploadFolder',
             allPages,
             {

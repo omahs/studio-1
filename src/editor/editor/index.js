@@ -95,7 +95,7 @@ const Editor = ({ projectId, onClickHome }) => {
             {
               headers: {
                 "X-API-KEY": process.env.REACT_APP_MORALIS_API_KEY,
-                "Content-Tyoe": "application/json",
+                "Content-Type": "application/json",
                 "accept": "application/json"
               }
             }
@@ -161,9 +161,9 @@ const Editor = ({ projectId, onClickHome }) => {
       },
       {
         headers: {
-          "X-API-KEY": process.env.REACT_APP_MORALIS_API_KEY,
-          "Content-Tyoe": "application/json",
-          "accept": "application/json"
+          "X-Api-Key": process.env.REACT_APP_MORALIS_API_KEY,
+          "Content-Type": "application/json",
+          "Accept": "application/json"
         }
       }
     )

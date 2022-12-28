@@ -95,7 +95,7 @@ const Editor = ({ projectId, onClickHome }) => {
             {
               headers: {
                 "X-API-KEY": process.env.REACT_APP_MORALIS_API_KEY,
-                "Content-Tyoe": "application/json",
+                "Content-Type": "application/json",
                 "accept": "application/json"
               }
             }
@@ -105,7 +105,20 @@ const Editor = ({ projectId, onClickHome }) => {
         const cid = indexPage.path.split('/')[4];
         const url = `https://ipfs.moralis.io:2053/ipfs/${cid}/index.html`;
 
-        // Save as project
+        // Register in AWS deploy
+        const defaultSubdomain = process.env.REACT_APP_HOST_ENV === 'dev' ?
+           `${project.get("subdomain")}.dev.dappify.com` :
+           `${project.get("subdomain")}.dappify.com`;
+
+        await publishRouting(defaultSubdomain, cid);
+
+        // Custom domain?
+        const defaultDomain = project.get("domain");
+        if (defaultDomain) {
+          await publishRouting(defaultDomain, cid);
+        }
+
+        // Save as project in Moralis (Legacy)
         project.set("url", url);
         project.set("hash", cid);
         await project.save();
@@ -139,6 +152,22 @@ const Editor = ({ projectId, onClickHome }) => {
 
       loadEditor();
   };
+
+  const publishRouting = async (id, cid) => {
+    return await axios.post(`${process.env.REACT_APP_DAPPIFY_API_URL}/route/${id}`,
+      {
+        id: id,
+        cid: cid
+      },
+      {
+        headers: {
+          "X-Api-Key": process.env.REACT_APP_MORALIS_API_KEY,
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+      }
+    )
+  }
 
   const projectEndpoint = `${process.env.REACT_APP_DAPPIFY_API_URL}/project/${projectId}`;
 

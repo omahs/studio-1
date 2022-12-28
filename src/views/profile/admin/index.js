@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 // material-ui
 import { styled, useTheme } from "@mui/material/styles";
@@ -17,10 +17,12 @@ import {
 import { drawerWidth } from "store/constant";
 import Sidebar from "layout/ProfileLayout/Sidebar";
 import { SET_MENU } from "store/actions";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 import AccountBalanceWalletTwoToneIcon from "@mui/icons-material/AccountBalanceWalletTwoTone";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Logo from "common/Logo";
+import { Magic } from 'magic-sdk';
+const m = new Magic(process.env.REACT_APP_MAGIC_API_KEY);
 
 // styles
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -74,7 +76,8 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 
 const ProfileAdmin = () => {
 	const theme = useTheme();
-	const { logout, user } = useMoralis();
+	const navigate = useNavigate();
+	// const { logout, user } = useMoralis();
 	const matchDownMd = useMediaQuery(theme.breakpoints.down("lg"));
 
 	// Handle left drawer
@@ -85,17 +88,22 @@ const ProfileAdmin = () => {
 	};
 
 	const renderAddress = () => {
-		const address = user.get("ethAddress");
-		return `${address.substring(0, 4)}...${address.substring(
-			address.length - 8,
-			address.length
-		)}`;
+		// const address = user.get("ethAddress");
+		// return `${address.substring(0, 4)}...${address.substring(
+		// 	address.length - 8,
+		// 	address.length
+		// )}`;
 	};
 
 	useEffect(() => {
 		dispatch({ type: SET_MENU, opened: !matchDownMd });
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [matchDownMd]);
+
+	const logout = async () => {
+		await m.user.logout();
+		navigate('/');
+	}
 
 	return (
 		<Box sx={{ display: "flex" }}>
@@ -124,10 +132,9 @@ const ProfileAdmin = () => {
 						color="primary"
 						size="small"
 						onClick={logout}
-						startIcon={<AccountBalanceWalletTwoToneIcon />}
 						endIcon={<LogoutIcon />}
 					>
-						{user && renderAddress()}
+						Logout
 					</Button>
 				</Toolbar>
 			</AppBar>
@@ -140,7 +147,7 @@ const ProfileAdmin = () => {
 			{/* main content */}
 			<Main theme={theme} open={leftDrawerOpened}>
 				{/* breadcrumb */}
-				{user && <Outlet />}
+				{<Outlet />}
 			</Main>
 			{/* <SidePanel /> */}
 		</Box>

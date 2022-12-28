@@ -4,20 +4,23 @@ import { useDispatch } from "react-redux";
 import { Box, Grid, Typography, Paper, Avatar, CircularProgress } from "@mui/material";
 import Logo from "common/Logo";
 import { SNACKBAR_OPEN } from "store/actions";
-import { useMoralis } from 'react-moralis';
+import { Magic } from 'magic-sdk';
+
 const destination = "/profile/projects";
+
+const m = new Magic(process.env.REACT_APP_MAGIC_API_KEY);
 
 const Signin = () => {
 	const navigate = useNavigate();
-	const { isAuthenticated, authenticate } = useMoralis();
 	const [originUser, setOriginUser] = useState({});
 	const dispatch = useDispatch();
 
 	/**
 	 * Only users redirected from main website are allowed, providing (uid, name, email and photo)
 	 */
-	const runAuth = () => {
-		if (isAuthenticated) {
+	const runAuth = async () => {
+		const loggedIn = await m?.user?.isLoggedIn();
+		if (loggedIn) {
 			navigate(destination);
 			return;
 		}
@@ -47,20 +50,8 @@ const Signin = () => {
 	
 	const signIn = async (refUser) => {
 		try {
-			const signupUser = await authenticate({
-				provider: "magicLink",
-				email: refUser.email,
-				apiKey: process.env.REACT_APP_MAGIC_API_KEY,
-				network: "mainnet"
-			});
-			if (!signupUser) return;
-			signupUser.set("profile", {
-				image: refUser.photo,
-				name: refUser.name,
-				email: refUser.email,
-				uid: refUser.uid
-			});
-			await signupUser.save();
+
+			await m.auth.loginWithMagicLink({ email: refUser.email });
 			navigate(destination);
 		} catch (e) {
 			console.log(e);

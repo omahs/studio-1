@@ -1,9 +1,12 @@
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // project imports
-import { useEffect } from "react";
-import { useMoralis } from "react-moralis";
+import { useContext, useEffect } from "react";
+// import { useMoralis } from "react-moralis";
+import { Magic } from 'magic-sdk';
+const m = new Magic(process.env.REACT_APP_MAGIC_API_KEY);
 
 // ==============================|| AUTH GUARD ||============================== //
 
@@ -12,14 +15,24 @@ import { useMoralis } from "react-moralis";
  * @param {PropTypes.node} children children element/node
  */
 const ProfileGuard = ({ children }) => {
-	const { isAuthenticated } = useMoralis();
+	// const { isAuthenticated } = useMoralis();
+	// const appState = useSelector((state) => state.app);
+	// const { user, isAuthenticated } = useMoralis();
+	// const { isLoggedIn } = useAuth();
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!isAuthenticated) {
-			navigate("/", { replace: true });
+		// if (!appState.appId) {
+		// 	navigate("/profile", { replace: true });
+		// }
+		const evalLogin = async() => {
+			const loggedIn = await m.user.isLoggedIn();
+			if (!loggedIn)
+				navigate('/');
 		}
-	}, [isAuthenticated, navigate]);
+
+		evalLogin();
+	}, [navigate]);
 
 	return children;
 };

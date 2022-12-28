@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 
 // project imports
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 
 // assets
 import MenuIcon from "@mui/icons-material/Menu";
@@ -59,7 +59,7 @@ function ElevationScroll({ children, window }) {
 const AppBar = ({ ...others }) => {
 	const location = useLocation();
 	const [drawerToggle, setDrawerToggle] = useState(false);
-	const { isAuthenticated, user, logout } = useMoralis();
+	// const { isAuthenticated, user, logout } = useMoralis();
 
 	const [showWalletDialog, setShowWalletDialog] = useState();
 
@@ -75,41 +75,41 @@ const AppBar = ({ ...others }) => {
 	};
 
 	const renderAddress = () => {
-		const address = user.get("ethAddress");
-		return `${address.substring(0, 4)}...${address.substring(
-			address.length - 8,
-			address.length
-		)}`;
+		// const address = user.get("ethAddress");
+		// return `${address.substring(0, 4)}...${address.substring(
+		// 	address.length - 8,
+		// 	address.length
+		// )}`;
 	};
 
-	const loginButton = isAuthenticated ? (
-		<Button
-			disableElevation
-			variant="contained"
-			color="primary"
-			component="span"
-			size="large"
-			id="disconnect-wallet-btn"
-			onClick={logout}
-			startIcon={<AccountBalanceWalletTwoToneIcon />}
-			endIcon={<LogoutIcon />}
-		>
-			{renderAddress()}
-		</Button>
-	) : (
-		<Button
-			disableElevation
-			variant="contained"
-			color="primary"
-			component="span"
-			size="large"
-			id="connect-wallet-btn"
-			onClick={() => setShowWalletDialog(true)}
-			startIcon={<AccountBalanceWalletTwoToneIcon />}
-		>
-			Connect Wallet
-		</Button>
-	);
+	// const loginButton = isAuthenticated ? (
+	// 	<Button
+	// 		disableElevation
+	// 		variant="contained"
+	// 		color="primary"
+	// 		component="span"
+	// 		size="large"
+	// 		id="disconnect-wallet-btn"
+	// 		onClick={logout}
+	// 		startIcon={<AccountBalanceWalletTwoToneIcon />}
+	// 		endIcon={<LogoutIcon />}
+	// 	>
+	// 		{renderAddress()}
+	// 	</Button>
+	// ) : (
+	// 	<Button
+	// 		disableElevation
+	// 		variant="contained"
+	// 		color="primary"
+	// 		component="span"
+	// 		size="large"
+	// 		id="connect-wallet-btn"
+	// 		onClick={() => setShowWalletDialog(true)}
+	// 		startIcon={<AccountBalanceWalletTwoToneIcon />}
+	// 	>
+	// 		Connect Wallet
+	// 	</Button>
+	// );
 
 	const roadmap = process.env.REACT_APP_ROADMAP_URL;
 	const micropaper = process.env.REACT_APP_MICROPAPER_URL;
@@ -168,7 +168,7 @@ const AppBar = ({ ...others }) => {
 							{!(
 								location.pathname === "/" ||
 								location.pathname === "/templates"
-							) && loginButton}
+							) /*&& loginButton*/ }
 						</Stack>
 						<Box sx={{ display: { xs: "block", md: "none" } }}>
 							<IconButton

@@ -13,7 +13,6 @@ import Locales from "ui-component/Locales";
 import Snackbar from "ui-component/extended/Snackbar";
 
 // provider
-import { MoralisProvider } from "react-moralis";
 import { ProgressProvider } from "contexts/ProgressContext";
 
 // ==============================|| APP ||============================== //
@@ -22,21 +21,19 @@ const App = () => {
 	const customization = useSelector((state) => state.customization);
 
 	return (
-		<MoralisProvider appId={process.env.REACT_APP_MORALIS_APP_ID} serverUrl={process.env.REACT_APP_MORALIS_SERVER_URL}>
-			<StyledEngineProvider injectFirst>
-				<ThemeProvider theme={themes(customization)}>
-					<ProgressProvider>
-						<CssBaseline />
-						<Locales>
-							<>
-								<Routes />
-								<Snackbar />
-							</>
-						</Locales>
-					</ProgressProvider>
-				</ThemeProvider>
-			</StyledEngineProvider>
-		</MoralisProvider>
+		<StyledEngineProvider injectFirst>
+			<ThemeProvider theme={themes(customization)}>
+				<ProgressProvider>
+					<CssBaseline />
+					<Locales>
+						<>
+							<Routes />
+							<Snackbar />
+						</>
+					</Locales>
+				</ProgressProvider>
+			</ThemeProvider>
+		</StyledEngineProvider>
 	);
 };
 

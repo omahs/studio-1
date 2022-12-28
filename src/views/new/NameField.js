@@ -18,7 +18,8 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { getUrl } from "utils/url";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
+import axios from "axios";
 
 const NameField = ({ onChange }) => {
 	const theme = useTheme();
@@ -27,7 +28,8 @@ const NameField = ({ onChange }) => {
 	const [appSubdomain, setAppSubdomain] = useState(appState.subdomain);
 	const [error, setError] = useState();
 	const [showEditor, setShowEditor] = useState(false);
-	const { Moralis } = useMoralis();
+	// const { Moralis } = useMoralis();
+
 
 	const generateSubdomain = async (name) => {
 		setError();
@@ -47,16 +49,40 @@ const NameField = ({ onChange }) => {
 			return;
 		}
 		const prefix = name.replace(/\s/g, "").toLowerCase();
-		const query = new Moralis.Query('Project')
-		query.equalTo('subdomain', prefix.toLocaleLowerCase())
-		const found = await query.first()
-		setError(
-			found
-				? "Project subdomain taken, please select a different subdomain"
-				: null
-		);
 		setAppSubdomain(prefix);
 		setAppName(name);
+		try {
+			const response = await axios.get(`${process.env.REACT_APP_DAPPIFY_API_URL}/project/${prefix}`,
+				{
+					headers: {
+					"X-Api-Key": process.env.REACT_APP_DAPPIFY_API_KEY,
+					"Content-Type": "application/json",
+					"Accept": "application/json"
+					}
+				}
+			)
+
+			const found = response?.data?.id;
+			setError(
+				found
+					? "Project subdomain taken, please select a different subdomain"
+					: null
+			);
+			return;
+		} catch (e) {
+			// Not found any project, good to go
+		}
+
+		// const query = new Moralis.Query('Project')
+		// query.equalTo('subdomain', prefix.toLocaleLowerCase())
+		// const found = await query.first()
+		// setError(
+		// 	found
+		// 		? "Project subdomain taken, please select a different subdomain"
+		// 		: null
+		// );
+		// setAppSubdomain(prefix);
+		// setAppName(name);
 	};
 
 	useEffect(() => {

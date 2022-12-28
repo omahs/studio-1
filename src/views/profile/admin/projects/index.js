@@ -4,25 +4,43 @@ import ProjectCard from "ui-component/ProjectCard";
 import { useTheme } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
+import axios from 'axios';
+import { Magic } from 'magic-sdk';
+const m = new Magic(process.env.REACT_APP_MAGIC_API_KEY);
+
 
 const Projects = () => {
-	const { isAuthenticated, user, Moralis } = useMoralis();
+	// const { isAuthenticated, user, Moralis } = useMoralis();
 	const navigate = useNavigate();
 	const theme = useTheme();
 	const [projects, setProjects] = useState([]);
 	const [selected, setSelected] = useState();
 
 	const listAll = async () => {
-		const query = new Moralis.Query("Project");
-		query.equalTo("owner", user);
-		query.descending("updatedAt");
-		const list = await query.find();
+		const { issuer } = await m.user.getMetadata();
+		const response = await axios.get(`${process.env.REACT_APP_DAPPIFY_API_URL}/project?owner=${issuer}`,
+			{
+				headers: {
+				"X-Api-Key": process.env.REACT_APP_DAPPIFY_API_KEY,
+				"Content-Type": "application/json",
+				"Accept": "application/json"
+				}
+			}
+		)
+
+		const list = response?.data;
+
+		// const query = new Moralis.Query("Project");
+		// query.equalTo("owner", user);
+		// query.descending("updatedAt");
+		// const list = await query.find();
 		setProjects(list);
 	};
 
 	const loadApps = async () => {
-		if (isAuthenticated) {
+		const isLoggedIn = m.user.isLoggedIn();
+		if (isLoggedIn) {
 			listAll();
 		} else {
 			setProjects([]);
@@ -32,9 +50,9 @@ const Projects = () => {
 	useEffect(() => {
 		loadApps();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isAuthenticated]);
+	}, []);
 
-	const createNew = isAuthenticated && (
+	const createNew = /* isAuthenticated && */ (
 		<Grid item xs={12} sm={6} md={4} key={0}>
 			<Box>
 				<Paper

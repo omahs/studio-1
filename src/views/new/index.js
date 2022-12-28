@@ -16,10 +16,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { UPDATE_APP } from "store/actions";
 import { defaultConfiguration } from "utils/config";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
+import axios from "axios";
+import { Magic } from 'magic-sdk';
+const m = new Magic(process.env.REACT_APP_MAGIC_API_KEY);
 
 const NewPage = () => {
-	const { user, Moralis } = useMoralis();
+	// const { user, Moralis } = useMoralis();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const appState = useSelector((state) => state.app);
@@ -28,7 +31,7 @@ const NewPage = () => {
 		setCantContinue(!canNextStep || !appName || !subddomain);
 		appState.name = appName;
 		appState.subdomain = subddomain;
-		appState.operator = user.get("ethAddress");
+		// appState.operator = user.get("ethAddress");
 	};
 
 	// const handleStepTwo = (chainId) => {
@@ -63,15 +66,30 @@ const NewPage = () => {
 	const [cantContinue, setCantContinue] = useState(true);
 
 	const createProject = async (appConfiguration, userPointer) => {
-		const Project = Moralis.Object.extend("Project");
-		const project = new Project();
-		project.set("owner", userPointer);
-		project.set("subdomain", appConfiguration.subdomain);
-		const createdProject = await project.save();
-		appConfiguration.appId = createdProject.id;
-		createdProject.set("config", appConfiguration);
-		const savedProject = await createdProject.save();
-		return savedProject;
+		console.log(appConfiguration);
+		console.log(userPointer);
+
+
+	// 	const response = await axios.get(`${process.env.REACT_APP_DAPPIFY_API_URL}/project/${prefix}`,
+	// 	{
+	// 		headers: {
+	// 		"X-Api-Key": process.env.REACT_APP_MORALIS_API_KEY,
+	// 		"Content-Type": "application/json",
+	// 		"Accept": "application/json"
+	// 		}
+	// 	}
+	// )
+
+
+		// const Project = Moralis.Object.extend("Project");
+		// const project = new Project();
+		// project.set("owner", userPointer);
+		// project.set("subdomain", appConfiguration.subdomain);
+		// const createdProject = await project.save();
+		// appConfiguration.appId = createdProject.id;
+		// createdProject.set("config", appConfiguration);
+		// const savedProject = await createdProject.save();
+		// return savedProject;
 	};
 
 	const handleNextStep = async () => {
@@ -79,12 +97,40 @@ const NewPage = () => {
 		setCantContinue(true);
 		dispatch({ type: UPDATE_APP, configuration: appState });
 		if (appState.step === 2) {
-			const savedProject = await createProject(appState, user);
-			dispatch({
-				type: UPDATE_APP,
-				configuration: savedProject.get("config")
-			});
-			navigate(`/builder/${appState?.appId}`);
+			const { issuer } = await m.user.getMetadata();
+			console.log(issuer);
+			console.log(appState);
+
+			const appData = {
+				name: appState.name,
+				subdomain: appState.subdomain,
+				owner:issuer,
+				domain: null,
+				metadata: {},
+				plan: null
+			}
+			
+			try {
+				await axios.post(`${process.env.REACT_APP_DAPPIFY_API_URL}/project/${appState.subdomain}`,
+					appData,
+					{
+						headers: {
+						"X-Api-Key": process.env.REACT_APP_DAPPIFY_API_KEY,
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+						}
+					}
+				)
+				dispatch({
+					type: UPDATE_APP,
+					configuration: appData
+				});
+				navigate(`/builder/${appData?.subdomain}`);
+			} catch(e) {
+				console.log(e);
+			}
+			// const savedProject = await createProject(appState, user);
+
 		}
 	};
 

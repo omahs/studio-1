@@ -12,14 +12,14 @@ import {
 import { useParams } from "react-router-dom";
 import Identicon from "react-identicons";
 import axios from "axios";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 
 // =============================|| LANDING MAIN ||============================= //
 
 const PublicProfile = () => {
 	const { id } = useParams();
 	const [nfts, setNfts] = useState([]);
-	const { Moralis } = useMoralis();
+	// const { Moralis } = useMoralis();
 	const [profile, setProfile] = useState({});
 
 	useEffect(() => {
@@ -35,10 +35,10 @@ const PublicProfile = () => {
 	}, [profile]);
 
 	const loadProfile = async () => {
-		const userProfile = await Moralis.Cloud.run("getProfileByHandle", {
-			handle: id
-		});
-		setProfile(userProfile);
+		// const userProfile = await Moralis.Cloud.run("getProfileByHandle", {
+		// 	handle: id
+		// });
+		// setProfile(userProfile);
 	};
 
 	const loadNfts = async (targetAddress) => {

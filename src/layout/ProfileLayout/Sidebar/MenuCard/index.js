@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 
 // assets
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 import { TwitterIcon, TwitterShareButton } from "react-share";
 import { getUrl } from "utils/url";
 import { ProgressContext } from "contexts/ProgressContext";
@@ -113,7 +113,7 @@ LinearProgressWithLabel.propTypes = {
 
 const MenuCard = () => {
 	const { progress } = useContext(ProgressContext);
-	const { user } = useMoralis();
+	// const { user } = useMoralis();
 
 	return (
 		<CardStyle>
@@ -126,7 +126,6 @@ const MenuCard = () => {
 							variant="contained"
 							color="secondary"
 							sx={{ mt: 2 }}
-							href={`/${user.get("username")}`}
 							id="visit-dapp-btn"
 							target="_blank"
 						>
@@ -139,7 +138,7 @@ const MenuCard = () => {
 					title={
 						"Check out my new Web3 builder profile at @DappifyWeb3 🤩. Create yours now, it is free!"
 					}
-					url={`${getUrl()}/${user.get("username")}`}
+					url={`${getUrl()}`}
 					hashtags={["Web3", "Web3Community"]}
 				>
 					<Grid

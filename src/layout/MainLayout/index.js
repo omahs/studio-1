@@ -20,7 +20,7 @@ import navigation from "menu-items";
 import { drawerWidth } from "store/constant";
 import { SET_MENU, UPDATE_APP } from "store/actions";
 
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 
 // assets
 import { IconChevronRight } from "@tabler/icons";
@@ -77,7 +77,7 @@ const MainLayout = () => {
 	const { appId } = useParams();
 
 	const theme = useTheme();
-	const { Moralis, user } = useMoralis();
+	// const { Moralis, user } = useMoralis();
 	const matchDownMd = useMediaQuery(theme.breakpoints.down("lg"));
 
 	// Handle left drawer
@@ -88,13 +88,13 @@ const MainLayout = () => {
 	};
 
 	const loadConfig = async () => {
-		const Project = Moralis.Object.extend("Project");
-		const query = new Moralis.Query(Project);
-		query.equalTo("objectId", appId);
-		query.equalTo("owner", user.get("ethAddress"));
-		const appObj = await query.first();
-		const config = appObj?.attributes?.config;
-		dispatch({ type: UPDATE_APP, configuration: config });
+		// const Project = Moralis.Object.extend("Project");
+		// const query = new Moralis.Query(Project);
+		// query.equalTo("objectId", appId);
+		// query.equalTo("owner", user.get("ethAddress"));
+		// const appObj = await query.first();
+		// const config = appObj?.attributes?.config;
+		// dispatch({ type: UPDATE_APP, configuration: config });
 	};
 
 	useEffect(() => {

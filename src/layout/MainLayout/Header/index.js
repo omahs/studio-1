@@ -13,7 +13,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { saveProject } from "utils/project";
 import { getUrl } from "utils/url";
 import isEmpty from "lodash/isEmpty";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
@@ -21,8 +21,8 @@ const Header = ({ handleLeftDrawerToggle }) => {
 	const theme = useTheme();
 	const appConfiguration = useSelector((state) => state.app);
 	// const { user, isAuthenticated, logout, authenticate } = useMoralis();
-	const { Provider, user, authenticate, isAuthenticated, logout } =
-		useMoralis();
+	// const { Provider, user, authenticate, isAuthenticated, logout } =
+	// 	useMoralis();
 	const [hasChanges, setHasChanges] = useState(false);
 	const dispatch = useDispatch();
 
@@ -34,8 +34,8 @@ const Header = ({ handleLeftDrawerToggle }) => {
 		try {
 			await saveProject({
 				project: appConfiguration,
-				provider: Provider,
-				user: user
+				// provider: Provider,
+				// user: user
 			});
 			dispatch({
 				type: SNACKBAR_OPEN,
@@ -59,48 +59,48 @@ const Header = ({ handleLeftDrawerToggle }) => {
 	};
 
 	const renderAddress = () => {
-		const address = user.get("ethAddress");
-		return `${address.substring(0, 4)}...${address.substring(
-			address.length - 8,
-			address.length
-		)}`;
+		// const address = user.get("ethAddress");
+		// return `${address.substring(0, 4)}...${address.substring(
+		// 	address.length - 8,
+		// 	address.length
+		// )}`;
 	};
 
 	const authUser = () => {
-		authenticate();
+		// authenticate();
 	};
 
 	const cleanupState = () => {
 		dispatch({ type: CLEAR_APP });
 	};
 
-	const loginButton = isAuthenticated ? (
-		<Button
-			disableElevation
-			variant="contained"
-			color="primary"
-			size="small"
-			onClick={() => {
-				logout();
-				cleanupState();
-			}}
-			startIcon={<AccountBalanceWalletTwoToneIcon />}
-			endIcon={<LogoutIcon />}
-		>
-			{renderAddress()}
-		</Button>
-	) : (
-		<Button
-			disableElevation
-			variant="contained"
-			color="primary"
-			size="small"
-			onClick={authUser}
-			startIcon={<AccountBalanceWalletTwoToneIcon />}
-		>
-			Connect Wallet
-		</Button>
-	);
+	// const loginButton = isAuthenticated ? (
+	// 	<Button
+	// 		disableElevation
+	// 		variant="contained"
+	// 		color="primary"
+	// 		size="small"
+	// 		onClick={() => {
+	// 			logout();
+	// 			cleanupState();
+	// 		}}
+	// 		startIcon={<AccountBalanceWalletTwoToneIcon />}
+	// 		endIcon={<LogoutIcon />}
+	// 	>
+	// 		{renderAddress()}
+	// 	</Button>
+	// ) : (
+	// 	<Button
+	// 		disableElevation
+	// 		variant="contained"
+	// 		color="primary"
+	// 		size="small"
+	// 		onClick={authUser}
+	// 		startIcon={<AccountBalanceWalletTwoToneIcon />}
+	// 	>
+	// 		Connect Wallet
+	// 	</Button>
+	// );
 
 	return (
 		<>
@@ -159,7 +159,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
 					</Button>
 				</Box>
 			</Tooltip>
-			{loginButton}
+			{/*loginButton*/}
 			{/* notification & profile 
             <NotificationSection />
             <ProfileSection /> */}

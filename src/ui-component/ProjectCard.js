@@ -1,26 +1,47 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Paper, Grid, Typography, Button } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { UPDATE_APP } from "store/actions";
 import moment from "moment";
 import { getUrl } from "utils/url";
-
+import axios from "axios";
 
 const ProjectCard = ({ project = {} }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [selected, setSelected] = useState();
-	console.log(project);
-	const projectConfig = project?.get('config');
+	const [cid, setCid] = useState();
+	// console.log(project);
+	// const projectConfig = project?.get('config');
 	const selectProject = (appConfig) => {
-		dispatch({ type: UPDATE_APP, configuration: appConfig });
-		navigate(`/builder/${appConfig?.appId}`);
+		dispatch({ type: UPDATE_APP, configuration: project });
+		navigate(`/builder/${project?.id}`);
 	};
+
+	const loadCid = async() => {
+		try{
+			const response = await axios.get(`${process.env.REACT_APP_DAPPIFY_API_URL}/route/${getUrl(project.subdomain)}`,
+			{
+				headers: {
+					"X-Api-Key": process.env.REACT_APP_DAPPIFY_API_KEY,
+					"Content-Type": "application/json",
+					"Accept": "application/json"
+				}
+			});
+			setCid(response?.data?.cid);
+		} catch(e) {
+			console.log(e);
+		}
+	}
+
+	useEffect(() => {
+		loadCid();
+	}, []);
 
 	return (
 		<Paper
-			data-cy={`${projectConfig?.name} box`}
+			data-cy={`${project?.name} box`}
 			className="bordered"
 			sx={{
 				borderRadius: 2,
@@ -33,13 +54,13 @@ const ProjectCard = ({ project = {} }) => {
 				cursor: "pointer",
 				height: 210
 			}}
-			onClick={() => selectProject(projectConfig)}
-			onMouseOver={() => setSelected(projectConfig.subdomain)}
+			onClick={() => selectProject(project)}
+			onMouseOver={() => setSelected(project.subdomain)}
 			onMouseOut={() => setSelected()}
-			elevation={selected === projectConfig.subdomain ? 5 : 0}
+			elevation={selected === project.subdomain ? 5 : 0}
 		>
 			<Grid container spacing={0.3}>
-				<Grid item xs={12} sx={{ height: 54 }}>
+				{/*<Grid item xs={12} sx={{ height: 54 }}>
 					<img
 						src={projectConfig.logo}
 						alt="banner"
@@ -49,21 +70,21 @@ const ProjectCard = ({ project = {} }) => {
 							maxWidth: "50%"
 						}}
 					/>
-				</Grid>
+					</Grid>*/}
 				<Grid item sx={{ mb: 0 }} xs={12}>
 					<Typography variant="h3" sx={{ color: "#222" }}>
-						{projectConfig.name}
+						{project.name}
 					</Typography>
 					<Typography variant="h6" fontSize="1em">
 						<Button
 							sx={{ textTransform: "none" }}
-							href={getUrl(projectConfig.subdomain)}
+							href={getUrl(project.subdomain)}
 						>
-							{getUrl(projectConfig.subdomain)}
+							{getUrl(project.subdomain)}
 						</Button>
 					</Typography>
 					<Grid item sx={{ height: 20, mb: 2 }} xs={12}>
-						{project?.get('hash') && (
+						{cid && (
 							<Typography variant="h6" fontSize="0.7em">
 								<Button
 									sx={{
@@ -72,15 +93,15 @@ const ProjectCard = ({ project = {} }) => {
 									}}
 									href={project?.get('url')}
 								>
-									{`ipfs/${project.get('hash')}`}
+									{`ipfs/${cid}`}
 								</Button>
 							</Typography>
 						)}
 					</Grid>
 				</Grid>
-				<Typography fontSize="1em">
+				{/*<Typography fontSize="1em">
 					Last updated {moment(project.get('updatedAt')).format("lll")}
-				</Typography>
+								</Typography>*/}
 			</Grid>
 		</Paper>
 	);

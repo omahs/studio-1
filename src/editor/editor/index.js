@@ -147,9 +147,9 @@ const Editor = ({ projectId, onClickHome }) => {
       const response = await axios.get(`${process.env.REACT_APP_DAPPIFY_API_URL}/project/${projectId}`,
         {
           headers: {
-          "X-Api-Key": process.env.REACT_APP_DAPPIFY_API_KEY,
-          "Content-Type": "application/json",
-          "Accept": "application/json"
+            "AuthorizeToken": process.env.REACT_APP_DAPPIFY_API_KEY,
+            "Content-Type": "application/json",
+            "Accept": "application/json"
           }
         }
       )
@@ -184,7 +184,7 @@ const Editor = ({ projectId, onClickHome }) => {
       },
       {
         headers: {
-          "X-Api-Key": process.env.REACT_APP_MORALIS_API_KEY,
+          "AuthorizeToken": process.env.REACT_APP_DAPPIFY_API_KEY,
           "Content-Type": "application/json",
           "Accept": "application/json"
         }
@@ -216,6 +216,9 @@ const Editor = ({ projectId, onClickHome }) => {
         stepsBeforeSave: 1, 
         options: {
           remote: {
+            headers: {
+              AuthorizeToken: process.env.REACT_APP_DAPPIFY_API_KEY
+            },
             urlLoad: projectEndpoint,
             urlStore: projectEndpoint,
             // The `remote` storage uses the POST method when stores data but

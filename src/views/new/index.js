@@ -31,18 +31,7 @@ const NewPage = () => {
 		setCantContinue(!canNextStep || !appName || !subddomain);
 		appState.name = appName;
 		appState.subdomain = subddomain;
-		// appState.operator = user.get("ethAddress");
 	};
-
-	// const handleStepTwo = (chainId) => {
-	// 	setCantContinue(!chainId);
-	// 	appState.chainId = chainId;
-	// };
-
-	// const handleStepThree = (template) => {
-	// 	setCantContinue(!template.id);
-	// 	if (template?.id) appState.template[template.id] = template;
-	// };
 
 	const handleStepTwo = (checked) => {
 		setCantContinue(!checked);
@@ -53,44 +42,11 @@ const NewPage = () => {
 	};
 
 	const stepOne = !appState.step && <NameField onChange={handleStepOne} />;
-	// const stepTwo = appState.step === 1 && (
-	// 	<Blockchain onChange={handleStepTwo} />
-	// );
-	// const stepThree = appState.step === 2 && (
-	// 	<Template onTemplateSelect={handleStepThree} />
-	// );
 	const stepFour = appState.step === 1 && (
 		<TermsAndConditions onChange={handleStepTwo} />
 	);
 	const loader = appState.step === 2 && <Loader onChange={handleStepThree} />;
 	const [cantContinue, setCantContinue] = useState(true);
-
-	const createProject = async (appConfiguration, userPointer) => {
-		console.log(appConfiguration);
-		console.log(userPointer);
-
-
-	// 	const response = await axios.get(`${process.env.REACT_APP_DAPPIFY_API_URL}/project/${prefix}`,
-	// 	{
-	// 		headers: {
-	// 		"X-Api-Key": process.env.REACT_APP_MORALIS_API_KEY,
-	// 		"Content-Type": "application/json",
-	// 		"Accept": "application/json"
-	// 		}
-	// 	}
-	// )
-
-
-		// const Project = Moralis.Object.extend("Project");
-		// const project = new Project();
-		// project.set("owner", userPointer);
-		// project.set("subdomain", appConfiguration.subdomain);
-		// const createdProject = await project.save();
-		// appConfiguration.appId = createdProject.id;
-		// createdProject.set("config", appConfiguration);
-		// const savedProject = await createdProject.save();
-		// return savedProject;
-	};
 
 	const handleNextStep = async () => {
 		appState.step = appState.step ? appState.step + 1 : 1;
@@ -115,9 +71,9 @@ const NewPage = () => {
 					appData,
 					{
 						headers: {
-						"X-Api-Key": process.env.REACT_APP_DAPPIFY_API_KEY,
-						"Content-Type": "application/json",
-						"Accept": "application/json"
+							"AuthorizeToken": process.env.REACT_APP_DAPPIFY_API_KEY,
+							"Content-Type": "application/json",
+							"Accept": "application/json"
 						}
 					}
 				)
@@ -129,8 +85,6 @@ const NewPage = () => {
 			} catch(e) {
 				console.log(e);
 			}
-			// const savedProject = await createProject(appState, user);
-
 		}
 	};
 

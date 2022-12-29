@@ -22,9 +22,9 @@ const Projects = () => {
 		const response = await axios.get(`${process.env.REACT_APP_DAPPIFY_API_URL}/project?owner=${issuer}`,
 			{
 				headers: {
-				"X-Api-Key": process.env.REACT_APP_DAPPIFY_API_KEY,
-				"Content-Type": "application/json",
-				"Accept": "application/json"
+					"AuthorizeToken": process.env.REACT_APP_DAPPIFY_API_KEY,
+					"Content-Type": "application/json",
+					"Accept": "application/json"
 				}
 			}
 		)

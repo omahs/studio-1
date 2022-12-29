@@ -41,9 +41,9 @@ const TemplateManager = ({ open, handleClose, editor }) => {
             }
         }}
     >
-        <AppBar sx={{ position: 'relative', background: "#1d2023" }}>
+        <AppBar sx={{ position: 'relative', background: "#27293D" }}>
         <Toolbar>
-            <Typography sx={{ ml: 2, flex: 1, color: '#00e6e6' }} variant="h2" component="div">
+            <Typography sx={{ ml: 2, flex: 1, color: '#7572F9' }} variant="h2" component="div">
             🎉 Choose a new template for your project
             </Typography>
             <IconButton

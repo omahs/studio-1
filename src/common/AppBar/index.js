@@ -27,8 +27,6 @@ import {
 // assets
 import MenuIcon from "@mui/icons-material/Menu";
 import AppsIcon from "@mui/icons-material/Apps";
-import AccountBalanceWalletTwoToneIcon from "@mui/icons-material/AccountBalanceWalletTwoTone";
-import LogoutIcon from "@mui/icons-material/Logout";
 import DirectionsIcon from "@mui/icons-material/Directions";
 import Logo from "common/Logo";
 
@@ -73,43 +71,6 @@ const AppBar = ({ ...others }) => {
 		}
 		setDrawerToggle(open);
 	};
-
-	const renderAddress = () => {
-		// const address = user.get("ethAddress");
-		// return `${address.substring(0, 4)}...${address.substring(
-		// 	address.length - 8,
-		// 	address.length
-		// )}`;
-	};
-
-	// const loginButton = isAuthenticated ? (
-	// 	<Button
-	// 		disableElevation
-	// 		variant="contained"
-	// 		color="primary"
-	// 		component="span"
-	// 		size="large"
-	// 		id="disconnect-wallet-btn"
-	// 		onClick={logout}
-	// 		startIcon={<AccountBalanceWalletTwoToneIcon />}
-	// 		endIcon={<LogoutIcon />}
-	// 	>
-	// 		{renderAddress()}
-	// 	</Button>
-	// ) : (
-	// 	<Button
-	// 		disableElevation
-	// 		variant="contained"
-	// 		color="primary"
-	// 		component="span"
-	// 		size="large"
-	// 		id="connect-wallet-btn"
-	// 		onClick={() => setShowWalletDialog(true)}
-	// 		startIcon={<AccountBalanceWalletTwoToneIcon />}
-	// 	>
-	// 		Connect Wallet
-	// 	</Button>
-	// );
 
 	const roadmap = process.env.REACT_APP_ROADMAP_URL;
 	const micropaper = process.env.REACT_APP_MICROPAPER_URL;

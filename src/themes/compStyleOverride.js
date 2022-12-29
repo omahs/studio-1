@@ -271,7 +271,7 @@ export default function componentStyleOverrides(theme) {
             styleOverrides: {
                 flexContainer: {
                     borderBottom: '1px solid',
-                    borderColor: theme?.customization?.navType === 'dark' ? theme.colors.darkTextPrimary + 20 : theme.colors?.grey200
+                    borderColor: theme?.customization?.navType === 'dark' ? theme.colors.darkTextPrimary + 20 : theme.colors?.grey50
                 }
             }
         },
@@ -285,7 +285,7 @@ export default function componentStyleOverrides(theme) {
         MuiTableCell: {
             styleOverrides: {
                 root: {
-                    borderColor: theme?.customization?.navType === 'dark' ? theme.colors.darkTextPrimary + 15 : theme.colors?.grey200,
+                    borderColor: theme?.customization?.navType === 'dark' ? theme.colors.darkTextPrimary + 15 : theme.colors?.grey50,
                     '&.MuiTableCell-head': {
                         fontSize: '0.875rem',
                         color: theme.heading,

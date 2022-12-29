@@ -55,9 +55,9 @@ const NameField = ({ onChange }) => {
 			const response = await axios.get(`${process.env.REACT_APP_DAPPIFY_API_URL}/project/${prefix}`,
 				{
 					headers: {
-					"X-Api-Key": process.env.REACT_APP_DAPPIFY_API_KEY,
-					"Content-Type": "application/json",
-					"Accept": "application/json"
+						"AuthorizeToken": process.env.REACT_APP_DAPPIFY_API_KEY,
+						"Content-Type": "application/json",
+						"Accept": "application/json"
 					}
 				}
 			)

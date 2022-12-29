@@ -17,8 +17,6 @@ import {
 import { drawerWidth } from "store/constant";
 import Sidebar from "layout/ProfileLayout/Sidebar";
 import { SET_MENU } from "store/actions";
-// import { useMoralis } from "react-moralis";
-import AccountBalanceWalletTwoToneIcon from "@mui/icons-material/AccountBalanceWalletTwoTone";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Logo from "common/Logo";
 import { Magic } from 'magic-sdk';
@@ -77,7 +75,6 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 const ProfileAdmin = () => {
 	const theme = useTheme();
 	const navigate = useNavigate();
-	// const { logout, user } = useMoralis();
 	const matchDownMd = useMediaQuery(theme.breakpoints.down("lg"));
 
 	// Handle left drawer
@@ -85,14 +82,6 @@ const ProfileAdmin = () => {
 	const dispatch = useDispatch();
 	const handleLeftDrawerToggle = () => {
 		dispatch({ type: SET_MENU, opened: !leftDrawerOpened });
-	};
-
-	const renderAddress = () => {
-		// const address = user.get("ethAddress");
-		// return `${address.substring(0, 4)}...${address.substring(
-		// 	address.length - 8,
-		// 	address.length
-		// )}`;
 	};
 
 	useEffect(() => {

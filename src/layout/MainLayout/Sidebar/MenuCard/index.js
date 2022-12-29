@@ -157,7 +157,7 @@ const MenuCard = () => {
 			`${process.env.REACT_APP_DAPPIFY_API_URL}/chain/${appState?.chainId}`,
 			{
 				headers: {
-					"x-api-Key": process.env.REACT_APP_DAPPIFY_API_KEY,
+					"Authorize": process.env.REACT_APP_DAPPIFY_API_KEY,
 					accept: "application/json"
 				}
 			}

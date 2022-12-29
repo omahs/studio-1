@@ -1159,7 +1159,7 @@ const style = `
     font-size:1.2em;
   }
   .lead-btn.btn-primary{
-    background-color:#2196f3;
+    background-color:#7572F9;
     border-radius:4px 4px 4px 4px;
   }
   .lead-btn.btn-primary:hover{

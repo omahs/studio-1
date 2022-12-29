@@ -50,7 +50,7 @@ export const theme = (customization) => {
             themeOption.paper = color.paper;
             themeOption.backgroundDefault = color.paper;
             themeOption.background = color.primaryLight;
-            themeOption.darkTextPrimary = color.grey700;
+            themeOption.darkTextPrimary = color.grey300;
             themeOption.darkTextSecondary = color.grey500;
             themeOption.textDark = color.grey900;
             themeOption.menuSelected = color.secondaryDark;

@@ -23,8 +23,8 @@ const ProjectCard = ({ project = {} }) => {
 				borderRadius: 2,
 				p: 3,
 				position: "relative",
-				background: "#fff",
-				color: "#222",
+				background: "#27293D",
+				color: "#1E1E2F",
 				backgroundRepeat: "no-repeat",
 				backgroundSize: "cover",
 				cursor: "pointer",
@@ -48,7 +48,7 @@ const ProjectCard = ({ project = {} }) => {
 					/>
 					</Grid>*/}
 				<Grid item sx={{ mb: 0 }} xs={12}>
-					<Typography variant="h3" sx={{ color: "#222" }}>
+					<Typography variant="h3" sx={{ color: "#aaa" }}>
 						{project.name}
 					</Typography>
 					<Typography variant="h6" fontSize="1em">

@@ -4,24 +4,24 @@ const cmdPublish = "publish";
 const cmdDeviceDesktop = "set-device-desktop";
 const cmdDeviceTablet = "set-device-tablet";
 const cmdDeviceMobile = "set-device-mobile";
-const cmdClear = "canvas-clear";
+// const cmdClear = "canvas-clear";
 
-const clearCanvasButton = {
-  id: cmdClear,
-  // className: 'fa fa-trash',
-  command: (e) => e.runCommand(cmdClear),
-  attributes: { title: "Clear Canvas" },
-  label: `
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-          <line x1="4" y1="7" x2="20" y2="7"></line>
-          <line x1="10" y1="11" x2="10" y2="17"></line>
-          <line x1="14" y1="11" x2="14" y2="17"></line>
-          <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
-          <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
-      </svg>
-  `,
-};
+// const clearCanvasButton = {
+//   id: cmdClear,
+//   // className: 'fa fa-trash',
+//   command: (e) => e.runCommand(cmdClear),
+//   attributes: { title: "Clear Canvas" },
+//   label: `
+//       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+//           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+//           <line x1="4" y1="7" x2="20" y2="7"></line>
+//           <line x1="10" y1="11" x2="10" y2="17"></line>
+//           <line x1="14" y1="11" x2="14" y2="17"></line>
+//           <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+//           <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+//       </svg>
+//   `,
+// };
 
 const publishButton = {
   id: cmdPublish,
@@ -52,8 +52,8 @@ const publishFn = (editor) => {
 const Plugin = (editor, config) => {
   const pn = editor.Panels;
   const eConfig = editor.getConfig();
-  const swv = "sw-visibility";
-  const expt = "export-template";
+  // const swv = "sw-visibility";
+  // const expt = "export-template";
   const osm = "open-sm";
   const otm = "open-tm";
   const ola = "open-layers";
@@ -70,36 +70,36 @@ const Plugin = (editor, config) => {
     {
       id: "options",
       buttons: [
-        {
-          id: swv,
-          command: swv,
-          context: swv,
-          active: true,
-          attributes: { title: "Toggle Show Grid" },
-          // className: 'fa fa-square-o',
-          label: `
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box-margin" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M8 8h8v8h-8z"></path>
-                <path d="M4 4v.01"></path>
-                <path d="M8 4v.01"></path>
-                <path d="M12 4v.01"></path>
-                <path d="M16 4v.01"></path>
-                <path d="M20 4v.01"></path>
-                <path d="M4 20v.01"></path>
-                <path d="M8 20v.01"></path>
-                <path d="M12 20v.01"></path>
-                <path d="M16 20v.01"></path>
-                <path d="M20 20v.01"></path>
-                <path d="M20 16v.01"></path>
-                <path d="M20 12v.01"></path>
-                <path d="M20 8v.01"></path>
-                <path d="M4 16v.01"></path>
-                <path d="M4 12v.01"></path>
-                <path d="M4 8v.01"></path>
-            </svg>
-        `,
-        },
+        // {
+        //   id: swv,
+        //   command: swv,
+        //   context: swv,
+        //   active: true,
+        //   attributes: { title: "Toggle Show Grid" },
+        //   // className: 'fa fa-square-o',
+        //   label: `
+        //     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box-margin" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        //         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        //         <path d="M8 8h8v8h-8z"></path>
+        //         <path d="M4 4v.01"></path>
+        //         <path d="M8 4v.01"></path>
+        //         <path d="M12 4v.01"></path>
+        //         <path d="M16 4v.01"></path>
+        //         <path d="M20 4v.01"></path>
+        //         <path d="M4 20v.01"></path>
+        //         <path d="M8 20v.01"></path>
+        //         <path d="M12 20v.01"></path>
+        //         <path d="M16 20v.01"></path>
+        //         <path d="M20 20v.01"></path>
+        //         <path d="M20 16v.01"></path>
+        //         <path d="M20 12v.01"></path>
+        //         <path d="M20 8v.01"></path>
+        //         <path d="M4 16v.01"></path>
+        //         <path d="M4 12v.01"></path>
+        //         <path d="M4 8v.01"></path>
+        //     </svg>
+        // `,
+        // },
         {
           id: prv,
           context: prv,
@@ -114,20 +114,20 @@ const Plugin = (editor, config) => {
             </svg>
         `,
         },
-        {
-          id: expt,
-          // className: 'fa fa-code',
-          command: (e) => e.runCommand(expt),
-          attributes: { title: "View Source Code" },
-          label: `
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-code" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <polyline points="7 8 3 12 7 16"></polyline>
-                <polyline points="17 8 21 12 17 16"></polyline>
-                <line x1="14" y1="4" x2="10" y2="20"></line>
-            </svg>
-        `,
-        },
+        // {
+        //   id: expt,
+        //   // className: 'fa fa-code',
+        //   command: (e) => e.runCommand(expt),
+        //   attributes: { title: "View Source Code" },
+        //   label: `
+        //     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-code" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        //         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        //         <polyline points="7 8 3 12 7 16"></polyline>
+        //         <polyline points="17 8 21 12 17 16"></polyline>
+        //         <line x1="14" y1="4" x2="10" y2="20"></line>
+        //     </svg>
+        // `,
+        // },
         {
           id: "undo",
           // className: 'fa fa-undo',
@@ -145,24 +145,24 @@ const Plugin = (editor, config) => {
             </svg>
         `,
         },
-        {
-          id: "redo",
-          // className: 'fa fa-repeat',
-          command: (e) => e.runCommand("core:redo"),
-          attributes: { title: "Redo" },
-          label: `
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rotate-clockwise-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M9 4.55a8 8 0 0 1 6 14.9m0 -4.45v5h5"></path>
-                <line x1="5.63" y1="7.16" x2="5.63" y2="7.17"></line>
-                <line x1="4.06" y1="11" x2="4.06" y2="11.01"></line>
-                <line x1="4.63" y1="15.1" x2="4.63" y2="15.11"></line>
-                <line x1="7.16" y1="18.37" x2="7.16" y2="18.38"></line>
-                <line x1="11" y1="19.94" x2="11" y2="19.95"></line>
-            </svg>
-        `,
-        },
-        clearCanvasButton,
+        // {
+        //   id: "redo",
+        //   // className: 'fa fa-repeat',
+        //   command: (e) => e.runCommand("core:redo"),
+        //   attributes: { title: "Redo" },
+        //   label: `
+        //     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rotate-clockwise-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        //         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        //         <path d="M9 4.55a8 8 0 0 1 6 14.9m0 -4.45v5h5"></path>
+        //         <line x1="5.63" y1="7.16" x2="5.63" y2="7.17"></line>
+        //         <line x1="4.06" y1="11" x2="4.06" y2="11.01"></line>
+        //         <line x1="4.63" y1="15.1" x2="4.63" y2="15.11"></line>
+        //         <line x1="7.16" y1="18.37" x2="7.16" y2="18.38"></line>
+        //         <line x1="11" y1="19.94" x2="11" y2="19.95"></line>
+        //     </svg>
+        // `,
+        // },
+        // clearCanvasButton,
         publishButton,
         {
           id: 'alert-button',
@@ -213,19 +213,19 @@ const Plugin = (editor, config) => {
             </svg>
         `,
         },
-        {
-          id: ola,
-          command: ola,
-          // className: 'fa fa-bars',
-          label: `
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-stack-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <polyline points="12 4 4 8 12 12 20 8 12 4"></polyline>
-                <polyline points="4 12 12 16 20 12"></polyline>
-                <polyline points="4 16 12 20 20 16"></polyline>
-            </svg>
-        `,
-        },
+        // {
+        //   id: ola,
+        //   command: ola,
+        //   // className: 'fa fa-bars',
+        //   label: `
+        //     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-stack-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        //         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        //         <polyline points="12 4 4 8 12 12 20 8 12 4"></polyline>
+        //         <polyline points="4 12 12 16 20 12"></polyline>
+        //         <polyline points="4 16 12 20 20 16"></polyline>
+        //     </svg>
+        // `,
+        // },
         {
           id: obl,
           command: obl,
@@ -258,7 +258,7 @@ const Plugin = (editor, config) => {
           `,
           command: 'open-pages',
           togglable: false
-      }
+        }
       ],
     },
   ]);

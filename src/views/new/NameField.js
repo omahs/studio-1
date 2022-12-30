@@ -129,7 +129,7 @@ const NameField = ({ onChange }) => {
 							"&::placeholder": {
 								fontSize: 34,
 								fontWeight: "500",
-								color: "rgba(0,0,0,0.9)"
+								color: "rgba(255,255,255,0.7)"
 							}
 						}
 					}}

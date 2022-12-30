@@ -1,19 +1,51 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Paper, Grid, Typography, Button } from "@mui/material";
+import { Paper, Grid, Typography, Box, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useDispatch } from "react-redux";
 import { UPDATE_APP } from "store/actions";
 import { getUrl } from "utils/url";
+import premiumSvg from "assets/images/premium.svg";
+import externalLinkSvg from "assets/images/external-link.svg";
+import axios from "axios";
 
-const ProjectCard = ({ project = {} }) => {
+const ProjectCard = ({ project = {}, onReload }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [selected, setSelected] = useState();
+	const [deleteDialog, setDeleteDialog] = useState(false);
 
 	const selectProject = (appConfig) => {
 		dispatch({ type: UPDATE_APP, configuration: project });
 		navigate(`/builder/${project?.id}`);
 	};
+
+	const premiumIcon = project?.plan && (
+		<Box sx={{ position: 'absolute', left: 15, top: 15 }}>
+			<img src={premiumSvg} alt="Premium"></img>
+		</Box>
+	);
+
+	const getDomainUrl = () => {
+		if (project.domain) {
+			return `https://${project.domain}`;
+		} else {
+			return getUrl(project.subdomain);
+		}
+	}
+
+	const handleDelete = async() => {
+		const headers = {
+			headers: {
+				"AuthorizeToken": process.env.REACT_APP_DAPPIFY_API_KEY,
+				"Content-Type": "application/json",
+				"Accept": "application/json"
+			}
+		}
+		await axios.delete(`${process.env.REACT_APP_DAPPIFY_API_URL}/project/${project.id}`, headers)
+		setDeleteDialog(false);
+		onReload();
+	}
 
 	return (
 		<Paper
@@ -27,43 +59,82 @@ const ProjectCard = ({ project = {} }) => {
 				color: "#1E1E2F",
 				backgroundRepeat: "no-repeat",
 				backgroundSize: "cover",
-				cursor: "pointer",
-				height: 210
+				height: 210,
+				paddingTop: 9
 			}}
-			onClick={() => selectProject(project)}
 			onMouseOver={() => setSelected(project.subdomain)}
 			onMouseOut={() => setSelected()}
 			elevation={selected === project.subdomain ? 5 : 0}
 		>
 			<Grid container spacing={0.3}>
-				{/*<Grid item xs={12} sx={{ height: 54 }}>
-					<img
-						src={projectConfig.logo}
-						alt="banner"
-						style={{
-							maxHeight: "54px",
-							padding: "2px 0px",
-							maxWidth: "50%"
-						}}
-					/>
-					</Grid>*/}
-				<Grid item sx={{ mb: 0 }} xs={12}>
-					<Typography variant="h3" sx={{ color: "#aaa" }}>
+				{ premiumIcon }
+				<Button size="large" sx={{ 
+					margin: '0 auto',
+					position: 'absolute',
+					top: 10,
+					right: 10,
+					opacity: selected === project.subdomain ? 0.5 : 0
+				}} onClick={() => setDeleteDialog(true)} >
+					<DeleteOutlineIcon />
+				</Button>
+				<Grid item sx={{ mb: 0, textAlign: 'center' }} xs={12}>
+					<Typography variant="h2" sx={{ color: "#aaa" }}>
 						{project.name}
 					</Typography>
-					<Typography variant="h6" fontSize="1em">
-						<Button
-							sx={{ textTransform: "none" }}
-							href={getUrl(project.subdomain)}
-						>
-							{getUrl(project.subdomain)}
-						</Button>
+					<Typography variant="h6" fontSize="0.95em">
+						<a href={getDomainUrl()} target="__blank" style={{
+							'color': '#8C909A',
+    						textDecoration: 'none',
+							position: 'relative',
+							cursor: "pointer"
+						}}>
+							{project.domain || getUrl(project.subdomain)}
+							<Box sx={{ display: "inline", pt: '10px', position: 'relative' }}>
+								<img src={externalLinkSvg} alt="Link" style={{
+									marginLeft: '3px',
+									position: 'absolute',
+									top: '10px'
+								}}></img>
+							</Box>
+						</a>
 					</Typography>
+				</Grid>
+				<Grid item xs={12} sx={{ textAlign: 'center', mt: 1 }}>
+					<Button sx={{ 
+						margin: '0 auto',
+						opacity: selected === project.subdomain ? 1 : 0
+					}} variant="outlined"
+					onClick={() => selectProject(project)}
+					>Launch Editor ✏️</Button>
 				</Grid>
 				{/*<Typography fontSize="1em">
 					Last updated {moment(project.get('updatedAt')).format("lll")}
 								</Typography>*/}
 			</Grid>
+
+
+			<Dialog
+				open={deleteDialog}
+				onClose={() => setDeleteDialog(false)}
+				aria-labelledby="alert-dialog-title"
+				aria-describedby="alert-dialog-description"
+			>
+				<DialogTitle id="alert-dialog-title">
+				{"Are you sure?"}
+				</DialogTitle>
+				<DialogContent>
+				<DialogContentText id="alert-dialog-description">
+					Yes, I want to delete project <b>{project.name}</b>.
+				</DialogContentText>
+				</DialogContent>
+				<DialogActions sx={{ px:2 }}>
+					<Button onClick={() => setDeleteDialog(false)}>No! go back!</Button>
+					<Button onClick={() => handleDelete()} autoFocus variant="contained" color="error">
+						Confirm Deletion
+					</Button>
+				</DialogActions>
+			</Dialog>
+
 		</Paper>
 	);
 };

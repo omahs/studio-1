@@ -53,6 +53,7 @@ const NewPage = () => {
 		setCantContinue(true);
 		dispatch({ type: UPDATE_APP, configuration: appState });
 		if (appState.step === 2) {
+			appState.step = 0;
 			const { issuer } = await m.user.getMetadata();
 			console.log(issuer);
 			console.log(appState);
@@ -79,7 +80,7 @@ const NewPage = () => {
 				)
 				dispatch({
 					type: UPDATE_APP,
-					configuration: appData
+					configuration: defaultConfiguration
 				});
 				navigate(`/builder/${appData?.subdomain}`);
 			} catch(e) {
@@ -89,6 +90,20 @@ const NewPage = () => {
 	};
 
 	const canGoBack = appState.step < 3 || !appState.step;
+
+	const returnHome = () => {
+		resetConfig();
+		navigate("/profile/projects");
+	}
+
+	const resetConfig = () => { 
+		defaultConfiguration.step = 0;
+		dispatch({
+			type: UPDATE_APP,
+			configuration:
+				defaultConfiguration
+		});
+	}
 
 	return (
 		<Slide
@@ -116,15 +131,7 @@ const NewPage = () => {
 									<IconButton
 										sx={{ color: '#8C909A' }}
 										aria-label="Back"
-										onClick={() => {
-											defaultConfiguration.step = 0;
-											dispatch({
-												type: UPDATE_APP,
-												configuration:
-													defaultConfiguration
-											});
-											navigate("/profile/admin");
-										}}
+										onClick={returnHome}
 									>
 										<CloseIcon />
 									</IconButton>

@@ -30,11 +30,6 @@ const Projects = () => {
 		)
 
 		const list = response?.data;
-
-		// const query = new Moralis.Query("Project");
-		// query.equalTo("owner", user);
-		// query.descending("updatedAt");
-		// const list = await query.find();
 		setProjects(list);
 	};
 
@@ -98,7 +93,7 @@ const Projects = () => {
 			list.push(
 				<Grid item xs={12} sm={6} md={4} key={app.id}>
 					<Box>
-						<ProjectCard project={app} />
+						<ProjectCard project={app} onReload={listAll} />
 					</Box>
 				</Grid>
 			);

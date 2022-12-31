@@ -150,19 +150,19 @@ const MenuCard = () => {
 	const [network, setNetwork] = useState([]);
 
 	const loadNetwork = async () => {
-		if (!appState?.chainId) {
-			return;
-		}
-		const response = await axios.get(
-			`${process.env.REACT_APP_DAPPIFY_API_URL}/chain/${appState?.chainId}`,
-			{
-				headers: {
-					"Authorize": process.env.REACT_APP_DAPPIFY_API_KEY,
-					accept: "application/json"
-				}
-			}
-		);
-		setNetwork(response.data);
+		// if (!appState?.chainId) {
+		// 	return;
+		// }
+		// const response = await axios.get(
+		// 	`${process.env.REACT_APP_DAPPIFY_API_URL}/chain/${appState?.chainId}`,
+		// 	{
+		// 		headers: {
+		// 			"Authorize": process.env.REACT_APP_DAPPIFY_API_KEY,
+		// 			accept: "application/json"
+		// 		}
+		// 	}
+		// );
+		// setNetwork(response.data);
 	};
 
 	return (

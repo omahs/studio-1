@@ -1,51 +1,64 @@
 import { useEffect, useState } from "react";
-import { Typography, Grid, Container, Box, Paper } from "@mui/material";
+import { Typography, Grid, Box, Paper, Container } from "@mui/material";
 import ProjectCard from "ui-component/ProjectCard";
 import { useTheme } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
-// import { useMoralis } from "react-moralis";
 import axios from 'axios';
+import { useDispatch } from "react-redux";
+import { LOADER } from "store/actions";
 import { Magic } from 'magic-sdk';
 const m = new Magic(process.env.REACT_APP_MAGIC_API_KEY);
 
-
 const Projects = () => {
-	// const { isAuthenticated, user, Moralis } = useMoralis();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const theme = useTheme();
 	const [projects, setProjects] = useState([]);
 	const [selected, setSelected] = useState();
+	const [principal, setPrincipal] = useState();
 
-	const listAll = async () => {
-		const { issuer } = await m.user.getMetadata();
-		const response = await axios.get(`${process.env.REACT_APP_DAPPIFY_API_URL}/project?owner=${issuer}`,
-			{
-				headers: {
-					"AuthorizeToken": process.env.REACT_APP_DAPPIFY_API_KEY,
-					"Content-Type": "application/json",
-					"Accept": "application/json"
-				}
-			}
-		)
-
-		const list = response?.data;
-		setProjects(list);
+	const loadPrincipal = async () => {
+		dispatch({ type: LOADER, show: true });
+		const idToken = await m.user.getIdToken();
+		setPrincipal(idToken);
+		dispatch({ type: LOADER, show: false });
 	};
 
-	const loadApps = async () => {
-		const isLoggedIn = m.user.isLoggedIn();
-		if (isLoggedIn) {
-			listAll();
-		} else {
-			setProjects([]);
+	const listAll = async () => {
+
+		try {
+			dispatch({ type: LOADER, show: true });
+			const response = await axios.get(`${process.env.REACT_APP_DAPPIFY_API_URL}/project`,
+				{
+					headers: {
+						"AuthorizeToken": `Bearer ${principal}`,
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					}
+				}
+			)
+
+			const list = response?.data;
+			setProjects(list);
+		} finally {
+			dispatch({ type: LOADER, show: false });
 		}
 	};
 
 	useEffect(() => {
-		loadApps();
+		loadPrincipal();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		if (principal) {
+			listAll();
+		} else {
+			setProjects([]);
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [principal]);
 
 	const createNew = /* isAuthenticated && */ (
 		<Grid item xs={12} sm={6} md={4} key={0}>
@@ -93,7 +106,7 @@ const Projects = () => {
 			list.push(
 				<Grid item xs={12} sm={6} md={4} key={app.id}>
 					<Box>
-						<ProjectCard project={app} onReload={listAll} />
+						<ProjectCard project={app} onReload={listAll} principal={principal} />
 					</Box>
 				</Grid>
 			);

@@ -8,12 +8,14 @@ import snackbarReducer from './snackbarReducer';
 import cartReducer from './cartReducer';
 import kanbanReducer from './kanbanReducer';
 import appReducer from 'store/appReducer';
+import loaderReducer from './loaderReducer';
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
 const reducer = combineReducers({
     customization: customizationReducer,
     snackbar: snackbarReducer,
+    loader: loaderReducer,
     cart: persistReducer(
         {
             key: 'cart',

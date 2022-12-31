@@ -139,6 +139,7 @@ const ProfileAdmin = () => {
 				{<Outlet />}
 			</Main>
 			{/* <SidePanel /> */}
+			
 		</Box>
 	);
 };

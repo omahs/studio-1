@@ -56,3 +56,6 @@ export const ADD_STORY_COMMENT = '@kanban/ADD_STORY_COMMENT';
 // action - app
 export const UPDATE_APP = '@app/UPDATE_APP';
 export const CLEAR_APP = '@app/CLEAR_APP';
+
+// action - loader
+export const LOADER = '@loader/SHOW';

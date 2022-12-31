@@ -1,40 +1,43 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { Editor } from "editor";
-// import { Container } from "@mui/material";
 import TemplateModal from "views/templates";
+import { Magic } from 'magic-sdk';
+const m = new Magic(process.env.REACT_APP_MAGIC_API_KEY);
 
 const EditorView = () => {
 	const { projectId } = useParams();
 	const navigate = useNavigate();
-	// const [modalOpen, setModalOpen] = useState(false);
 	const [editor, setEditor] = useState();
+	const [principal, setPrincipal] = useState();
 
+	const addEditorListeners = () => {
+		document.addEventListener('toggleTemplates', (event) => {
+			setEditor(event.detail);
+		});
+	};
+
+	const loadPrincipal = async () => {
+		const idToken = await m.user.getIdToken();
+		setPrincipal(idToken);
+	};
 	const onClickHome = () => {
 		navigate("/profile/projects", { replace: true });
 	};
 
 	useEffect(() => {
-		document.addEventListener('toggleTemplates', (event) => {
-			// console.log(editor);
-			// toggleModal(editor);
-			setEditor(event.detail);
-		  });
-		  return () => {
-			document.removeEventListener('toggleTemplates', () => {
-			  console.log("Removing listener");
-			});
-		  }
+		addEditorListeners();
+		loadPrincipal();
+		return () => document.removeEventListener('toggleTemplates', () => {});
 	},[]);
 
 	const handleClose = () => {
-		// setModalOpen(!modalOpen);
 		setEditor();
 	};
 
 	return (
 		<>
-			<Editor projectId={projectId} onClickHome={onClickHome} />
+			{principal && (<Editor projectId={projectId} onClickHome={onClickHome} principal={principal} />)}
 			<TemplateModal open={!!editor} handleClose={handleClose} editor={editor} />
 		</>
 	);

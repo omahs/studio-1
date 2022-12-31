@@ -18,18 +18,15 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { getUrl } from "utils/url";
-// import { useMoralis } from "react-moralis";
 import axios from "axios";
 
-const NameField = ({ onChange }) => {
+const NameField = ({ onChange, principal }) => {
 	const theme = useTheme();
 	const appState = useSelector((state) => state.app);
 	const [appName, setAppName] = useState(appState.name);
 	const [appSubdomain, setAppSubdomain] = useState(appState.subdomain);
 	const [error, setError] = useState();
 	const [showEditor, setShowEditor] = useState(false);
-	// const { Moralis } = useMoralis();
-
 
 	const generateSubdomain = async (name) => {
 		setError();
@@ -52,10 +49,11 @@ const NameField = ({ onChange }) => {
 		setAppSubdomain(prefix);
 		setAppName(name);
 		try {
+			
 			const response = await axios.get(`${process.env.REACT_APP_DAPPIFY_API_URL}/project/${prefix}`,
 				{
 					headers: {
-						"AuthorizeToken": process.env.REACT_APP_DAPPIFY_API_KEY,
+						"AuthorizeToken": `Bearer ${principal}`,
 						"Content-Type": "application/json",
 						"Accept": "application/json"
 					}

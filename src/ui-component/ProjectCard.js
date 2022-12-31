@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { Paper, Grid, Typography, Box, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useDispatch } from "react-redux";
-import { UPDATE_APP } from "store/actions";
+import { UPDATE_APP, LOADER } from "store/actions";
 import { getUrl } from "utils/url";
 import premiumSvg from "assets/images/premium.svg";
 import externalLinkSvg from "assets/images/external-link.svg";
 import axios from "axios";
 
-const ProjectCard = ({ project = {}, onReload }) => {
+const ProjectCard = ({ project = {}, onReload, principal }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [selected, setSelected] = useState();
@@ -27,24 +27,31 @@ const ProjectCard = ({ project = {}, onReload }) => {
 	);
 
 	const getDomainUrl = () => {
+		const t = Math.floor(Math.random() * 100000);
 		if (project.domain) {
-			return `https://${project.domain}`;
+			return `https://${project.domain}?t=${t}`;
 		} else {
-			return getUrl(project.subdomain);
+			return `${getUrl(project.subdomain)}?t=${t}`;
 		}
 	}
 
 	const handleDelete = async() => {
 		const headers = {
 			headers: {
-				"AuthorizeToken": process.env.REACT_APP_DAPPIFY_API_KEY,
+				"AuthorizeToken": `Bearer ${principal}`,
 				"Content-Type": "application/json",
 				"Accept": "application/json"
 			}
 		}
-		await axios.delete(`${process.env.REACT_APP_DAPPIFY_API_URL}/project/${project.id}`, headers)
-		setDeleteDialog(false);
-		onReload();
+
+		try {
+			dispatch({ type: LOADER, show: true });
+			await axios.delete(`${process.env.REACT_APP_DAPPIFY_API_URL}/project/${project.id}`, headers)
+			setDeleteDialog(false);
+			onReload();
+		} finally {
+			dispatch({ type: LOADER, show: false });
+		}
 	}
 
 	return (

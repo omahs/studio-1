@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
 	Box,
@@ -16,7 +16,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { UPDATE_APP } from "store/actions";
 import { defaultConfiguration } from "utils/config";
-// import { useMoralis } from "react-moralis";
 import axios from "axios";
 import { Magic } from 'magic-sdk';
 const m = new Magic(process.env.REACT_APP_MAGIC_API_KEY);
@@ -26,6 +25,17 @@ const NewPage = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const appState = useSelector((state) => state.app);
+	const [principal, setPrincipal] = useState();
+
+
+	const loadPrincipal = async () => {
+		const idToken = await m.user.getIdToken();
+		setPrincipal(idToken);
+	};
+
+	useEffect(() => {
+		loadPrincipal();
+	}, []);
 
 	const handleStepOne = (canNextStep, appName, subddomain) => {
 		setCantContinue(!canNextStep || !appName || !subddomain);
@@ -41,7 +51,7 @@ const NewPage = () => {
 		setCantContinue(!isReady);
 	};
 
-	const stepOne = !appState.step && <NameField onChange={handleStepOne} />;
+	const stepOne = !appState.step && <NameField onChange={handleStepOne} principal={principal} />;
 	const stepFour = appState.step === 1 && (
 		<TermsAndConditions onChange={handleStepTwo} />
 	);
@@ -54,25 +64,22 @@ const NewPage = () => {
 		dispatch({ type: UPDATE_APP, configuration: appState });
 		if (appState.step === 2) {
 			appState.step = 0;
-			const { issuer } = await m.user.getMetadata();
-			console.log(issuer);
-			console.log(appState);
 
 			const appData = {
 				name: appState.name,
 				subdomain: appState.subdomain,
-				owner:issuer,
 				domain: null,
 				metadata: {},
 				plan: null
 			}
 			
 			try {
+				const idToken = await m.user.getIdToken();
 				await axios.post(`${process.env.REACT_APP_DAPPIFY_API_URL}/project/${appState.subdomain}`,
 					appData,
 					{
 						headers: {
-							"AuthorizeToken": process.env.REACT_APP_DAPPIFY_API_KEY,
+							"AuthorizeToken": `Bearer ${idToken}`,
 							"Content-Type": "application/json",
 							"Accept": "application/json"
 						}

@@ -1,30 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import grapesjs from "grapesjs";
-
 import PrimitiveWalletConnect from "../primitives/wallet-connect-button";
 import PluginTokenGate from "../primitives/token-gated-container";
 import PluginNFT from "../primitives/nft-card";
 import PluginActionButton from "../primitives/action-button";
 import PluginTailwind from "grapesjs-tailwind";
-
 import PageManager from "./Plugins/PageManager";
-
 import PluginEditorPanelButtons from "./Panel/Buttons";
 import ConfirmationModal from "../views/modal/Confirmation";
-// import { useMoralis } from "react-moralis";
 import isEmpty from "lodash/isEmpty";
-
+import { useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+import { LOADER } from "store/actions";
 import axios from 'axios';
-import { Magic } from 'magic-sdk';
 
-
-const m = new Magic(process.env.REACT_APP_MAGIC_API_KEY);
-
-const Editor = ({ projectId, onClickHome }) => {
+const Editor = ({ projectId, onClickHome, principal }) => {
   const [editor, setEditor] = useState({});
   const [project, setProject] = useState({});
-  // const { Moralis, user } = useMoralis();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getUrl = (subdomain) => {
     const environmentPrefix =
@@ -37,13 +32,14 @@ const Editor = ({ projectId, onClickHome }) => {
 
   const loadFns = () => {
     window.handlePublishToIpfs = async (event) => {
-      event.preventDefault();
-      event.target.parentNode.querySelector("#publish-btn").style.display =
-        "none";
-      event.target.parentNode.querySelector("#wait-publish-btn").style.display =
-        "block";
+      try {
+        dispatch({ type: LOADER, show: true });
+        event.preventDefault();
+        event.target.parentNode.querySelector("#publish-btn").style.display =
+          "none";
+        event.target.parentNode.querySelector("#wait-publish-btn").style.display =
+          "block";
 
-        
         const pageManager = editor.Pages;
         const currentPageId = pageManager.getSelected().id;
 
@@ -122,58 +118,44 @@ const Editor = ({ projectId, onClickHome }) => {
           await publishRouting(defaultDomain, cid);
         }
 
-        // Save as project in Moralis (Legacy)
-        // project.set("url", url);
-        // project.set("hash", cid);
-        // await project.save();
-
-        const uri = getUrl(project?.subdomain);
-            console.log(uri);
-            console.log(cid);
-            console.log(url);
-        // Show confirmation modal
+        const t = Math.floor(Math.random() * 100000);
+        const uri = `${getUrl(project?.subdomain)}?t=${t}`;
         const modal = editor.Modal;
         modal.open({
           title: "Congratulations",
           content: ConfirmationModal({ url, cid, uri }),
           attributes: { class: "my-class" },
         });
-      };
+      } finally {
+        dispatch({ type: LOADER, show: false });
+      }
     };
+  };
 
     const loadProject = async () => {
 
-      const { issuer } = await m.user.getMetadata();
-      const response = await axios.get(`${process.env.REACT_APP_DAPPIFY_API_URL}/project/${projectId}`,
-        {
-          headers: {
-            "AuthorizeToken": process.env.REACT_APP_DAPPIFY_API_KEY,
-            "Content-Type": "application/json",
-            "Accept": "application/json"
+      try {
+        dispatch({ type: LOADER, show: true });
+        const response = await axios.get(`${process.env.REACT_APP_DAPPIFY_API_URL}/project/${projectId}`,
+          {
+            headers: {
+              "AuthorizeToken": `Bearer ${principal}`,
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            }
           }
-        }
-      )
-  
-      const foundProject = response?.data;
-      if (foundProject?.owner !== issuer) {
-        // Not right owner
-        onClickHome();
-        return;
+        )
+    
+        const foundProject = response?.data;
+        setProject(foundProject);
+        window.dappify = {
+          project: foundProject,
+        };
+
+        loadEditor();
+      } finally {
+        dispatch({ type: LOADER, show: false });
       }
-
-      // const Proj = Moralis.Object.extend("Project");
-      // const query = new Moralis.Query(Proj);
-      // query.equalTo("owner", user);
-      // query.equalTo("objectId", projectId);
-      // const foundProject = await query.first();
-      setProject(foundProject);
-
-      // Set context
-      window.dappify = {
-        project: foundProject,
-      };
-
-      loadEditor();
   };
 
   const publishRouting = async (id, cid) => {
@@ -184,7 +166,7 @@ const Editor = ({ projectId, onClickHome }) => {
       },
       {
         headers: {
-          "AuthorizeToken": process.env.REACT_APP_DAPPIFY_API_KEY,
+          "AuthorizeToken": `Bearer ${principal}`,
           "Content-Type": "application/json",
           "Accept": "application/json"
         }
@@ -217,7 +199,7 @@ const Editor = ({ projectId, onClickHome }) => {
         options: {
           remote: {
             headers: {
-              AuthorizeToken: process.env.REACT_APP_DAPPIFY_API_KEY
+              AuthorizeToken: `Bearer ${principal}`
             },
             urlLoad: projectEndpoint,
             urlStore: projectEndpoint,
@@ -233,11 +215,8 @@ const Editor = ({ projectId, onClickHome }) => {
         }
       },
       plugins: [
-        // PluginProjectManager,
-        // PluginTailwind,
         PluginEditorPanelButtons,
         PrimitiveWalletConnect,
-        // PluginSmartContract,
         PluginTokenGate,
         PluginNFT,
         PluginActionButton,

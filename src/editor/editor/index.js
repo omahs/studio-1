@@ -8,129 +8,14 @@ import PluginActionButton from "../primitives/action-button";
 import PluginTailwind from "grapesjs-tailwind";
 import PageManager from "./Plugins/PageManager";
 import PluginEditorPanelButtons from "./Panel/Buttons";
-import ConfirmationModal from "../views/modal/Confirmation";
 import isEmpty from "lodash/isEmpty";
 import { useDispatch } from "react-redux";
-import { useNavigate } from 'react-router-dom';
 import { LOADER } from "store/actions";
 import axios from 'axios';
 
 const Editor = ({ projectId, onClickHome, principal }) => {
-  const [editor, setEditor] = useState({});
-  const [project, setProject] = useState({});
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const getUrl = (subdomain) => {
-    const environmentPrefix =
-      process.env.REACT_APP_HOST_ENV === "production"
-        ? ""
-        : `${process.env.REACT_APP_HOST_ENV}.`;
-    const subdomainPrefix = subdomain ? `${subdomain}.` : "";
-    return `https://${subdomainPrefix}${environmentPrefix}dappify.com`;
-  };
-
-  const loadFns = () => {
-    window.handlePublishToIpfs = async (event) => {
-      try {
-        dispatch({ type: LOADER, show: true });
-        event.preventDefault();
-        event.target.parentNode.querySelector("#publish-btn").style.display =
-          "none";
-        event.target.parentNode.querySelector("#wait-publish-btn").style.display =
-          "block";
-
-        const pageManager = editor.Pages;
-        const currentPageId = pageManager.getSelected().id;
-
-        const allPages = [];
-        pageManager.getAll().forEach(async (page) => {
-
-          pageManager.select(page.id);
-          const pageName = page.attributes?.type === 'main' ? 'index' : page.attributes?.name;
-          const body = page.getMainComponent().toHTML();
-
-          const functionalBody = body.replace(
-            '</body', 
-            `<script>
-                ${editor.getJs()}
-              </script>
-            </body>`
-          );
-
-          const content = `
-            <!doctype html>
-            <html lang="en">
-              <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-                <script src="https://cdn.tailwindcss.com"></script>
-                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
-                <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script>
-                <script src="https://unpkg.com/web3modal@1.9.0/dist/index.js"></script>
-                <script src="https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js"></script>
-                <script src="https://unpkg.com/@walletconnect/web3-provider@1.3.1/dist/umd/index.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js"></script>
-                <style>
-                  ${editor.getCss()}
-                </style>
-              </head>
-              ${functionalBody}
-            </html>`;
-
-            allPages.push({
-              path: `${pageName}.html`,
-              content:btoa(content)
-            });
-        });
-
-        // Return to original selected page
-        pageManager.select(currentPageId);
-
-        const upload = await axios.post('https://deep-index.moralis.io/api/v2/ipfs/uploadFolder',
-            allPages,
-            {
-              headers: {
-                "X-API-KEY": process.env.REACT_APP_MORALIS_API_KEY,
-                "Content-Type": "application/json",
-                "accept": "application/json"
-              }
-            }
-        )
-
-        const indexPage = upload?.data?.find((item) => item.path.includes('/index.html'));
-        const cid = indexPage.path.split('/')[4];
-        const url = `https://ipfs.moralis.io:2053/ipfs/${cid}/index.html`;
-
-        // Register in AWS deploy
-        const defaultSubdomain = process.env.REACT_APP_HOST_ENV === 'dev' ?
-           `${project?.subdomain}.dev.dappify.com` :
-           `${project?.subdomain}.dappify.com`;
-
-        await publishRouting(defaultSubdomain, cid);
-
-        // Custom domain?
-        const defaultDomain = project?.domain;
-        if (defaultDomain) {
-          await publishRouting(defaultDomain, cid);
-        }
-
-        const t = Math.floor(Math.random() * 100000);
-        const uri = `${getUrl(project?.subdomain)}?t=${t}`;
-        const modal = editor.Modal;
-        modal.open({
-          title: "Congratulations",
-          content: ConfirmationModal({ url, cid, uri }),
-          attributes: { class: "my-class" },
-        });
-      } finally {
-        dispatch({ type: LOADER, show: false });
-      }
-    };
-  };
+    const [editor, setEditor] = useState({});
+    const dispatch = useDispatch();
 
     const loadProject = async () => {
 
@@ -147,7 +32,6 @@ const Editor = ({ projectId, onClickHome, principal }) => {
         )
     
         const foundProject = response?.data;
-        setProject(foundProject);
         window.dappify = {
           project: foundProject,
         };
@@ -157,22 +41,6 @@ const Editor = ({ projectId, onClickHome, principal }) => {
         dispatch({ type: LOADER, show: false });
       }
   };
-
-  const publishRouting = async (id, cid) => {
-    return await axios.post(`${process.env.REACT_APP_DAPPIFY_API_URL}/route/${id}`,
-      {
-        id: id,
-        cid: cid
-      },
-      {
-        headers: {
-          "AuthorizeToken": `Bearer ${principal}`,
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        }
-      }
-    )
-  }
 
   const projectEndpoint = `${process.env.REACT_APP_DAPPIFY_API_URL}/project/${projectId}/content`;
 
@@ -270,10 +138,6 @@ const Editor = ({ projectId, onClickHome, principal }) => {
   useEffect(() => {
     loadProject();
   }, []);
-
-  useEffect(() => {
-    if (editor) loadFns();
-  }, [editor]);
 
   return <div id="gjs" />;
 };

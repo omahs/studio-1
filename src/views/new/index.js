@@ -136,7 +136,7 @@ const NewPage = () => {
 							<Grid container direction="row" sx={{ ml: -8 }}>
 								<Grid item>
 									<IconButton
-										sx={{ color: '#8C909A' }}
+										sx={{ color: '#aaacb3' }}
 										aria-label="Back"
 										onClick={returnHome}
 									>

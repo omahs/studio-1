@@ -90,7 +90,7 @@ const ProjectCard = ({ project = {}, onReload, principal }) => {
 					</Typography>
 					<Typography variant="h6" fontSize="0.95em">
 						<a href={getDomainUrl()} target="__blank" style={{
-							'color': '#8C909A',
+							'color': '#aaacb3',
     						textDecoration: 'none',
 							position: 'relative',
 							cursor: "pointer"

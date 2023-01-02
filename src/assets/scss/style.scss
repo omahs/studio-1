@@ -339,6 +339,10 @@ html, body {
     font-family: $primary-font;
 }
 
+.Mui-selected {
+    border-radius: 6px;
+}
+
 .main-card {
     border-radius: 8px;
     overflow: hidden;

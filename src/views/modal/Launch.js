@@ -21,9 +21,34 @@ import { TwitterIcon, TwitterShareButton } from "react-share";
 import { Magic } from 'magic-sdk';
 const m = new Magic(process.env.REACT_APP_MAGIC_API_KEY);
 
+const DEFAULT_METADATA = {
+    "title": "My Super App",
+    "description": "This App does X,Y,Z under 50 characters",
+    "keywords": "Web3, no code, dapp, builder",
+    "author": "Dappify",
+    // Open graph / facebook tags
+    "og:locale": "en_US",
+    "og:type": "website",
+    "og:url": "https://dappify.com/",
+    "og:site_name": "dappify.com/",
+    "article:publisher": "https://dappify.com/",
+    "og:title": "Web3 Builder | Dappify",
+    "og:description": "The simplest way to build and launch web3 apps",
+    "og:image": "https://i.ibb.co/L9cpg3y/Screenshot-2022-08-22-at-11-46-45.png",
+    // Twitter social tags
+    "twitter:card": "summary_large_image",
+    "twitter:url": "https://dappify.com",
+    "twitter:title": "Web3 Builder | Dappify",
+    "twitter:description": "The simplest way to build and launch web3 apps",
+    "twitter:image": "https://i.ibb.co/L9cpg3y/Screenshot-2022-08-22-at-11-46-45.png",
+    "twitter:creator": "@DappifyWeb3",
+    "icon": "https://i.ibb.co/K5YxKKM/logo.png"
+};
+
 const Launch = ({ handleClose, editor, principal, projectId }) => {
     const [expanded, setExpanded] = useState(false);
     const [project, setProject] = useState();
+    const [metadata, setMetadata] = useState(DEFAULT_METADATA);
     const [deploymentCid, setDeploymentCid] = useState();
     const [newDomain, setNewDomain] = useState();
     const loading = useSelector((state) => state.loader.show);
@@ -43,6 +68,11 @@ const Launch = ({ handleClose, editor, principal, projectId }) => {
                 }
             );
             setProject(currentProject?.data);
+            const mData = currentProject?.data?.metadata;
+            if (mData) {
+                console.log(mData);
+                setMetadata(mData);
+            }
         } finally {
             dispatch({ type: LOADER, show: false });
         }
@@ -76,10 +106,24 @@ const Launch = ({ handleClose, editor, principal, projectId }) => {
     const publish = async () => {
         try {
             dispatch({ type: LOADER, show: true });
-    
+            handleChange('no-panel');
             const pageManager = editor.Pages;
             const currentPageId = pageManager.getSelected().id;
     
+            const metaTags = Object.keys(metadata).map((key) => {
+                const val = metadata[key];
+                return `
+                    <meta name="${key}" content="${val}"></meta>
+                    <meta property="${key}" content="${val}"></meta>
+                `
+            });
+            metaTags.push(`
+                <title>${metadata.description}</title>
+                <link rel="icon" sizes="192x192" href="">
+                <link rel="shortcut icon" href="${metadata.icon}" type="image/png">
+                <link rel="apple-touch-icon" href="${metadata.icon}" type="image/png">
+            `)
+
             const allPages = [];
             pageManager.getAll().forEach(async (page) => {
     
@@ -94,13 +138,15 @@ const Launch = ({ handleClose, editor, principal, projectId }) => {
                   </script>
                 </body>`
               );
-    
+
               const content = `
                 <!doctype html>
                 <html lang="en">
                   <head>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    ${metaTags.join('')}
+
                     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
                     <script src="https://cdn.tailwindcss.com"></script>
                     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -320,6 +366,74 @@ const Launch = ({ handleClose, editor, principal, projectId }) => {
         }
     }
 
+    const handleSaveMetadata = async () => {
+
+        try {
+            dispatch({ type: LOADER, show: true });
+            await axios.post(`${process.env.REACT_APP_DAPPIFY_API_URL}/project/${project.id}/metadata`,
+                metadata,
+                {
+                    headers: {
+                        "AuthorizeToken": `Bearer ${principal}`,
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    }
+                }
+            )
+            dispatch({
+                type: SNACKBAR_OPEN,
+                open: true,
+                message: 'Metadata saved',
+                variant: "alert",
+                anchorOrigin: { vertical: "bottom", horizontal: "right" },
+                alertSeverity: "success"
+            });
+            loadProject();
+        } catch(e) {
+            dispatch({
+                type: SNACKBAR_OPEN,
+                open: true,
+                message: e.message,
+                variant: "alert",
+                anchorOrigin: { vertical: "bottom", horizontal: "right" },
+                alertSeverity: "error"
+            });
+        } finally {
+            dispatch({ type: LOADER, show: false });
+        }
+    }
+
+    const metaItems = !loading && (
+        <Grid container fullWidth spacing={2}>
+            { Object.keys(metadata).map((key) => {
+                const value = metadata[key];
+                return (
+                    <Grid item xs={6} key={key}>
+                        <TextField
+                            id={`meta-${key}`}
+                            label={key} 
+                            variant="standard" 
+                            defaultValue={value}
+                            onChange={(e) => {
+                                const val = e.target.value;
+                                const currMeta = {...metadata};
+                                currMeta[key] = val;
+                                setMetadata(currMeta);
+                            }}
+                            fullWidth
+                        />
+                    </Grid>
+                )
+            })}
+            <Grid item xs={12}>
+                <Button fullWidth 
+                        variant="outlined" 
+                        size="large"
+                        onClick={handleSaveMetadata}> Save Metadata Changes</Button>
+            </Grid>
+        </Grid>
+    );
+
     const domains = (
         <Container sx={{ py: 2}}>
             <Typography variant="h4">
@@ -341,25 +455,27 @@ const Launch = ({ handleClose, editor, principal, projectId }) => {
                 </a>
             </Typography>
 
-    
-            <TextField  id="outlined-basic" 
-                        label="Request a new custom domain" 
-                        variant="standard" 
-                        defaultValue={project?.domain}
-                        autoFocus
-                        sx={{ minWidth: 200, mr: 2 }}
-                        disabled={!project?.plan}
-                        onChange={(e) => setNewDomain(e.target.value)}
-            />
-            <Button variant="outlined" 
+            { project?.plan && (
+                <TextField  id="outlined-basic" 
+                            label="Request a new custom domain" 
+                            variant="standard" 
+                            defaultValue={project?.domain}
+                            autoFocus
+                            sx={{ minWidth: 200, mr: 2 }}
+                            onChange={(e) => setNewDomain(e.target.value)}
+                />
+            )}
+            { project?.plan && (
+                <Button variant="outlined" 
                     sx={{ my: 1 }}
-                    disabled={!project?.plan || loading}
+                    disabled={loading}
                     onClick={() => {
                         postMessageToDiscord();
                     }}
-            >
-                Submit Request
-            </Button>
+                >
+                    Submit Request
+                </Button>
+            )}
 
             <Alert variant="contained" severity="warning" sx={{ mt: 2 }}>
                 Once you request a custom domain, our team will reach out to you via email to help 
@@ -401,9 +517,7 @@ const Launch = ({ handleClose, editor, principal, projectId }) => {
                             </Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                            <Typography>
-                            Coming soon...
-                            </Typography>
+                                {metaItems}
                             </AccordionDetails>
                         </Accordion>
                         <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>

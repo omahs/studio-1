@@ -137,7 +137,7 @@ const Launch = ({ handleClose, editor, principal, projectId }) => {
                     ${editor.getJs()}
                   </script>
                 </body>`
-              );
+              ).replace('<video', '<video autoplay');
 
               const content = `
                 <!doctype html>
@@ -166,7 +166,7 @@ const Launch = ({ handleClose, editor, principal, projectId }) => {
     
                 allPages.push({
                   path: `${pageName}.html`,
-                  content:btoa(content)
+                  content:btoa(unescape(encodeURIComponent(content)))
                 });
             });
     
@@ -258,7 +258,7 @@ const Launch = ({ handleClose, editor, principal, projectId }) => {
                         Dappify URL: <a style={{color: 'white'}} href={`https://${getDappifyUrl()}${queryParams()}`} target="__blank">{`https://${getDappifyUrl()}`}</a>
                     </Typography>
                     <Typography  variant="h4">
-                        Custom URL: <a style={{color: 'white'}}  href={`${getUrl()}${queryParams()}}`}  target="__blank">{getUrl()}</a>
+                        Custom URL: <a style={{color: 'white'}}  href={`${getUrl()}${queryParams()}`}  target="__blank">{getUrl()}</a>
                     </Typography>
                     <TwitterShareButton
                         title={

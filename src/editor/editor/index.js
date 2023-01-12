@@ -94,19 +94,21 @@ const Editor = ({ projectId, onClickHome, principal }) => {
       pluginsOpts: {},
       canvas: {
         scripts: [
+          "https://cdn.jsdelivr.net/npm/dappify-sdk@0.0.2/dist/main.min.js",
           "https://cdn.tailwindcss.com",
           "https://code.jquery.com/jquery-3.6.1.min.js",
-          "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js",
-          "https://cdn.ethers.io/lib/ethers-5.0.umd.min.js",
-          "https://unpkg.com/web3modal@1.9.0/dist/index.js",
-          "https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js",
-          "https://unpkg.com/@walletconnect/web3-provider@1.3.1/dist/umd/index.min.js",
-          "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js",
-          "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js",
+          "https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"
+          // "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js",
+          // "https://cdn.ethers.io/lib/ethers-5.0.umd.min.js",
+          // "https://unpkg.com/web3modal@1.9.0/dist/index.js",
+          // "https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js",
+          // "https://unpkg.com/@walletconnect/web3-provider@1.3.1/dist/umd/index.min.js",
+          // "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js",
+          // "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js",
         ],
         // The same would be for external styles
         styles: [
-          "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          // "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         ],
       },
     });

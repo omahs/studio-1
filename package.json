@@ -1,6 +1,6 @@
 {
     "name": "dappify-studio",
-    "version": "1.0.10",
+    "version": "1.0.12",
     "private": false,
     "dependencies": {
         "@auth0/auth0-spa-js": "^1.14.0",

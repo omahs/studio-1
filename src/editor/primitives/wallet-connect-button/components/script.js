@@ -49,25 +49,27 @@ const script = function (props) {
           }
     }
 
-    function init() {
-
-
-        modal = new Web3Modal({
-        cacheProvider: true,
-        providerOptions,
-        disableInjectedProvider: false,
-        theme: {
-            background: "rgb(39, 49, 56)",
-            main: "rgb(199, 199, 199)",
-            secondary: "rgb(136, 136, 136)",
-            border: "rgba(195, 195, 195, 0.14)",
-            hover: "rgb(16, 26, 32)"
+    function getModal() {
+        if (!modal) {
+            modal = new Web3Modal({
+                cacheProvider: true,
+                providerOptions,
+                disableInjectedProvider: false,
+                theme: {
+                    background: "rgb(39, 49, 56)",
+                    main: "rgb(199, 199, 199)",
+                    secondary: "rgb(136, 136, 136)",
+                    border: "rgba(195, 195, 195, 0.14)",
+                    hover: "rgb(16, 26, 32)"
+                }
+                });
+        
+            if (props.udAppId)
+                UAuthWeb3Modal.registerWeb3Modal(modal);
         }
-        });
-
-        if (props.udAppId)
-            UAuthWeb3Modal.registerWeb3Modal(modal);
-
+        return modal;
+    }
+    function init() {
         const cachedProvider = localStorage.getItem(cachedProviderName);
         if (cachedProvider) {
         connect();
@@ -89,7 +91,7 @@ const script = function (props) {
     function connect() {
         console.log("Connecting wallet", modal);
         try {
-        modal.connect().then((provider) => {
+        getModal().connect().then((provider) => {
             console.log(provider);
             walletProvider = provider;
             window.walletProvider = provider;
@@ -128,9 +130,7 @@ const script = function (props) {
             if (walletProvider?.close) {
                 walletProvider?.close();
             }
-            if (modal) {
-                await modal?.clearCachedProvider();
-            }
+            modal?.clearCachedProvider();
         } catch (e) {
             console.log(e);
         } finally {
@@ -139,7 +139,7 @@ const script = function (props) {
     }
 
     function handleToggleConnect() {
-        if (window.walletProvider) {
+        if (localStorage.getItem(cachedProviderName)) {
         disconnect();
         } else {
         connect();

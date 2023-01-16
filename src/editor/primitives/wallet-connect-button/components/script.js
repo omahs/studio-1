@@ -70,6 +70,7 @@ const script = function (props) {
         return modal;
     }
     function init() {
+        getModal();
         const cachedProvider = localStorage.getItem(cachedProviderName);
         if (cachedProvider) {
         connect();
@@ -115,7 +116,7 @@ const script = function (props) {
             fetchAccountData();
         });
         } catch (e) {
-        console.log("Could not get a wallet connection", e);
+            console.log("Could not get a wallet connection", e);
         }
     }
 
@@ -139,10 +140,15 @@ const script = function (props) {
     }
 
     function handleToggleConnect() {
-        if (localStorage.getItem(cachedProviderName)) {
-        disconnect();
+        console.log('Click initiated');
+        const prov = localStorage.getItem(cachedProviderName);
+        console.log(`Clicking wallet button for provider ${prov}`);
+        if (prov) {
+            console.log('Disconnecting...');
+            disconnect();
         } else {
-        connect();
+            console.log('Connecting...');
+            connect();
         }
     }
 

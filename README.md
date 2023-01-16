@@ -2,7 +2,7 @@
 
 # [Dappify Studio](https://dappify.com)
 
-welcome to a new era of no-code for creatives, innovators and visionaries building on the New Internet. What required a team of developers, can now be done by you, through a visual drag and drop editor and carefully curated components to help you build and launch full stack web3 applications in minutes and without code.
+Welcome to a new era of no-code for creatives, innovators and visionaries building on the New Internet. What required a team of developers, can now be done by you, through a visual drag and drop editor and carefully curated components to help you build and launch full stack web3 applications in minutes and without code.
 
 ## What is it?
 
@@ -16,7 +16,7 @@ welcome to a new era of no-code for creatives, innovators and visionaries buildi
 
 If you are looking to build dApps without code, I recommend you use our cloud platform [Dappify](https://dappify.com). For developers contributing to the project here are the configuration steps.
 
-### 1. Prerrequisites
+### 1. Prerequisites
 
 - Join us on [discord](https://discord.gg/CYYX8yUVgc) to request your Dappify API key
 - Node 16

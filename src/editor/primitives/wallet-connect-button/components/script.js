@@ -120,13 +120,22 @@ const script = function (props) {
     async function disconnect () {
         console.log("Disconnecting wallet", walletProvider);
         document.dispatchEvent(new Event("onDisconnect", walletProvider));
-        if (walletProvider.close) walletProvider.close();
-        await modal.clearCachedProvider();
-        walletProvider = null;
-        window.walletProvider = null;
-        localStorage.removeItem(cachedProviderName);
-        window.localStorage.clear();
-        $(`#${componentId} span`).text(originalText);
+        try {
+            localStorage.removeItem(cachedProviderName);
+            localStorage.clear();
+            walletProvider = null;
+            window.walletProvider = null;
+            if (walletProvider?.close) {
+                walletProvider?.close();
+            }
+            if (modal) {
+                await modal?.clearCachedProvider();
+            }
+        } catch (e) {
+            console.log(e);
+        } finally {
+            $(`#${componentId} span`).text(originalText);
+        }
     }
 
     function handleToggleConnect() {
